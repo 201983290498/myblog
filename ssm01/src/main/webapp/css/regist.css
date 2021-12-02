@@ -1,0 +1,58 @@
+
+body .login-container .form-group .validateMsgBox{
+    margin: -20px 0 20px;
+}
+body .login-container{
+    height: 477px;
+}
+body .login-container .form-group{
+    position: relative;
+}
+body .login-container .index-item{
+    position: absolute;
+    left: 4px;
+    top: 27px;
+    height: 17px;
+    line-height: 17px;
+    font-size: 13px;
+    text-align: left;
+}
+body .login-container .form-group #validateMsg{
+    top: 47px;
+}
+body .login-container .form-group .index-item.focus .tip {
+    display: block;
+    color: #9e9e9e;
+}
+body .login-container .form-group .index-item.success .tip{
+    display: block;
+    color: #33a853;
+    background-size: 15px 15px;
+    padding-left: 18px;
+}
+body .login-container .form-group .index-item.error .tip{
+    display: block;
+    color: #ff5b5b;
+    padding-left: 18px;
+    background-size: 15px 15px;
+}
+body .login-container .form-group .index-item .fd{
+    display: none;
+}
+body .login-container .form-group .success .tip{
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAXVBMVEVHcEw3rVc0qVQ1qlU0qVM9slkzqVQzqVM0q1YzqFM0qlROsWIzqVQzqFQ0qVMzqFQzqVQzqVQ1qVQzqVNVqlUzqFP///+HzJqx3b08rFpPtGpuwYXp9eyPz6DR69g9FZdJAAAAFXRSTlMAG21FtA+a7jHiVwaAxPnKd9J0/gMIIjVXAAAA8ElEQVQoz33TyRKDIBAE0AZUlrgl2MQlyf9/Zg4aSxDTJ6hXTIEzAr8IWdx1a5tK3ZBmMA1J0pOkrstYy4JRrDuqsUxTH1SvRaNUe+XzWZJeblxkzpJszVqa+fgCANBk6DmSpAIgchrCvN1OZvVJknoAikslDXC/VjpAXysl0JLkMs4ZZQ9YkhxDeJ/Vu+3Z0xjCZ06UVEC1rpZXCO9EvQDUtp7GEGJlB+C2X315xcoeAOp9O82R6vK63SQfa79dXrvfwNa5bluxD1t1ZmsOoyrbtLKIBt1EfdWP04+iqu0D+K4vkclgnOydEviTId5+AY/mM/wSjlEoAAAAAElFTkSuQmCC) no-repeat 0 1px;
+}
+body .login-container .form-group .error .tip{
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAY1BMVEVHcEz/Z2f/XFz/W1v/XFz/XV3/XFz/W1v/cnL/X1//XFz/W1v/W1v/XFz/XV3/XFz/W1v/XFz/XV3/XFz/W1v/////fHz/2dn/7e3/s7P/xsb/8vL/mpr/iYn/bGz/p6f/Y2NsZYSPAAAAFHRSTlMAELjPcS3F8ggd6t2XgTmsVEhCoJXLaSEAAADrSURBVCjPjZPrFoIgEIQXARHSSl1v2e39nzI0pV3MTvPL4TvALjsCrLIqkc4c0rzMYKNjikGmEByKEzK5M6X6gLEKQs2y1vV9f1u+83By2Ns1TbNiVAv+3Msw6nfNyHAbXDJj0tGFYaym18BdXHusInwn3Xuc7GO0AJLYweMn8b529wMfAUyEkWP63I8Ia9b2hEfkpeXEXiPsx14Se29b8iqY+r4zg3uaZ1Z8fDsMD5KpOVLC0bv7aDPA+TuWa2DD8ddx7MI8bAhbvi3LaRJVFVNpWdA1nSsatflRqnrtIFUCvkkIa63I4H+9AItiMgck4VeDAAAAAElFTkSuQmCC) no-repeat 0 1px;
+}
+body .login-container .right-container .photo-container #photo,
+body .login-container .left-container .form-group input[type=button]  {
+    cursor: pointer;
+}
+
+body .login-container .left-container .form-group input[type=button].avoid{
+    cursor: default;
+    border: 1px solid;
+    border-radius: 10px;
+    background: fixed rgb(61, 60, 60);
+}

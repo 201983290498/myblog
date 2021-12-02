@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- <link rel="stylesheet" th:href="@{/font/iconfont1/iconfont.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/regist.css}"/> -->
+    <link rel="stylesheet" href="../../font/iconfont1/iconfont.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/regist.css" />
+    <style>
+
+    </style>
+</head>
+<body>
+    <form id="form" th:action="@{/users/register}"> 
+        <div class="login-container">
+            <div class="left-container">
+                <div class="title">
+                    <span>注册</span>
+                </div>
+                <div class="input-container">
+                    <div class="form-group">
+                        <input type="text" id="username" name="username" placeholder="用户名" />
+                        <div class="index-item" id="accountMsg">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6  ">
+                                <div class="tip fd"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="password" type="password" id="password" name="password" placeholder="密码" data-tip="pwdMsg" data-pwd="repeatPwdMsg"/>
+                        <div class="index-item  " id="pwdMsg">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6  ">
+                                <div class="tip fd"></div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="form-group">
+                        <input class="password" type="password" name="repeatPwd" placeholder="重复密码" data-tip="repeatPwdMsg" data-pwd="pwdMsg"/>
+                        <div class="index-item  " id="repeatPwdMsg">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6">
+                                <div class="tip fd"></div>
+                            </div>
+                        </div>
+                   </div>
+                   <div class="form-group">
+                        <input type="text" name="email" placeholder="邮箱" />
+                        <div class="index-item  " id="emailMsg">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6  ">
+                                <div class="tip fd"></div>
+                            </div>
+                        </div>
+                   </div>
+                   <div class="form-group">
+                    <div class="validateMsgBox"> 
+                        <input type="text" name="validateData" placeholder="验证码" style="display: inline-block;width: 60%;" />
+                        <input type="button" value="发送验证信息" style="display: inline-block;width: 38%;" />
+                    </div>
+                    <div class="index-item " id="validateMsg">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-6 ">
+                            <div class="tip fd"></div>
+                        </div>
+                    </div>
+                   </div>
+                </div>
+                <div class="message-container">
+                    <span><a th:action="@{/}">登录</a></span>
+                </div>
+            </div>
+            <div class="right-container">
+                <div class="regist-container">
+                    <span class="regist">上传头像</span>
+                </div>
+                <div class="photo-container">
+                    <div class="photo" id="photo"></div>
+                </div>
+                <div class="action-container" id="submit">
+                    <span>注册</span>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- <script th:src="@{/js/jQuery3.6.js}" type="text/javascript"></script> -->
+    <script src="../../js/jQuery3.6.js" type="text/javascript"></script>
+    <script>
+        (function(){
+            
+            function checkPwd(value){
+                const pattern = /^[A-Z]/
+                const pattern2 = /[a-z]/
+                return pattern.test(value) && pattern2.test(value) && /[0-9]/.test(value) && /\w{6,16}/.test(value);
+            }
+
+            function checkAccount(value){
+                return /^[a-zA-Z]\w{5,17}$/.test(value);
+            }
+            
+            function checkEmail(value){
+                return /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value);
+            }
+
+            $("#photo").html("&#xe65b;");
+            $("#photo").addClass("empty-photo");
+            $("#photo").addClass("iconfont");
+
+            // 用户名获取焦点事件
+            $('#username').focus(function(){
+                const msg = `6～18个字符，可使用字母、数字、下划线，需要以字母开头`;
+                $('#accountMsg .tip').empty().text(msg);
+                $('#accountMsg').removeClass('success');
+                $('#accountMsg').removeClass('error');
+                $('#accountMsg').addClass('focus');
+            })
+            
+            // 用户名失去焦点事件
+            $("#username").blur(function () {
+                const account = this.value;
+                //正则检验 输入的账号是否合法
+                $("#accountMsg").removeClass("focus");
+                if(account){
+                    let msg = ''
+                    let style = ''
+                    if(checkAccount(account)){//查看样式是否符号规范
+                        $.ajax({
+                            url: '/users/login/username?account=' + account,
+                            method: 'get',
+                            dataType: "json",
+                            success: (rs)=>{
+                                msg = rs.result? "恭喜，该用户名可以注册": "用户名重复";
+                                style = re.result? "success":"error";
+                                $(`#accountMsg`).addClass(style);
+                                
+                                $(`#accountMsg .tip`).empty().text(msg);   
+                            }
+                        });
+                    }else{
+                        msg = '长度应为6~18个字符'
+                        style = 'error'
+                        $('#accountMsg').addClass(style)
+                        $('#accountMsg .tip').empty().text(msg)
+                    }
+                }
+            })
+
+            // 密码框 获取焦点事件,当有多个对象时，事件注入到所有的dom标签上
+            $('.password').focus(()=>{
+                const msg = `6～16个字符，首字母必须大写,并包含数字和字母`;
+                const tip = this.dataset.tip;
+                $(`#${tip} .tip`).empty().text(msg);//将内容清空
+                $(`#${tip}`).removeClass('success');
+                $(`#${tip}`).removeClass('error');
+                $(`#${tip}`).addClass('focus');
+            })
+            // 密码框失去焦点
+            $(`.password`).blur(()=>{
+                const tip = this.dataset.tip;//当前的标签的id
+                const pwd = this.dataset.pwd;//另一个密码框标签的id
+                $(`#${tip}`).removeClass('focus');
+                const val1 = this.value;
+                const val2 = $(`#${pwd}`).val();//另外一个输入框的密码
+                if(val1){//输入的内容需要验证
+                    let msg = '';
+                    let style = '';
+                    if(checkPwd(val1) && val1 == val2){
+                        msg = '恭喜，改密码可用!';
+                        style='success';
+                    }else if(checkPwd(val1)){
+                        msg = '两次输入的密码不同!'
+                        style='error';
+                    }else{
+                        msg = '首写字母必须大写，并包含数字和字母!'
+                        style = 'error'
+                    }
+                    $(`#${tip}`).addClass(style);
+                    $(`#${tip} .tip`).empty().text(msg);
+                    $(`#${pwd}`).addClass(style);
+                    $(`#${pwd} .tip`).empty().text(msg);
+                }
+                
+            })
+            
+            //邮箱的聚焦和失去焦点
+            $('input[name=email]').focus(()=>{
+                const msg = '邮箱地址: xx@xx.xx'
+                $('#emailMsg').removeClass('success');
+                $('#emailMsg').removeClass('error');
+                $('#emailMsg').addClass('focus');
+                $('#emailMsg .tip').empty().text(msg);
+            });
+            $('input[name=email]').blur(()=>{
+                $('#emailMsg').removeClass('focus');
+                const value = this.value;
+                let style = '',msg = '';
+                if(checkEmail(value)){
+                    msg = "该邮箱格式有效!"
+                    style = 'success'
+                }else{
+                    msg = '邮箱格式错误!'
+                    style = 'error' 
+                }
+                $('#emailMsg').addClass(style)
+                $('#emailMsg .tip').empty().text(msg);
+            });
+            
+            //验证码
+            $(`input[name=validateData]`).focus(()=>{
+                const msg = '6位验证码'
+                $('#emailMsg').removeClass('success');
+                $('#emailMsg').removeClass('error');
+                $('#emailMsg').addClass('focus');
+                $('#emailMsg .tip').empty().text(msg);
+            });
+            $(`input[name=validateData]`).blur(()=>{
+                const value = this.value;
+                $('#emailMsg').removeClass("focus");
+                if(value&&value.length==6){
+                    let style='',msg='';
+                    $.ajax({
+                        url: '/users/checkMsg',
+                        type:'post',
+                        dataType:"json",
+                        data:{
+                            message: value
+                        },
+                        success:function(rq){
+                            style = rq.result? "success":'error';
+                            msg = rq.result? "验证码通过!":"验证码错误!";
+                            $('#emailMsg').addClass(style);
+                            $('#emailMsg .tip').empty().text(msg);
+                        }
+                    });
+                }
+            });
+        })()
+    </script>
+</body>
+</html>
