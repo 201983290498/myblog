@@ -61,11 +61,10 @@ public class AccountController {
     @PostMapping("/login")
     @ApiOperation(value="登入", notes = "登入成功,跳转到dashboard页面，失败跳转到error页面", httpMethod = "POST")
     public String login(String username, String password,ModelMap map){
-
         if(userService.login(new User(username, password))) {
             return "userInfo/dashBoard";
         }else{
-            map.addAttribute("errors",RespMessageUtils.generateErrorInfo(new String[]{"用户名和密码错误"}));
+            RespMessageUtils.generateErrorInfo(map,new String[]{"用户名和密码错误"});
             return "error";
         }
     }
@@ -77,13 +76,13 @@ public class AccountController {
         //验证失败，或者密码重复不正确
 
         if(!repeatPwd.equals(user.getPassword())) {
-            map.addAttribute("errors",RespMessageUtils.generateErrorInfo(new String[]{"两次输入的密码不正确"}));
+            RespMessageUtils.generateErrorInfo(map,new String[]{"两次输入的密码不正确"});
             return "error";
         }
         try {
             messageQueUntils.checkMsg(user.getEmail(),validateData);
         } catch (MessageException e) {
-            map.addAttribute("errors",RespMessageUtils.generateErrorInfo(new String[]{e.getMessage()}));
+            RespMessageUtils.generateErrorInfo(map,new String[]{e.getMessage()});
             return "error";
         }
 
@@ -91,7 +90,7 @@ public class AccountController {
         try {
             userService.insert(user,photo);
         } catch (IOException e) {
-            map.addAttribute("errors",RespMessageUtils.generateErrorInfo(new String[]{e.getMessage()}));
+            RespMessageUtils.generateErrorInfo(map,new String[]{e.getMessage()});
             return "error";
         }
         return "index";

@@ -50,7 +50,8 @@ public class ShrioConfig {
     public HashedCredentialsMatcher credentialsMatcher(ShiroProps shiroProps){
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
         credentialsMatcher.setHashAlgorithmName(shiroProps.getAlgorithm());
-        credentialsMatcher.setHashIterations(shiroProps.getHashIterations());//设置加密次数
+        /* 设置加密次数 */
+        credentialsMatcher.setHashIterations(shiroProps.getHashIterations());
         return credentialsMatcher;
     }
 

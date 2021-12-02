@@ -23,8 +23,8 @@ public class RespMessageUtils {
     private Boolean result;
 
     private String msg;
-
-    private Object data;//数据
+    /** 数据 */
+    private Object data;
 
     private int size;
 
