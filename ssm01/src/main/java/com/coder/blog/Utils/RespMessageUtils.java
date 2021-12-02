@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.ui.ModelMap;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author coder
@@ -91,8 +93,16 @@ public class RespMessageUtils {
     /**
      * 产生错误信息队列
      */
-    public static List<String> generateErrorInfo(String[] args){
-        return new LinkedList<>(List.of(args));
+    public static void generateErrorInfo(ModelMap map, String[] args){
+        Object error = map.getAttribute("errors");
+        List<String> errors  = new LinkedList<>();
+        if(error == null) {
+            errors.addAll(List.of(args));
+        }else{
+            errors = (List<String>) error;
+            errors.add("用户名和密码错误");
+        }
+        map.addAttribute("errors",errors);
     }
 
 }
