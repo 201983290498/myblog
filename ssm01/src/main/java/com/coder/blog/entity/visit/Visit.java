@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * @Author coder
  * @Date 2021/11/26 23:09
- * @Description
+ * @Description 记录访问ip的地址,访问地点，访问的浏览器,代理商，访问平台等相关基础的物理设备信息。
  */
 @Data
 @NoArgsConstructor
@@ -29,10 +29,11 @@ public class Visit implements Serializable {
 
     private String url;
 
-    private String browserType;//浏览器类型
+    /**浏览器类型*/
+    private String browserType;
 
-
-    private String platformType;//平台类型
+    /** 平台类型 */
+    private String platformType;
 
 
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")

@@ -112,6 +112,7 @@ public class ShrioConfig {
         filterChainDefinitionMap.put("/","anon");
         filterChainDefinitionMap.put("/login","anon");
         filterChainDefinitionMap.put("/admin/**","authc");
+        filterChainDefinitionMap.put("/account/**","authc");
         factoryBean.setUnauthorizedUrl("/error/error.jsp");
         factoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         factoryBean.setLoginUrl("/login");

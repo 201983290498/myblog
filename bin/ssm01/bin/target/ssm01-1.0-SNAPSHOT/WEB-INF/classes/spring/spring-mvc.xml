@@ -12,7 +12,7 @@
         <context:include-filter type="assignable" expression="com.coder.blog.config.SpringMvcConfig"/>
     </context:component-scan>
     <bean class="com.coder.blog.props.SwaggerConfig"/>
-    <mvc:annotation-driven/>
+    <mvc:com.coder.commom.annotation-driven/>
 
     <!--配置视图解析器-->
     <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">

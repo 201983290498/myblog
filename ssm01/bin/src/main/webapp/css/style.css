@@ -132,4 +132,5 @@ body .login-container .right-container .action-container span:hover{
     text-align: center;
     line-height: 65px;
     color: rgb(199,191,219);
+    transition: .4s;
 }

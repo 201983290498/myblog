@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <!-- <link rel="stylesheet" th:href="@{/font/iconfont1/iconfont.css}"/>
+    <link rel="stylesheet" th:href="@{/font/iconfont1/iconfont.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" th:href="@{/css/regist.css}"/> -->
-    <link rel="stylesheet" href="../../font/iconfont1/iconfont.css" />
-    <link rel="stylesheet" href="../../css/style.css" />
-    <link rel="stylesheet" href="../../css/regist.css" />
+    <link rel="stylesheet" th:href="@{/css/regist.css}"/>
+<!--    <link rel="stylesheet" href="../../font/iconfont1/iconfont.css" />-->
+<!--    <link rel="stylesheet" href="../../css/style.css" />-->
+<!--    <link rel="stylesheet" href="../../css/regist.css" />-->
     <style>
 
     </style>
 </head>
 <body>
-    <form id="form" th:action="@{/users/register}"> 
+    <form id="form" th:action="@{/users/register}" method="post" enctype="multipart/form-data"> 
         <div class="login-container">
             <div class="left-container">
                 <div class="title">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input class="password" type="password" id="password" name="password" placeholder="密码" data-tip="pwdMsg" data-pwd="repeatPwdMsg"/>
+                        <input class="password" type="password" id="pwd" name="password" placeholder="密码" data-tip="pwdMsg" data-pwd="repeatPwd"/>
                         <div class="index-item  " id="pwdMsg">
                             <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-6  ">
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                    <div class="form-group">
-                        <input class="password" type="password" name="repeatPwd" placeholder="重复密码" data-tip="repeatPwdMsg" data-pwd="pwdMsg"/>
+                        <input class="password" type="password" name="repeatPwd" id="repeatPwd" placeholder="重复密码" data-tip="repeatPwdMsg" data-pwd="pwd"/>
                         <div class="index-item  " id="repeatPwdMsg">
                             <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-6">
@@ -49,29 +49,29 @@
                         </div>
                    </div>
                    <div class="form-group">
-                        <input type="text" name="email" placeholder="邮箱" />
+                        <input type="text" name="email" placeholder="邮箱" id="email"/>
                         <div class="index-item  " id="emailMsg">
                             <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-6  ">
+                            <div class="col-sm-6">
                                 <div class="tip fd"></div>
                             </div>
                         </div>
                    </div>
                    <div class="form-group">
-                    <div class="validateMsgBox"> 
-                        <input type="text" name="validateData" placeholder="验证码" style="display: inline-block;width: 60%;" />
-                        <input type="button" value="发送验证信息" style="display: inline-block;width: 38%;" />
-                    </div>
-                    <div class="index-item " id="validateMsg">
-                        <label class="col-sm-2 control-label"></label>
-                        <div class="col-sm-6 ">
-                            <div class="tip fd"></div>
+                        <div class="validateMsgBox"> 
+                            <input type="text" name="validateData" placeholder="验证码" style="display: inline-block;width: 60%;"  id="validateData"/>
+                            <input type="button" value="发送验证信息" style="display: inline-block;width: 38%;"/>
                         </div>
-                    </div>
+                        <div class="index-item " id="validateMsg">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6 ">
+                                <div class="tip fd"></div>
+                            </div>
+                        </div>
                    </div>
                 </div>
                 <div class="message-container">
-                    <span><a th:action="@{/}">登录</a></span>
+                    <span><a th:href="@{/login}">登录</a></span>
                 </div>
             </div>
             <div class="right-container">
@@ -80,19 +80,23 @@
                 </div>
                 <div class="photo-container">
                     <div class="photo" id="photo"></div>
+                    <input type="file" name="photo" style="display: none;"/>
                 </div>
                 <div class="action-container" id="submit">
                     <span>注册</span>
                 </div>
+
+                <input type="submit" style="display: none;" />
             </div>
         </div>
     </form>
 
-    <!-- <script th:src="@{/js/jQuery3.6.js}" type="text/javascript"></script> -->
-    <script src="../../js/jQuery3.6.js" type="text/javascript"></script>
-    <script>
+    <script th:src="@{/js/jQuery3.6.js}" type="text/javascript"></script>
+<!--    <script src="../../js/jQuery3.6.js" type="text/javascript"></script>-->
+    <script th:inline="javascript" type="text/javascript">
         (function(){
-            
+            let waitProcess;
+
             function checkPwd(value){
                 const pattern = /^[A-Z]/
                 const pattern2 = /[a-z]/
@@ -115,8 +119,7 @@
             $('#username').focus(function(){
                 const msg = `6～18个字符，可使用字母、数字、下划线，需要以字母开头`;
                 $('#accountMsg .tip').empty().text(msg);
-                $('#accountMsg').removeClass('success');
-                $('#accountMsg').removeClass('error');
+                $('#accountMsg').removeClass('success error');
                 $('#accountMsg').addClass('focus');
             })
             
@@ -130,14 +133,13 @@
                     let style = ''
                     if(checkAccount(account)){//查看样式是否符号规范
                         $.ajax({
-                            url: '/users/login/username?account=' + account,
+                            url: [[@{'/users/login/username?account='}]]+account,
                             method: 'get',
                             dataType: "json",
                             success: (rs)=>{
-                                msg = rs.result? "恭喜，该用户名可以注册": "用户名重复";
-                                style = re.result? "success":"error";
+                                msg = (!rs.result)? "恭喜，该用户名可以注册": "用户名重复";
+                                style = (!rs.result)? "success":"error";
                                 $(`#accountMsg`).addClass(style);
-                                
                                 $(`#accountMsg .tip`).empty().text(msg);   
                             }
                         });
@@ -151,26 +153,27 @@
             })
 
             // 密码框 获取焦点事件,当有多个对象时，事件注入到所有的dom标签上
-            $('.password').focus(()=>{
+            $('.password').focus(function(){
                 const msg = `6～16个字符，首字母必须大写,并包含数字和字母`;
                 const tip = this.dataset.tip;
                 $(`#${tip} .tip`).empty().text(msg);//将内容清空
-                $(`#${tip}`).removeClass('success');
-                $(`#${tip}`).removeClass('error');
+                $(`#${tip}`).removeClass('success error');
                 $(`#${tip}`).addClass('focus');
             })
             // 密码框失去焦点
-            $(`.password`).blur(()=>{
-                const tip = this.dataset.tip;//当前的标签的id
-                const pwd = this.dataset.pwd;//另一个密码框标签的id
-                $(`#${tip}`).removeClass('focus');
+            $(`.password`).blur(function(){
+                const tip = this.dataset.tip;//显示标签
+                const pwd = this.dataset.pwd;//另一个框的id
+                const tip2 = $(`#${pwd}`).data("tip");
+                $(`#${tip}`).removeClass('focus success error');
+                $(`#${tip2}`).removeClass('focus success error');
                 const val1 = this.value;
                 const val2 = $(`#${pwd}`).val();//另外一个输入框的密码
-                if(val1){//输入的内容需要验证
+                if(val1!=''){//输入的内容需要验证
                     let msg = '';
                     let style = '';
                     if(checkPwd(val1) && val1 == val2){
-                        msg = '恭喜，改密码可用!';
+                        msg = '恭喜，该密码可用!';
                         style='success';
                     }else if(checkPwd(val1)){
                         msg = '两次输入的密码不同!'
@@ -181,8 +184,8 @@
                     }
                     $(`#${tip}`).addClass(style);
                     $(`#${tip} .tip`).empty().text(msg);
-                    $(`#${pwd}`).addClass(style);
-                    $(`#${pwd} .tip`).empty().text(msg);
+                    $(`#${tip2}`).addClass(style);
+                    $(`#${tip2} .tip`).empty().text(msg);
                 }
                 
             })
@@ -195,14 +198,14 @@
                 $('#emailMsg').addClass('focus');
                 $('#emailMsg .tip').empty().text(msg);
             });
-            $('input[name=email]').blur(()=>{
+            $('input[name=email]').blur(function(){
                 $('#emailMsg').removeClass('focus');
                 const value = this.value;
                 let style = '',msg = '';
-                if(checkEmail(value)){
+                if(value&&checkEmail(value)){
                     msg = "该邮箱格式有效!"
                     style = 'success'
-                }else{
+                }else if(!value==''){
                     msg = '邮箱格式错误!'
                     style = 'error' 
                 }
@@ -213,32 +216,103 @@
             //验证码
             $(`input[name=validateData]`).focus(()=>{
                 const msg = '6位验证码'
-                $('#emailMsg').removeClass('success');
-                $('#emailMsg').removeClass('error');
-                $('#emailMsg').addClass('focus');
-                $('#emailMsg .tip').empty().text(msg);
+                $('#validateMsg').removeClass('success error');
+                $('#validateMsg').addClass('focus');
+                $('#validateMsg .tip').empty().text(msg);
             });
-            $(`input[name=validateData]`).blur(()=>{
+            $(`input[name=validateData]`).blur(function(){
                 const value = this.value;
-                $('#emailMsg').removeClass("focus");
+                $('#validateMsg').removeClass("focus");
                 if(value&&value.length==6){
                     let style='',msg='';
                     $.ajax({
-                        url: '/users/checkMsg',
+                        url: [[@{'/users/checkMsg'}]],
                         type:'post',
                         dataType:"json",
                         data:{
+                            email: $(`input[name=email]`).val(),
                             message: value
                         },
                         success:function(rq){
                             style = rq.result? "success":'error';
                             msg = rq.result? "验证码通过!":"验证码错误!";
-                            $('#emailMsg').addClass(style);
-                            $('#emailMsg .tip').empty().text(msg);
+                            $('#validateMsg').addClass(style);
+                            $('#validateMsg .tip').empty().text(msg);
                         }
                     });
                 }
             });
+            $(`#photo`).click(function(){
+                $(`input[name=photo]`).click();
+            });
+            //获取图片渲染到src中
+            $(`input[name=photo]`).change(function(event){
+                if(event.target.files.length==0){
+                    $('#photo').html("&#xe65b;");
+                    return;
+                }
+                let file = event.target.files[0];
+                if(!/^image\/\w*$/.test(file.type)){
+                    event.target.value = ''
+                    alert("上传的并非图片,请重新选择");
+                    return;
+                }
+                let rd = new FileReader();
+                rd.readAsDataURL(file);//记载图片，加载完成之后
+                rd.onload = function(e){
+                    let url = e.target.result
+                    let context = `<img src='${url}' style="width:65px;height:65px;"/>`
+                    $('#photo').html(context);
+                    console.log($('#photo'))
+                }
+            })
+            $(`#submit`).on('click',function(){
+                let flag = 0;
+                flag = flag + (($('#username').hasClass("error")|| $('#username').val()=='')? 1:0);
+                flag = flag + (($('#pwd').hasClass("error") || $('#pwd').val() == '') ? 1 : 0);
+                flag = flag + (($('#repeatPwd').hasClass("error") || $('#repeatPwd').val() == '') ? 1 : 0);
+                flag = flag + (($('#email').hasClass("error") || $('#email').val() == '') ? 1 : 0);
+                flag = flag + (($('#validateData').hasClass("error") || $('#validateData').val() == '') ? 1 : 0);
+                console.log(flag)
+                if(flag==0){
+                    $(`#submit + input[type=submit]`).click();
+                }else{
+                    alert("注册信息错误!");
+                }
+            })
+            $(`input[type=button]`).click(function(){
+                console.log($('email').val());
+                if(!$(`input[type=button]`).hasClass("avoid")){
+                    $.ajax({
+                        url: [[@{'/users/generateMsg'}]] + '?email='+$('#email').val(),
+                        type: 'get',
+                        success:function(resp){
+                            if(resp.result){
+                                console.info("验证信息已经发送到邮箱");
+                            }
+                        } 
+                    });
+                    $(`input[type=button]`).addClass("avoid");
+                    $(`input[type=button]`).val("重新发送(60s)");
+                    waitProcess = setInterval(()=>{
+                        let content = $(`input[type=button]`).val();
+                        let time = parseInt(content.substr(5, 2));
+                        time = time - 1;
+                        if (time < 10) {
+                            $(`input[type=button]`).val('重新发送(0' + time + 's)');
+                        } else {
+                            $(`input[type=button]`).val("重新发送(" + time + "s)");
+                        }
+                    },1000);//每隔一段时间修改时间
+                    setTimeout(()=>{
+                        clearInterval(waitProcess);
+                        $(`input[type=button]`).removeClass("avoid");
+                        $(`input[type=button]`).val('发送验证信息')
+                    }, 60000)
+                }
+            });
+
+            
         })()
     </script>
 </body>

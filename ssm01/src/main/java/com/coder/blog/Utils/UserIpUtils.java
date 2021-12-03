@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 /**
  * @Author coder
  * @Date 2021/11/26 21:29
- * @Description
+ * @Description 通过多种方式获取到登入的ip地址
  */
 public class UserIpUtils {
     public static String getIp(HttpServletRequest httpRequest) {
@@ -26,7 +26,7 @@ public class UserIpUtils {
         if (ipAddress == null || ipAddress.length() == 0
                 || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = httpRequest.getRemoteAddr();
-            if (ipAddress.equals("127.0.0.1")
+            if ("127.0.0.1".equals(ipAddress)
                     || ipAddress.equals("0:0:0:0:0:0:0:1")) {
                 // 根据网卡取本机配置的IP
                 InetAddress inet = null;
@@ -39,7 +39,8 @@ public class UserIpUtils {
             }
         }
         // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-        if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
+        // "***.***.***.***".length()
+        if (ipAddress != null && ipAddress.length() > 15) {
             // = 15
             if (ipAddress.indexOf(",") > 0) {
                 ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));

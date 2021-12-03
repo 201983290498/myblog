@@ -19,6 +19,11 @@ public interface VisitService {
 
     Visit selectVisitByIp(String ip);
 
+    /**
+     * @param visit 访问记录
+     * @return
+     * @Description
+     */
     Long findVisitTimes(Visit visit);
 
     /**

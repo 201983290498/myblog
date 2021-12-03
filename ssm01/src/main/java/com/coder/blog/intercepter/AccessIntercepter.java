@@ -1,6 +1,6 @@
 package com.coder.blog.intercepter;
 
-import com.coder.blog.annotation.AccessLimit;
+import com.coder.commom.annotation.AccessLimit;
 import com.coder.blog.Utils.UserIpUtils;
 import com.coder.blog.entity.visit.RequestIp;
 import org.jetbrains.annotations.NotNull;
@@ -18,8 +18,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 /**
- * 对标注了访问限制的方法进行拦截，避免过度修改数据库，带来的数据库压力,将数据写入session来限制访问
- * 对特殊方法的限制
+ * 对标注了访问限制的方法进行拦截，
+ * 避免过度修改数据库，带来的数据库压力,将数据写入session来限制访问
+ * 对修改方法的限制
  * @author coder
  */
 public class AccessIntercepter implements HandlerInterceptor {

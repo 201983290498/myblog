@@ -5,15 +5,18 @@ import com.coder.blog.Utils.RespMessageUtils;
 import com.coder.blog.entity.User;
 import com.coder.blog.exception.MessageException;
 import com.coder.blog.service.UserService;
+import com.coder.commom.annotation.AccessLimit;
+import com.coder.commom.annotation.Enum.ResourceType;
+import com.coder.commom.annotation.ResourceAcquisitionRecorder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
 
@@ -28,17 +31,23 @@ import java.util.*;
 @Controller
 @RequestMapping("/users")
 @Api(value = "账户登入、注册Contoller")
-//镇压自动注入的问题
-//@SuppressWarnings("all")
+/*
+镇压自动注入的问题
+@SuppressWarnings("all")
+*/
 public class AccountController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private MessageQueUntils messageQueUntils;
+    private final MessageQueUntils messageQueUntils;
+
+    public AccountController(UserService userService, MessageQueUntils messageQueUntils) {
+        this.userService = userService;
+        this.messageQueUntils = messageQueUntils;
+    }
 
 
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "用户名核验")
     @GetMapping("/login/username")
     @ResponseBody
     @ApiOperation(value = "查找账户是否存在", notes = "查找账户是否存在", httpMethod = "POST")
@@ -58,32 +67,36 @@ public class AccountController {
     }
 
 
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "登入核验")
     @PostMapping("/login")
     @ApiOperation(value="登入", notes = "登入成功,跳转到dashboard页面，失败跳转到error页面", httpMethod = "POST")
-    public String login(String username, String password,ModelMap map){
+    public String login(String username, String password, ModelMap map, HttpServletRequest request){
         if(userService.login(new User(username, password))) {
-            return "userInfo/dashBoard";
+            //记录登入信息
+            request.getSession().setAttribute("user",new User(username,new Date(System.currentTimeMillis())));
+            return "forward:/accountInfo/dashBoard";
         }else{
             RespMessageUtils.generateErrorInfo(map,new String[]{"用户名和密码错误"});
-            return "error";
+            return "forward:/error";
         }
     }
 
 
+    @AccessLimit(seconds = 1)
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name = "注册用户修改")
     @PostMapping("/register")
     @ApiOperation(value="账号注册",notes = "注册成功返回登入页面，失败跳转到失败页面，交代失败的原因", httpMethod = "POST")
     public String register(User user, MultipartFile photo, String repeatPwd, String validateData, ModelMap map){
         //验证失败，或者密码重复不正确
-
         if(!repeatPwd.equals(user.getPassword())) {
             RespMessageUtils.generateErrorInfo(map,new String[]{"两次输入的密码不正确"});
-            return "error";
+            return "forward:/error";
         }
         try {
             messageQueUntils.checkMsg(user.getEmail(),validateData);
         } catch (MessageException e) {
             RespMessageUtils.generateErrorInfo(map,new String[]{e.getMessage()});
-            return "error";
+            return "forward:/error";
         }
 
         //登入页面
@@ -91,17 +104,19 @@ public class AccountController {
             userService.insert(user,photo);
         } catch (IOException e) {
             RespMessageUtils.generateErrorInfo(map,new String[]{e.getMessage()});
-            return "error";
+            return "forward:/error";
         }
-        return "index";
+        return "redirect:/login";
     }
 
+    @ResourceAcquisitionRecorder(name = "注册页面")
     @GetMapping("/registPage")
     @ApiOperation(value="注册页面", notes = "跳转到注册页面regist", httpMethod = "GET")
     public String registPage(){
         return "regist";
     }
 
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name="生成验证信息修改")
     @GetMapping("/generateMsg")
     @ResponseBody
     @ApiOperation(value="生成验证码", notes = "生成验证码", httpMethod = "GET")
@@ -110,6 +125,7 @@ public class AccountController {
         return RespMessageUtils.SUCCESS("验证码已发送，请注意查收");
     }
 
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK, name="验证码核验")
     @PostMapping("/checkMsg")
     @ResponseBody
     @ApiOperation(value="生成验证码", notes = "生成验证码,错误返回错误信息", httpMethod = "POST")

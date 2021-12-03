@@ -10,12 +10,12 @@
 
 
     <!--    开启注解扫描-->
-    <context:annotation-config/>
+    <context:com.coder.commom.annotation-config/>
 
 
     <!--    Spring工厂的扫描-->
     <context:component-scan base-package="com.coder.blog">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="com.coder.commom.annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="assignable" expression="com.coder.blog.config.SpringMvcConfig"/>
     </context:component-scan>
 

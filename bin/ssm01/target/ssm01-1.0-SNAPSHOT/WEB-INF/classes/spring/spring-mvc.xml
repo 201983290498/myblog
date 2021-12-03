@@ -12,7 +12,7 @@
         <context:include-filter type="assignable" expression="com.coder.blog.config.SpringMvcConfig"/>
     </context:component-scan>
     <bean class="com.coder.blog.props.SwaggerConfig"/>
-    <mvc:annotation-driven/>
+    <mvc:com.coder.commom.annotation-driven/>
 
     <!--配置视图解析器-->
 <!--    会根据视图名称自动配置相应的视图解析器-->

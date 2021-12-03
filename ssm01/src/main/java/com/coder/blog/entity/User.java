@@ -19,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class User implements Serializable {
 
+
     /**
      * 用户的id
      */
@@ -72,6 +73,11 @@ public class User implements Serializable {
         this.password = password;
         this.imageId = imageId;
         this.personalInfo = personalInfo;
+        this.createTime = createTime;
+    }
+
+    public User(String username, Date createTime) {
+        this.username = username;
         this.createTime = createTime;
     }
 }

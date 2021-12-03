@@ -41,11 +41,13 @@ public class IpFilter implements Filter {
                 .getWebApplicationContext(servletContext);
         blackIpServiceImpl = (BlackIpService) applicationContext
                 .getBean("blackIpServiceImpl");
+        //插卡IP地址是否被禁止
         blackIp=blackIpServiceImpl.selectBlackIpByIp(ip);
         if(blackIp==null){
             filterChain.doFilter(request, response);
             return;
         }else{
+            //IP地址被禁止
             request.getRequestDispatcher("/error/blackIp.jsp").forward(request, response);
         }
     }

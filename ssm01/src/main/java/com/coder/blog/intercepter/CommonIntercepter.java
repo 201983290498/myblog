@@ -1,6 +1,6 @@
 package com.coder.blog.intercepter;
 
-import com.coder.blog.annotation.AccessLimit;
+import com.coder.commom.annotation.AccessLimit;
 import com.coder.blog.Utils.UserIpUtils;
 import com.coder.blog.entity.visit.RequestIp;
 import com.coder.blog.props.VisitProps;

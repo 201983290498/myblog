@@ -19,10 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
- * 监听所有访问网络的人，但是不监听每次的访问记录
  * @Author coder
  * @Date 2021/11/26 23:06
- * @Description
+ * @Description 监听所有访问网络的人，但是不监听每次的访问记录
  */
 @Data
 public class VisitTimeListener implements ServletRequestListener {
@@ -41,8 +40,8 @@ public class VisitTimeListener implements ServletRequestListener {
                 .getServletRequest();
         HttpSession session = request.getSession();
         ServletContext servletContext = session.getServletContext();
-        Visit visit = null;
-        VisitService visitServiceImpl = null;
+        Visit visit;
+        VisitService visitServiceImpl;
         applicationContext = WebApplicationContextUtils
                 .getWebApplicationContext(servletContext);
         try {

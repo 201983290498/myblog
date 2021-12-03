@@ -36,8 +36,7 @@
             </bean>
         </property>
     </bean>
-    <mvc:view-controller path="/" view-name="index"/>
-    <mvc:view-controller path="/login" view-name="login"/>
+
 
 <!-- 文件封装器 -->
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
@@ -48,6 +47,7 @@
         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
         <bean class="com.coder.blog.intercepter.AccessIntercepter"/>
         <bean class="com.coder.blog.intercepter.CommonIntercepter"/>
+        <bean class="com.coder.blog.intercepter.VisitorInterceptor"/>
     </mvc:interceptors>
     
 <!--    开启静态资源配置-->
