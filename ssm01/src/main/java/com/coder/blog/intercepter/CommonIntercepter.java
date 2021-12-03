@@ -5,12 +5,12 @@ import com.coder.blog.Utils.UserIpUtils;
 import com.coder.blog.entity.visit.RequestIp;
 import com.coder.blog.props.VisitProps;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
@@ -28,8 +28,9 @@ public class CommonIntercepter implements HandlerInterceptor {
     private VisitProps visitProps;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(handler instanceof HandlerMethod){//先判断是不是视图方法
+    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
+        //先判断是不是视图方法
+        if(handler instanceof HandlerMethod){
             HandlerMethod hm = (HandlerMethod) handler;
             AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
             if(accessLimit==null){
@@ -42,8 +43,8 @@ public class CommonIntercepter implements HandlerInterceptor {
                     re.setReCount(1);
                     re.setIp(ip);
                 }else{
-                    Long createtime = re.getCreateTime();
-                    if((System.currentTimeMillis()-createtime)/1000>visitProps.getSeconds()){
+                    long createTime = re.getCreateTime();
+                    if((System.currentTimeMillis()-createTime)/1000>visitProps.getSeconds()){
                         re = new RequestIp();
                         re.setReCount(1);
                         re.setCreateTime(System.currentTimeMillis());
@@ -70,12 +71,12 @@ public class CommonIntercepter implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, ModelAndView modelAndView) throws Exception {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler, Exception ex) throws Exception {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

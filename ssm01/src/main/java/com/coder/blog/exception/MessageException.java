@@ -1,9 +1,9 @@
 package com.coder.blog.exception;
 
 /**
- * @Author coder
- * @Date 2021/12/2 16:05
- * @Description
+ * @author coder
+ * @date 2021/12/2 16:05
+ * @description
  */
 public class MessageException extends Exception{
     public MessageException(String message) {

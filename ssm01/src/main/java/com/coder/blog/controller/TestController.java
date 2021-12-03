@@ -17,6 +17,6 @@ public class TestController {
     @GetMapping("/test")
     @ApiOperation(value="测试IpConfig",httpMethod = "GET")
     public String tes010(){
-        return "success";
+        return "error";
     }
 }
