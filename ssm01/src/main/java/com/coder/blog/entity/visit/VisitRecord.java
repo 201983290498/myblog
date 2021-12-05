@@ -14,6 +14,8 @@ import java.util.Date;
 @Data
 public class VisitRecord implements Serializable {
 
+    private Integer pageSize=10;
+
     /**
      * 访问的用户名， 登入前是匿名，登入之后是按用户名来算
      */
@@ -55,4 +57,8 @@ public class VisitRecord implements Serializable {
      */
     String sessionId;
 
+    /**
+    * 访问资源相关的物理信息
+    */
+    private Visit visit;
 }

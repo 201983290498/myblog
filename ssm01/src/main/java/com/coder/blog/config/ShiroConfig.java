@@ -28,7 +28,7 @@ import java.util.Vector;
  * @Description
  */
 @Configuration
-public class ShrioConfig {
+public class ShiroConfig {
 
     /**
      * 读入配置文件

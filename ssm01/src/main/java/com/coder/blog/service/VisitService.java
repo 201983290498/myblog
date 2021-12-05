@@ -1,6 +1,7 @@
 package com.coder.blog.service;
 
 import com.coder.blog.entity.visit.Visit;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ public interface VisitService {
 
     Visit selectByPrimaryKey(Integer id);
 
-    Visit selectVisitByIp(String ip);
+  PageInfo<Visit> selectVisitPageByIp(String ip, Integer page, Integer pageSize);
 
     /**
      * @param visit 访问记录
@@ -30,17 +31,25 @@ public interface VisitService {
      *  根据日期月份分组查询
      * @return
      */
-    List<?> selectVisitListByDate(Map<String, Object> map);
+    PageInfo<?> selectVisitListByDate(Map<String, Object> map,int page,int size);
 
     /**
      * 模糊查询  and 分组显示
      * @param map
      * @return
      */
-    List<?> selectLikeVisitListGroupByIp(Map<String, Object> map);
+    PageInfo<?> selectLikeVisitListGroupByIp(Map<String, Object> map,int page,int size);
 
 
-    List<Visit> selectLikeVisitListByPage(Map<String, Object> map);
+    PageInfo<Visit> selectLikeVisitListByPage(Map<String, Object> map,int page,int size);
+
+  /**
+   * 查询所有的记录
+   * @param page
+   * @param size
+   * @return
+   */
+  PageInfo<Visit> selectAllByPage(int page,int size);
 
     int updateByPrimaryKeySelective(Visit record);
 
@@ -50,5 +59,5 @@ public interface VisitService {
      *  根据IP分组查询
      * @return
      */
-    List<?>  selectVisitListByIp(Map<String, Object> map);
+    PageInfo<?>  selectVisitListByIp(Map<String, Object> map,int page,int size);
 }

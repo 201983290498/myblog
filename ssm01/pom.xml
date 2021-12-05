@@ -35,6 +35,12 @@
             <artifactId>mybatis</artifactId>
             <version>3.5.4</version>
         </dependency>
+<!--     分页插件-->
+        <dependency>
+          <groupId>com.github.pagehelper</groupId>
+          <artifactId>pagehelper</artifactId>
+          <version>5.1.2</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>

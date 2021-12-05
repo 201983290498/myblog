@@ -2,6 +2,8 @@ package com.coder.blog.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.coder.blog.props.DruidProps;
+import com.github.pagehelper.PageInterceptor;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -14,17 +16,20 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.Properties;
+
 
 /**
- * @Author coder
+ * 开始事务管理
+ * 开始spring的AOP
+
+ * @author coder
  * @Date 2021/11/25 0:25
  * @Description
  */
-@Configuration
-//开始事务管理
 @EnableTransactionManagement
-//开始aop动态大力
-@EnableAspectJAutoProxy
+@Configuration
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MybatisConfig {
 
     @Bean
@@ -33,7 +38,8 @@ public class MybatisConfig {
         return new DruidProps();
     }
 
-/* 配置数据源 */
+/**
+ *   配置数据源 */
     @Bean
     @Scope("singleton")
     public DruidDataSource dataSource(DruidProps druidProps){
@@ -50,10 +56,27 @@ public class MybatisConfig {
         return druidDataSource;
     }
 
-    /* sqlSessionFactory */
+    /**
+    * 注册分页拦截器
+    */
+    @Bean
+    public PageInterceptor pageInterceptor(){
+      PageInterceptor pageInterceptor = new PageInterceptor();
+      Properties properties = new Properties();
+      properties.setProperty("helperDialect","mysql");
+      properties.setProperty("reasonable","true");
+      properties.setProperty("supportMethodsArguments","true");
+      pageInterceptor.setProperties(properties);
+      return pageInterceptor;
+    }
+
+
+    /**
+     *  sqlSessionFactory
+     */
     @Bean
     @Scope("singleton")
-    public SqlSessionFactory sqlSessionFactory(DruidDataSource druidDataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(DruidDataSource druidDataSource,Interceptor pageInterceptor) throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(druidDataSource);
         factoryBean.setTypeAliasesPackage("com.coder.blog.entity");
@@ -63,13 +86,17 @@ public class MybatisConfig {
             System.out.println("mybatis读取配置文件失败，com.coder.blog.mapper");
             e.printStackTrace();
         }
+        //设置分页插件
+        factoryBean.setPlugins(new Interceptor[]{pageInterceptor});
        // 加载mybatis的配置文件
         factoryBean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml"));
         return factoryBean.getObject();
     }
 
-    //   配置mapperScannerConfigure
-    //    加载所有的dao
+    /**
+     * 配置mapperScannerConfigure
+     * 加载所有的dao
+     */
     @Bean
     @Scope("singleton")
     public MapperScannerConfigurer mapperScannerConfigurer(){

@@ -19,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class User implements Serializable {
 
+    private Integer pageSize=10;
 
     /**
      * 用户的id

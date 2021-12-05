@@ -18,6 +18,8 @@ public class ValidationInfo {
 
     private Long createTime;
 
+    private Integer pageSize=10;
+
     public ValidationInfo(String message, String email, Long createTime) {
         this.message = message;
         this.email = email;

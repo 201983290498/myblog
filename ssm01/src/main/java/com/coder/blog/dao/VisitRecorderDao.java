@@ -1,7 +1,10 @@
 package com.coder.blog.dao;
 
+
+import com.coder.blog.entity.visit.Visit;
 import com.coder.blog.entity.visit.VisitRecord;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public interface VisitRecorderDao {
 
   /**
+   * 插入访问记录
    * @param record 插入的访问记录
    */
   @Insert("insert into visit_record(username,ip,url,applicationType,resourceType,message,visit_time,sessionId)" +
@@ -22,18 +26,32 @@ public interface VisitRecorderDao {
 
 
   /**
+   * 按照sessionId查询访问记录
    * @param sessionId 通过sessionID查看访问的情况
    * @return 返回值为访问记录
    */
   @Results(id="visit_record",value = {
-    @Result(property="time",column = "visit_time")
+    @Result(property="time",column = "visit_time"),
+    @Result(property = "visit",column = "sessionId", javaType = Visit.class,one = @One(select="com.coder.blog.dao.VisitDao.selectVisitBySessionId",fetchType= FetchType.LAZY))
   })
   @Select("select * from visit_record where sessionId=#{arg0}")
-  List<VisitRecord> selectRecordsBySessionId(String sessionId);
+  List<VisitRecord> selectListPageBySessionId(String sessionId);
 
+  /**
+   * 通过userName查询访问记录
+   * @param username username
+   * @return 访问记录
+   */
   @ResultMap(value="visit_record")
   @Select("select * from visit_record where username=#{username}")
-  List<VisitRecord> selectRecordsByUsername(String username);;
+  List<VisitRecord> selectListPageByUsername(String username);;
 
 
+  /**
+   * 查询所有的访问资源记录
+   * @return
+   */
+  @ResultMap(value="visit_record")
+  @Select("select * from visit_record")
+  List<VisitRecord> selectAll();
 }

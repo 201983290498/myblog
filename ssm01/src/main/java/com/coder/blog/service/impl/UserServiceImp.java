@@ -6,6 +6,8 @@ import com.coder.blog.entity.Image;
 import com.coder.blog.entity.User;
 import com.coder.blog.service.ImageService;
 import com.coder.blog.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,16 @@ import java.util.UUID;
 @Data
 public class UserServiceImp implements UserService {
 
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
 
-    @Autowired
-    private ImageService imageService;
+    private final ImageService imageService;
 
-    /**
+  public UserServiceImp(UserDao userDao, ImageService imageService) {
+    this.userDao = userDao;
+    this.imageService = imageService;
+  }
+
+  /**
      * 登入
      * @param user
      * @return
@@ -56,8 +61,15 @@ public class UserServiceImp implements UserService {
         return userDao.selectOne(account);
     }
 
+    @Override
+    public PageInfo<User> selectAllByPage(int page, int size) {
+      // TODO List
+      PageHelper.startPage(page,size);
+      return new PageInfo<>(userDao.selectList());
+    }
 
-    @SuppressWarnings("AlibabaTransactionMustHaveRollback")
+
+  @SuppressWarnings("AlibabaTransactionMustHaveRollback")
     @Transactional
     @Override
     public void insert(User user, MultipartFile photo){

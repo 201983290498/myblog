@@ -1,6 +1,7 @@
 package com.coder.blog.service;
 
 import com.coder.blog.entity.User;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,6 +26,8 @@ public interface UserService {
       * @return 返回值为用户
       */
      User selectOne(String account);
+
+     PageInfo<User> selectAllByPage(int page,int size);
 
      /**
       * 插入一个图片，和需要打包的文件

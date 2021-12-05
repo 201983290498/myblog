@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Data
 public class Image implements Serializable {
 
+    private Integer pageSize=10;
+
     private String id;
 
     private byte[] bytes;

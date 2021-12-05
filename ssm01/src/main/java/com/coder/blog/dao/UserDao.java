@@ -5,6 +5,7 @@ import com.coder.blog.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,6 +33,14 @@ public interface UserDao {
     @Select("select b.* from user_role a ,role_permission b where a.role=b.role and a.username=#{param1}")
     Set<Role> selectRolesByName(String username);
 
+  /**
+   * 查询所有用户
+   * @return
+   */
+    @ResultMap(value="stu01")
+    @Select("select * from user_table")
+    List<User> selectList();
+
     /**
      * 插入新的用户
      * @param user 用户信息
@@ -47,4 +56,5 @@ public interface UserDao {
      */
     @Insert("insert into user_role(username,role) values(#{arg0},#{arg1})")
     void insertRole(String username,String role);
+
 }

@@ -5,6 +5,7 @@ import com.coder.commom.annotation.Enum.ResourceType;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.util.Map;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.TYPE;
@@ -28,4 +29,5 @@ public @interface ResourceAcquisitionRecorder {
     ApplicationType applicationType() default ApplicationType.BLOG;
 
     String name() default "文档";
+
 }

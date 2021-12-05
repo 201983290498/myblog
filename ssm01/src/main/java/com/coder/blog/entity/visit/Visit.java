@@ -18,6 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Visit implements Serializable {
     private static final long serialVersionUID = 1L;
+    private Integer pageSize=10;
 
     private Integer id;
 

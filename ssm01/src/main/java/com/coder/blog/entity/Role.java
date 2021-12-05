@@ -16,6 +16,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Role implements Serializable {
 
+    private Integer pageSize=10;
+
     private String role;
 
     private String permission;

@@ -3,6 +3,8 @@ package com.coder.blog.service.impl;
 import com.coder.blog.dao.VisitDao;
 import com.coder.blog.entity.visit.Visit;
 import com.coder.blog.service.VisitService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,34 +38,30 @@ public class VisitServiceImp implements VisitService {
     @Transactional
     @Override
     public int insert(Visit record) {
-        // TODO Auto-generated method stub
         return visitDao.insert(record);
     }
 
     @Override
     public Visit selectByPrimaryKey(Integer id) {
-        // TODO Auto-generated method stub
         return visitDao.selectByPrimaryKey(id);
     }
 
     @Transactional
     @Override
     public int updateByPrimaryKeySelective(Visit record) {
-        // TODO Auto-generated method stub
         return visitDao.updateByPrimaryKeySelective(record);
     }
 
     @Transactional
     @Override
     public int updateByPrimaryKey(Visit record) {
-        // TODO Auto-generated method stub
         return visitDao.updateByPrimaryKey(record);
     }
 
     @Override
-    public Visit selectVisitByIp(String ip) {
-        // TODO Auto-generated method stub
-        return visitDao.selectVisitByIp(ip);
+    public PageInfo<Visit> selectVisitPageByIp(String ip, Integer page, Integer size) {
+      PageHelper.startPage(page,size);
+      return new PageInfo<>(visitDao.selectVisitPageByIp(ip));
     }
 
     @Override
@@ -74,27 +71,33 @@ public class VisitServiceImp implements VisitService {
     }
 
     @Override
-    public List<?> selectVisitListByDate(Map<String, Object> map) {
-        // TODO Auto-generated method stub
-        return visitDao.selectVisitListByDate(map);
+    public PageInfo<?> selectVisitListByDate(Map<String, Object> map, int page, int size) {
+      PageHelper.startPage(page, size);
+      return new PageInfo<>(visitDao.selectVisitListByDate(map));
     }
 
 
     @Override
-    public List<Visit> selectLikeVisitListByPage(Map<String, Object> map) {
-        // TODO Auto-generated method stub
-        return visitDao.selectLikeVisitListByPage(map);
+    public PageInfo<Visit> selectLikeVisitListByPage(Map<String, Object> map,int page,int size) {
+        PageHelper.startPage(page,size);
+        return new PageInfo<>(visitDao.selectLikeVisitListByPage(map)) ;
+    }
+
+  @Override
+  public PageInfo<Visit> selectAllByPage(int page, int size) {
+    PageHelper.startPage(page,size);
+    return new PageInfo<>(visitDao.selectALl());
+  }
+
+  @Override
+    public PageInfo<?> selectVisitListByIp(Map<String, Object> map,int page,int size) {
+        PageHelper.startPage(page,size);
+        return new PageInfo<>(visitDao.selectVisitListByIp(map));
     }
 
     @Override
-    public List<?> selectVisitListByIp(Map<String, Object> map) {
-        // TODO Auto-generated method stub
-        return visitDao.selectVisitListByIp(map);
-    }
-
-    @Override
-    public List<?> selectLikeVisitListGroupByIp(Map<String, Object> map) {
-        // TODO Auto-generated method stub
-        return visitDao.selectLikeVisitListGroupByIp(map);
+    public PageInfo<?> selectLikeVisitListGroupByIp(Map<String, Object> map, int page, int size) {
+        PageHelper.startPage(page,size);
+        return new PageInfo<>(visitDao.selectLikeVisitListGroupByIp(map));
     }
 }
