@@ -3,8 +3,10 @@ package com.coder.blog.realms;
 import com.coder.blog.dao.UserDao;
 import com.coder.blog.entity.Role;
 import com.coder.blog.entity.User;
+import com.coder.blog.exception.MessageException;
 import lombok.Data;
 
+import lombok.SneakyThrows;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -52,25 +54,18 @@ public class MyRealm extends AuthorizingRealm {
             permissions.add(each.getPermission());
         }
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        //获取权限和角色
         authorizationInfo.setRoles(roles);
         authorizationInfo.setStringPermissions(permissions);
         return authorizationInfo;
     }
 
+
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken token1 = (UsernamePasswordToken) token;
         String userName = (String) token1.getPrincipal();
-
         String password = userDao.selectOne(userName).getPassword();
-        String password1 = new String(token1.getPassword());
-        if(null==password){
-            throw  null;
-        }
-        String md5Pwd = new SimpleHash("MD5",password1,salt).toHex();
-        if(!md5Pwd.equals(password)){
-            throw null;
-        }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userName,password,getName());
         authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(salt));
         return authenticationInfo;

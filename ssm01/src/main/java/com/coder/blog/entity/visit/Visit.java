@@ -36,8 +36,16 @@ public class Visit implements Serializable {
     private String platformType;
 
 
+    /**
+     * 记录登入的时间
+     */
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date time;
+
+    /**
+     * 记录登入的session号，区别两次登入
+     */
+    private String sessionId;
 
     public Visit(String browserType, String platformType) {
         this.browserType = browserType;

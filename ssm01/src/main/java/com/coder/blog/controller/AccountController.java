@@ -1,6 +1,6 @@
 package com.coder.blog.controller;
 
-import com.coder.blog.Utils.MessageQueUntils;
+import com.coder.blog.Utils.Queue.MessageQueUntils;
 import com.coder.blog.Utils.RespMessageUtils;
 import com.coder.blog.entity.User;
 import com.coder.blog.exception.MessageException;
@@ -74,7 +74,7 @@ public class AccountController {
         if(userService.login(new User(username, password))) {
             //记录登入信息
             request.getSession().setAttribute("user",new User(username,new Date(System.currentTimeMillis())));
-            return "forward:/accountInfo/dashBoard";
+            return "forward:/account/dashBoard";
         }else{
             RespMessageUtils.generateErrorInfo(map,new String[]{"用户名和密码错误"});
             return "forward:/error";

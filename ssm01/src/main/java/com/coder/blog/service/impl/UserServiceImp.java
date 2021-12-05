@@ -71,8 +71,8 @@ public class UserServiceImp implements UserService {
             }
         }
         //添加角色
-        userDao.insertRole(user.getUsername(),"user");
         insert(user);
+        userDao.insertRole(user.getUsername(),"user");
     }
 
 

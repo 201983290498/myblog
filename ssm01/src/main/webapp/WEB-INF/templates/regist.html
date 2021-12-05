@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{/font/iconfont1/iconfont.css}"/>
+    <link rel="stylesheet" th:href="@{/fonts/iconfont1/iconfont.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/css/regist.css}"/>
-<!--    <link rel="stylesheet" href="../../font/iconfont1/iconfont.css" />-->
+<!--    <link rel="stylesheet" href="../../fonts/iconfont1/iconfont.css" />-->
 <!--    <link rel="stylesheet" href="../../css/style.css" />-->
 <!--    <link rel="stylesheet" href="../../css/regist.css" />-->
     <style>
@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <form id="form" th:action="@{/users/register}" method="post" enctype="multipart/form-data"> 
+    <form id="form" th:action="@{/users/register}" method="post" enctype="multipart/form-data">
         <div class="login-container">
             <div class="left-container">
                 <div class="title">
@@ -58,7 +58,7 @@
                         </div>
                    </div>
                    <div class="form-group">
-                        <div class="validateMsgBox"> 
+                        <div class="validateMsgBox">
                             <input type="text" name="validateData" placeholder="验证码" style="display: inline-block;width: 60%;"  id="validateData"/>
                             <input type="button" value="发送验证信息" style="display: inline-block;width: 38%;"/>
                         </div>
@@ -106,7 +106,7 @@
             function checkAccount(value){
                 return /^[a-zA-Z]\w{5,17}$/.test(value);
             }
-            
+
             function checkEmail(value){
                 return /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value);
             }
@@ -122,7 +122,7 @@
                 $('#accountMsg').removeClass('success error');
                 $('#accountMsg').addClass('focus');
             })
-            
+
             // 用户名失去焦点事件
             $("#username").blur(function () {
                 const account = this.value;
@@ -140,7 +140,7 @@
                                 msg = (!rs.result)? "恭喜，该用户名可以注册": "用户名重复";
                                 style = (!rs.result)? "success":"error";
                                 $(`#accountMsg`).addClass(style);
-                                $(`#accountMsg .tip`).empty().text(msg);   
+                                $(`#accountMsg .tip`).empty().text(msg);
                             }
                         });
                     }else{
@@ -187,9 +187,9 @@
                     $(`#${tip2}`).addClass(style);
                     $(`#${tip2} .tip`).empty().text(msg);
                 }
-                
+
             })
-            
+
             //邮箱的聚焦和失去焦点
             $('input[name=email]').focus(()=>{
                 const msg = '邮箱地址: xx@xx.xx'
@@ -207,12 +207,12 @@
                     style = 'success'
                 }else if(!value==''){
                     msg = '邮箱格式错误!'
-                    style = 'error' 
+                    style = 'error'
                 }
                 $('#emailMsg').addClass(style)
                 $('#emailMsg .tip').empty().text(msg);
             });
-            
+
             //验证码
             $(`input[name=validateData]`).focus(()=>{
                 const msg = '6位验证码'
@@ -290,7 +290,7 @@
                             if(resp.result){
                                 console.info("验证信息已经发送到邮箱");
                             }
-                        } 
+                        }
                     });
                     $(`input[type=button]`).addClass("avoid");
                     $(`input[type=button]`).val("重新发送(60s)");
@@ -312,7 +312,7 @@
                 }
             });
 
-            
+
         })()
     </script>
 </body>

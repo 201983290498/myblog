@@ -42,7 +42,7 @@ public class LoginAop {
     @Pointcut("execution(public * com.coder.blog.controller.AccountController.login(..))")
     public void loginPoint(){
     }
-    
+
     /**
      * 注册切入点
      */
@@ -63,8 +63,8 @@ public class LoginAop {
         Object[] args = joinPoint.getArgs();
         String plainText = (String) args[1];
         plainText = new SimpleHash(shiroProps.getAlgorithm(),plainText,shiroProps.getSalt(),shiroProps.getHashIterations()).toString();
-        args[1] = plainText;
         UsernamePasswordToken token = new UsernamePasswordToken((String)args[0], (String)args[1]);
+        args[1] = plainText;
         Subject currentUser = SecurityUtils.getSubject();
         ModelMap map = (ModelMap) args[2];
         try {

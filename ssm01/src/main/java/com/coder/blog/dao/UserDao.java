@@ -45,6 +45,6 @@ public interface UserDao {
      * @param username 用户名
      * @param role 角色
      */
-    @Insert("insert into user_role(username,role) values(#{username},#{role})")
+    @Insert("insert into user_role(username,role) values(#{arg0},#{arg1})")
     void insertRole(String username,String role);
 }

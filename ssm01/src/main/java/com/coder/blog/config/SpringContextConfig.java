@@ -1,6 +1,6 @@
 package com.coder.blog.config;
 
-import com.coder.blog.Utils.MessageQueUntils;
+import com.coder.blog.Utils.Queue.MessageQueUntils;
 import com.coder.blog.props.EmailProps;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;

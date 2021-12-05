@@ -15,5 +15,5 @@ public enum ApplicationType {
     /**
      * 智能云相册
      */
-    AIPHOTO,
+    AIPHOTO
 }

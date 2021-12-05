@@ -5,7 +5,7 @@
 
 <mapper namespace="com.coder.blog.dao.VisitDao">
     <sql id="column_list">
-        id, ip,userAgent, city,url,browserType,platformType, time
+        id, ip,userAgent, city,url,browserType,platformType, time,sessionId
     </sql>
     <select id="findVisitTimes" parameterType="Visit"
             resultType="Long">
@@ -30,6 +30,9 @@
             <if test="time!=null ">
                 and TO_DAYS(DATE_FORMAT(time,'%Y-%m-%d')) = TO_DAYS(#{time})
                 <!-- and TO_DAYS(DATE_FORMAT(time,'%Y-%m-%d')) = TO_DAYS(#{time}) -->
+            </if>
+            <if test="sessionId != null">
+                and sessionId = #{sessionId}
             </if>
         </where>
     </select>
@@ -119,6 +122,9 @@
 
             <if test="time != null">
                 time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sessionId != null">
+                sessionId = #{sessionId, jdbcType=VARCHAR}
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

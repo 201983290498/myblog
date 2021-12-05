@@ -17,6 +17,7 @@ import javax.servlet.ServletRequestListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @Author coder
@@ -52,9 +53,16 @@ public class VisitTimeListener implements ServletRequestListener {
                 log.debug("begin- " + applicationContext + " -end");
                 log.debug("-----begin-----");
                 log.debug(applicationContext.getBean("visitServiceImp"));
+                //查看sessionIDs是否重复，如果不存在则加上一个，区分两次登入
+                Object uuid = session.getAttribute("sessionId");
+                if(uuid==null){
+                    uuid = UUID.randomUUID().toString();
+                    session.setAttribute("sessionId",uuid);
+                }
                 // 先判断当前ip当天是否已经访问过,如果没有则保存当前访问记录
                 visit = new Visit();
                 visit.setIp(UserIpUtils.getIp(request));
+                visit.setSessionId((String) uuid);
                 visit.setTime(new Date());
                 String userAgent = request.getHeader("user-agent");
                 visit.setUserAgent(userAgent);
