@@ -4,8 +4,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * The type Validation info.
+ *
  * @Author coder
- * @Date 2021/12/1 20:23
+ * @Date 2021 /12/1 20:23
  * @Description
  */
 @Data
@@ -20,7 +22,14 @@ public class ValidationInfo {
 
     private Integer pageSize=10;
 
-    public ValidationInfo(String message, String email, Long createTime) {
+  /**
+   * Instantiates a new Validation info.
+   *
+   * @param message    the message
+   * @param email      the email
+   * @param createTime the create time
+   */
+  public ValidationInfo(String message, String email, Long createTime) {
         this.message = message;
         this.email = email;
         this.createTime = createTime;

@@ -20,9 +20,11 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
+ * The type Visit time listener.
+ *
  * @Author coder
- * @Date 2021/11/26 23:06
- * @Description 监听所有访问网络的人，但是不监听每次的访问记录
+ * @Date 2021 /11/26 23:06
+ * @Description 监听所有访问网络的人 ，但是不监听每次的访问记录
  */
 @Data
 public class VisitTimeListener implements ServletRequestListener {

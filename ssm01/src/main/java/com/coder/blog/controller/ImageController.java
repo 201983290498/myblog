@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
 /**
+ * The type Image controller.
+ *
  * @Author coder
- * @Date 2021/11/30 8:15
+ * @Date 2021 /11/30 8:15
  * @Description
  */
 @Controller
@@ -29,10 +32,21 @@ public class ImageController {
 
     private final ImageService imageService;
 
+    /**
+     * Instantiates a new Image controller.
+     *
+     * @param imageService the image service
+     */
     public ImageController(ImageService imageService) {
         this.imageService = imageService;
     }
 
+    /**
+     * Login figure image response entity.
+     *
+     * @param id the id
+     * @return the response entity
+     */
     @ResourceAcquisitionRecorder(resourceType = ResourceType.IMAGE, name = "图片获取")
     @GetMapping("/{imageId}")
     @ApiOperation(value = "图片下载", notes = "根据账户获取头像", httpMethod = "GET")
@@ -45,6 +59,13 @@ public class ImageController {
         return response;
     }
 
+    /**
+     * Up load image string.
+     *
+     * @param photo the photo
+     * @return the string
+     * @throws IOException the io exception
+     */
     @ResourceAcquisitionRecorder(resourceType = ResourceType.IMAGE, name = "图片上传")
     @ResponseBody
     @PostMapping("/upload")

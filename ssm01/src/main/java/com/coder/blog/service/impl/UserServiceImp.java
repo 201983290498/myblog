@@ -19,8 +19,10 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
+ * The type User service imp.
+ *
  * @Author coder
- * @Date 2021/11/26 23:11
+ * @Date 2021 /11/26 23:11
  * @Description
  */
 @Service("userServiceImp")
@@ -31,6 +33,12 @@ public class UserServiceImp implements UserService {
 
     private final ImageService imageService;
 
+  /**
+   * Instantiates a new User service imp.
+   *
+   * @param userDao      the user dao
+   * @param imageService the image service
+   */
   public UserServiceImp(UserDao userDao, ImageService imageService) {
     this.userDao = userDao;
     this.imageService = imageService;

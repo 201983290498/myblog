@@ -19,8 +19,9 @@ import org.springframework.ui.ModelMap;
 
 /**
  * 登入的注册的时候实现对密码的加密和授权登入
+ *
  * @Author coder
- * @Date 2021/12/2 20:40
+ * @Date 2021 /12/2 20:40
  * @Description
  */
 @Aspect
@@ -32,31 +33,37 @@ public class LoginAop {
 
     private final ShiroProps shiroProps;
 
-    public LoginAop(ShiroProps shiroProps) {
+  /**
+   * Instantiates a new Login aop.
+   *
+   * @param shiroProps the shiro props
+   */
+  public LoginAop(ShiroProps shiroProps) {
         this.shiroProps = shiroProps;
     }
 
-    /**
-     * 登入切入点
-     */
-    @Pointcut("execution(public * com.coder.blog.controller.AccountController.login(..))")
+  /**
+   * 登入切入点
+   */
+  @Pointcut("execution(public * com.coder.blog.controller.AccountController.login(..))")
     public void loginPoint(){
     }
 
-    /**
-     * 注册切入点
-     */
-    @Pointcut("execution(public * com.coder.blog.controller.AccountController.register(..))")
+  /**
+   * 注册切入点
+   */
+  @Pointcut("execution(public * com.coder.blog.controller.AccountController.register(..))")
     public void registerPoint(){
     }
 
-    /**
-     * 登入程序的密码加密和权限认证
-     * @param joinPoint 登入程序
-     * @return
-     * @throws Throwable
-     */
-    @Order(1)
+  /**
+   * 登入程序的密码加密和权限认证
+   *
+   * @param joinPoint 登入程序
+   * @return object
+   * @throws Throwable the throwable
+   */
+  @Order(1)
     @Around("loginPoint()")
     public Object aroundLogin(ProceedingJoinPoint joinPoint) throws Throwable {
         boolean flag = true;
@@ -85,10 +92,14 @@ public class LoginAop {
     }
 
 
-    /**
-     * 注册时候实现密码加密
-     */
-    @Order(1)
+  /**
+   * 注册时候实现密码加密
+   *
+   * @param joinPoint the join point
+   * @return the object
+   * @throws Throwable the throwable
+   */
+  @Order(1)
     @Around("registerPoint()")
     public Object Register(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();

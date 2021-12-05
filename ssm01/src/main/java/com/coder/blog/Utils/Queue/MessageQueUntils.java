@@ -14,8 +14,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * @Author  coder
- * @Date 2021/12/1 20:20
+ * The type Message que untils.
+ *
+ * @Author coder
+ * @Date 2021 /12/1 20:20
  * @Description
  */
 @Data
@@ -42,8 +44,9 @@ public class MessageQueUntils {
 
     /**
      * 生成并发生验证信息，如果生成的验证信息依旧有效则重新发送验证信息
-     * @param email
-     * @return
+     *
+     * @param email the email
+     * @return string
      */
     public String generateMsg(String email){
         clearStaleData();
@@ -52,6 +55,14 @@ public class MessageQueUntils {
         return msg;
     }
 
+    /**
+     * Check msg boolean.
+     *
+     * @param email   the email
+     * @param message the message
+     * @return the boolean
+     * @throws MessageException the message exception
+     */
     public Boolean checkMsg(String email, String message) throws MessageException {
         clearStaleData();
         String msg = messageMap.get(email);
@@ -143,6 +154,13 @@ public class MessageQueUntils {
     }
 
 
+    /**
+     * Instantiates a new Message que untils.
+     *
+     * @param sendEmail the send email
+     * @param pwd       the pwd
+     * @param timeout   the timeout
+     */
     public MessageQueUntils(String sendEmail, String pwd, Long timeout) {
         this.sendEmail = sendEmail;
         this.pwd = pwd;

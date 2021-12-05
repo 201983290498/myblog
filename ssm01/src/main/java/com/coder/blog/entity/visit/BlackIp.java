@@ -7,8 +7,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * The type Black ip.
+ *
  * @Author coder
- * @Date 2021/11/26 21:31
+ * @Date 2021 /11/26 21:31
  * @Description
  */
 @Data

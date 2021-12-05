@@ -8,8 +8,10 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 /**
+ * The type Visit record service imp.
+ *
  * @Author coder
- * @Date 2021/12/4 19:26
+ * @Date 2021 /12/4 19:26
  * @Description
  */
 @Service
@@ -17,7 +19,12 @@ public class VisitRecordServiceImp implements VisitRecordService {
 
   private final VisitRecorderDao recorderDao;
 
-  public VisitRecordServiceImp(VisitRecorderDao recorderDao) {
+    /**
+     * Instantiates a new Visit record service imp.
+     *
+     * @param recorderDao the recorder dao
+     */
+    public VisitRecordServiceImp(VisitRecorderDao recorderDao) {
     this.recorderDao = recorderDao;
   }
 

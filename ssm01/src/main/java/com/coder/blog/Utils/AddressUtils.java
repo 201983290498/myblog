@@ -9,19 +9,21 @@ import java.net.URL;
 import java.util.Map;
 
 /**
+ * The type Address utils.
+ *
  * @Author coder
- * @Date 2021/11/27 0:02
+ * @Date 2021 /11/27 0:02
  * @Description
  */
 public class AddressUtils {
     /**
-     *  获取IP地址对应的城市
-     * @param content
-     *            需要获取的字符窜。
-     * @param encoding
-     *            服务器端请求编码。如GBK,UTF-8等
-     * @return
-     * @throws UnsupportedEncodingException
+     * 获取IP地址对应的城市
+     *
+     * @param content        需要获取的字符窜。
+     * @param encodingString the encoding string
+     * @return addresses
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     * @throws JsonProcessingException      the json processing exception
      */
     public  String getAddresses(String content, String encodingString)
             throws UnsupportedEncodingException, JsonProcessingException {

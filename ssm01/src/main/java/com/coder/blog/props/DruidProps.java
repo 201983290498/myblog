@@ -4,11 +4,12 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
+ * The type Druid props.
+ *
  * @Author coder
- * @Date 2021/11/25 0:33
+ * @Date 2021 /11/25 0:33
  * @Description
  */
-
 @Data
 public class DruidProps {
 

@@ -14,11 +14,11 @@ import java.io.IOException;
 
 /**
  * 这个类用来过滤一些不可访问的IP地址
+ *
  * @Author coder
- * @Date 2021/11/26 21:26
+ * @Date 2021 /11/26 21:26
  * @Description
  */
-
 public class IpFilter implements Filter {
 
     @Override
@@ -28,7 +28,7 @@ public class IpFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        // TODO Auto-generated method stub
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         //获取到用户的IP

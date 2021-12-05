@@ -3,13 +3,21 @@ package com.coder.blog.Utils;
 import com.coder.blog.entity.visit.Visit;
 
 /**
+ * The type User agent utils.
+ *
  * @Author coder
- * @Date 2021/11/26 23:59
+ * @Date 2021 /11/26 23:59
  * @Description
  */
 public class UserAgentUtils {
 
 
+    /**
+     * Gets user agent.
+     *
+     * @param userAgent the user agent
+     * @return the user agent
+     */
     public static Visit getUserAgent(String userAgent) {
         if(userAgent==""||userAgent==null){
             userAgent="";

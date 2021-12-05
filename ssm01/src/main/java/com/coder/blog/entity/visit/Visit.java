@@ -9,9 +9,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * The type Visit.
+ *
  * @Author coder
- * @Date 2021/11/26 23:09
- * @Description 记录访问ip的地址,访问地点，访问的浏览器,代理商，访问平台等相关基础的物理设备信息。
+ * @Date 2021 /11/26 23:09
+ * @Description 记录访问ip的地址, 访问地点 ，访问的浏览器,代理商，访问平台等相关基础的物理设备信息。
  */
 @Data
 @NoArgsConstructor
@@ -48,7 +50,13 @@ public class Visit implements Serializable {
      */
     private String sessionId;
 
-    public Visit(String browserType, String platformType) {
+  /**
+   * Instantiates a new Visit.
+   *
+   * @param browserType  the browser type
+   * @param platformType the platform type
+   */
+  public Visit(String browserType, String platformType) {
         this.browserType = browserType;
         this.platformType = platformType;
     }

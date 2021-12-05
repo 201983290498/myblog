@@ -5,11 +5,19 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
+ * The type User ip utils.
+ *
  * @Author coder
- * @Date 2021/11/26 21:29
+ * @Date 2021 /11/26 21:29
  * @Description 通过多种方式获取到登入的ip地址
  */
 public class UserIpUtils {
+    /**
+     * Gets ip.
+     *
+     * @param httpRequest the http request
+     * @return the ip
+     */
     public static String getIp(HttpServletRequest httpRequest) {
         String ipAddress = httpRequest.getHeader("x-forwarded-for");
         if (ipAddress == null || ipAddress.length() == 0

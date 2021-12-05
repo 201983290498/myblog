@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * The type Role.
+ *
  * @Author coder
- * @Date 2021/11/26 0:37
+ * @Date 2021 /11/26 0:37
  * @Description
  */
 @Data

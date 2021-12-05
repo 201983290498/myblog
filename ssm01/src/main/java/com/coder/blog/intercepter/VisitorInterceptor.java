@@ -17,8 +17,10 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
+ * The type Visitor interceptor.
+ *
  * @Author coder
- * @Date 2021/12/3 12:34
+ * @Date 2021 /12/3 12:34
  * @Description
  */
 public class VisitorInterceptor implements HandlerInterceptor {

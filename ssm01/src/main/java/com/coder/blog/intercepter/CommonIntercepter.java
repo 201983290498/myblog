@@ -17,8 +17,10 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * The type Common intercepter.
+ *
  * @Author coder
- * @Date 2021/11/27 13:14
+ * @Date 2021 /11/27 13:14
  * @Description
  */
 @Data

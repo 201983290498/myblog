@@ -11,14 +11,21 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
+ * The type Swagger config.
+ *
  * @Author coder
- * @Date 2021/11/26 20:39
+ * @Date 2021 /11/26 20:39
  * @Description
  */
 @EnableSwagger2
 @EnableWebMvc
 @ComponentScan(basePackages = "com.coder.blog.controller")
 public class SwaggerConfig {
+    /**
+     * Api docket.
+     *
+     * @return the docket
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)

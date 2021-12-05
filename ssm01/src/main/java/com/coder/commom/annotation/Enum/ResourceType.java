@@ -1,5 +1,8 @@
 package com.coder.commom.annotation.Enum;
 
+/**
+ * The enum Resource type.
+ */
 public enum ResourceType {
 
     /**

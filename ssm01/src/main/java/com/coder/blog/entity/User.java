@@ -10,8 +10,10 @@ import java.util.Date;
 import java.util.Set;
 
 /**
+ * The type User.
+ *
  * @Author coder
- * @Date 2021/11/25 20:15
+ * @Date 2021 /11/25 20:15
  * @Description
  */
 @Data
@@ -62,12 +64,29 @@ public class User implements Serializable {
      */
     private Set<Role> roles;
 
-    public User(String username, String password) {
+  /**
+   * Instantiates a new User.
+   *
+   * @param username the username
+   * @param password the password
+   */
+  public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public User(String id, String email, String username, String password, String imageId, String personalInfo, Date createTime) {
+  /**
+   * Instantiates a new User.
+   *
+   * @param id           the id
+   * @param email        the email
+   * @param username     the username
+   * @param password     the password
+   * @param imageId      the image id
+   * @param personalInfo the personal info
+   * @param createTime   the create time
+   */
+  public User(String id, String email, String username, String password, String imageId, String personalInfo, Date createTime) {
         this.id = id;
         this.email = email;
         this.username = username;
@@ -77,7 +96,13 @@ public class User implements Serializable {
         this.createTime = createTime;
     }
 
-    public User(String username, Date createTime) {
+  /**
+   * Instantiates a new User.
+   *
+   * @param username   the username
+   * @param createTime the create time
+   */
+  public User(String username, Date createTime) {
         this.username = username;
         this.createTime = createTime;
     }

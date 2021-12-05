@@ -23,29 +23,33 @@ import java.util.Map;
 import java.util.Vector;
 
 /**
+ * The type Shiro config.
+ *
  * @Author coder
- * @Date 2021/11/26 1:29
+ * @Date 2021 /11/26 1:29
  * @Description
  */
 @Configuration
 public class ShiroConfig {
 
-    /**
-     * 读入配置文件
-     * @return
-     */
-    @Bean
+  /**
+   * 读入配置文件
+   *
+   * @return shiro props
+   */
+  @Bean
     @Scope("singleton")
     public ShiroProps shiroProps(){
         return new ShiroProps();
     }
 
   /**
-     * 注入加密器
-     * @param shiroProps
-     * @return
-     */
-    @Bean
+   * 注入加密器
+   *
+   * @param shiroProps the shiro props
+   * @return hashed credentials matcher
+   */
+  @Bean
     @Scope("singleton")
     public HashedCredentialsMatcher credentialsMatcher(ShiroProps shiroProps){
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
@@ -55,26 +59,28 @@ public class ShiroConfig {
         return credentialsMatcher;
     }
 
-    /**
-     * 注入缓存器
-     * @return
-     */
-    @Bean
+  /**
+   * 注入缓存器
+   *
+   * @return memory constrained cache manager
+   */
+  @Bean
     @Scope("singleton")
     public MemoryConstrainedCacheManager cacheManager(){
         return  new MemoryConstrainedCacheManager();
     }
 
 
-    /**
-     * 注入我们的Realm
-     * @param userDao
-     * @param cacheManager
-     * @param credentialsMatcher
-     * @param shiroProps
-     * @return
-     */
-    @Bean
+  /**
+   * 注入我们的Realm
+   *
+   * @param userDao            the user dao
+   * @param cacheManager       the cache manager
+   * @param credentialsMatcher the credentials matcher
+   * @param shiroProps         the shiro props
+   * @return my realm
+   */
+  @Bean
     public MyRealm myRealm(UserDao userDao,MemoryConstrainedCacheManager cacheManager,HashedCredentialsMatcher credentialsMatcher,ShiroProps shiroProps){
         MyRealm myRealm = new MyRealm();
         myRealm.setUserDao(userDao);
@@ -84,13 +90,26 @@ public class ShiroConfig {
         return myRealm;
     }
 
-    @Bean
+  /**
+   * Ini realm ini realm.
+   *
+   * @return the ini realm
+   */
+  @Bean
     public IniRealm iniRealm(){
         IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
         return iniRealm;
     }
 
-    @Bean("securityManager")
+  /**
+   * Security manager security manager.
+   *
+   * @param myRealm      the my realm
+   * @param iniRealm     the ini realm
+   * @param cacheManager the cache manager
+   * @return the security manager
+   */
+  @Bean("securityManager")
     public SecurityManager securityManager(MyRealm myRealm, IniRealm iniRealm, MemoryConstrainedCacheManager cacheManager){
       DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
       Vector<Realm> vector = new Vector<>();
@@ -101,7 +120,13 @@ public class ShiroConfig {
       return securityManager;
     }
 
-    @Bean
+  /**
+   * Shiro filter shiro filter factory bean.
+   *
+   * @param securityManager the security manager
+   * @return the shiro filter factory bean
+   */
+  @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(securityManager);
@@ -121,24 +146,37 @@ public class ShiroConfig {
 
 
 //配置shiro的注解开启
-    /**
-     * 必须配置lifecycBeanPostProcessor：管理shiro的常见的对象
-     * 保证实现了Shiro内部的lifecycle函数的bean执行
-     * @return
-     */
-    @Bean
+
+  /**
+   * 必须配置lifecycBeanPostProcessor：管理shiro的常见的对象
+   * 保证实现了Shiro内部的lifecycle函数的bean执行
+   *
+   * @return lifecycle bean post processor
+   */
+  @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
         return  new LifecycleBeanPostProcessor();
     }
 
-    @Bean
+  /**
+   * Default advisor auto proxy creator default advisor auto proxy creator.
+   *
+   * @return the default advisor auto proxy creator
+   */
+  @Bean
     @Scope("singleton")
     @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
         return new DefaultAdvisorAutoProxyCreator();
     }
 
-    @Bean
+  /**
+   * Authorization attribute source advisor authorization attribute source advisor.
+   *
+   * @param securityManager the security manager
+   * @return the authorization attribute source advisor
+   */
+  @Bean
     @Scope("singleton")
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();

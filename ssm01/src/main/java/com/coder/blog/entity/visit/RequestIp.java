@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
+ * The type Request ip.
+ *
  * @Author coder
- * @Date 2021/11/27 11:43
+ * @Date 2021 /11/27 11:43
  * @Description
  */
 @Data

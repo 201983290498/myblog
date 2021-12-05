@@ -4,6 +4,7 @@ import com.coder.blog.Utils.Queue.MessageQueUntils;
 import com.coder.blog.Utils.RespMessageUtils;
 import com.coder.blog.entity.User;
 import com.coder.blog.exception.MessageException;
+import com.coder.blog.props.ShiroProps;
 import com.coder.blog.service.UserService;
 import com.coder.commom.annotation.AccessLimit;
 import com.coder.commom.annotation.Enum.ResourceType;
@@ -23,8 +24,9 @@ import java.util.*;
 
 /**
  * 专门负责用户的登入和注册
+ *
  * @Author coder
- * @Date 2021/11/29 19:54
+ * @Date 2021 /11/29 19:54
  * @Description
  */
 @Data
@@ -41,13 +43,29 @@ public class AccountController {
 
     private final MessageQueUntils messageQueUntils;
 
-    public AccountController(UserService userService, MessageQueUntils messageQueUntils) {
+    private final ShiroProps shiroProps;
+
+  /**
+   * Instantiates a new Account controller.
+   *
+   * @param userService      the user service
+   * @param messageQueUntils the message que untils
+   * @param shiroProps       the shiro props
+   */
+  public AccountController(UserService userService, MessageQueUntils messageQueUntils,ShiroProps shiroProps) {
         this.userService = userService;
         this.messageQueUntils = messageQueUntils;
+        this.shiroProps = shiroProps;
     }
 
 
-    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "用户名核验")
+  /**
+   * Login find exist string.
+   *
+   * @param account the account
+   * @return the string
+   */
+  @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "用户名核验")
     @GetMapping("/login/username")
     @ResponseBody
     @ApiOperation(value = "查找账户是否存在", notes = "查找账户是否存在", httpMethod = "POST")
@@ -67,13 +85,25 @@ public class AccountController {
     }
 
 
-    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "登入核验")
+  /**
+   * Login string.
+   *
+   * @param username the username
+   * @param password the password
+   * @param map      the map
+   * @param request  the request
+   * @return the string
+   */
+  @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "登入核验")
     @PostMapping("/login")
     @ApiOperation(value="登入", notes = "登入成功,跳转到dashboard页面，失败跳转到error页面", httpMethod = "POST")
     public String login(String username, String password, ModelMap map, HttpServletRequest request){
         if(userService.login(new User(username, password))) {
             //记录登入信息
             request.getSession().setAttribute("user",new User(username,new Date(System.currentTimeMillis())));
+            if(username.equals(shiroProps.getAdmin())){
+              return "forward:/admin/dashBoard";
+            }
             return "forward:/account/dashBoard";
         }else{
             RespMessageUtils.generateErrorInfo(map,new String[]{"用户名和密码错误"});
@@ -82,7 +112,17 @@ public class AccountController {
     }
 
 
-    @AccessLimit(seconds = 1)
+  /**
+   * Register string.
+   *
+   * @param user         the user
+   * @param photo        the photo
+   * @param repeatPwd    the repeat pwd
+   * @param validateData the validate data
+   * @param map          the map
+   * @return the string
+   */
+  @AccessLimit(seconds = 1)
     @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name = "注册用户修改")
     @PostMapping("/register")
     @ApiOperation(value="账号注册",notes = "注册成功返回登入页面，失败跳转到失败页面，交代失败的原因", httpMethod = "POST")
@@ -109,14 +149,25 @@ public class AccountController {
         return "redirect:/login";
     }
 
-    @ResourceAcquisitionRecorder(name = "注册页面")
+  /**
+   * Regist page string.
+   *
+   * @return the string
+   */
+  @ResourceAcquisitionRecorder(name = "注册页面")
     @GetMapping("/registPage")
     @ApiOperation(value="注册页面", notes = "跳转到注册页面regist", httpMethod = "GET")
     public String registPage(){
         return "regist";
     }
 
-    @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name="生成验证信息修改")
+  /**
+   * Generate msg string.
+   *
+   * @param email the email
+   * @return the string
+   */
+  @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name="生成验证信息修改")
     @GetMapping("/generateMsg")
     @ResponseBody
     @ApiOperation(value="生成验证码", notes = "生成验证码", httpMethod = "GET")
@@ -125,7 +176,14 @@ public class AccountController {
         return RespMessageUtils.SUCCESS("验证码已发送，请注意查收");
     }
 
-    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK, name="验证码核验")
+  /**
+   * Check msg string.
+   *
+   * @param email   the email
+   * @param message the message
+   * @return the string
+   */
+  @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK, name="验证码核验")
     @PostMapping("/checkMsg")
     @ResponseBody
     @ApiOperation(value="生成验证码", notes = "生成验证码,错误返回错误信息", httpMethod = "POST")

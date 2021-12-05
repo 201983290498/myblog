@@ -22,9 +22,9 @@ import java.util.Properties;
 /**
  * 开始事务管理
  * 开始spring的AOP
-
+ *
  * @author coder
- * @Date 2021/11/25 0:25
+ * @Date 2021 /11/25 0:25
  * @Description
  */
 @EnableTransactionManagement
@@ -32,14 +32,22 @@ import java.util.Properties;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MybatisConfig {
 
+    /**
+     * Druid props druid props.
+     *
+     * @return the druid props
+     */
     @Bean
     @Scope("singleton")
     public DruidProps druidProps(){
         return new DruidProps();
     }
 
-/**
- *   配置数据源 */
+    /**
+     * 配置数据源  @param druidProps the druid props
+     *
+     * @return the druid data source
+     */
     @Bean
     @Scope("singleton")
     public DruidDataSource dataSource(DruidProps druidProps){
@@ -57,8 +65,10 @@ public class MybatisConfig {
     }
 
     /**
-    * 注册分页拦截器
-    */
+     * 注册分页拦截器
+     *
+     * @return the page interceptor
+     */
     @Bean
     public PageInterceptor pageInterceptor(){
       PageInterceptor pageInterceptor = new PageInterceptor();
@@ -72,7 +82,12 @@ public class MybatisConfig {
 
 
     /**
-     *  sqlSessionFactory
+     * sqlSessionFactory
+     *
+     * @param druidDataSource the druid data source
+     * @param pageInterceptor the page interceptor
+     * @return the sql session factory
+     * @throws Exception the exception
      */
     @Bean
     @Scope("singleton")
@@ -96,6 +111,8 @@ public class MybatisConfig {
     /**
      * 配置mapperScannerConfigure
      * 加载所有的dao
+     *
+     * @return the mapper scanner configurer
      */
     @Bean
     @Scope("singleton")
@@ -106,6 +123,12 @@ public class MybatisConfig {
         return mapperScannerConfigurer;
     }
 
+    /**
+     * Transaction manager platform transaction manager.
+     *
+     * @param druidDataSource the druid data source
+     * @return the platform transaction manager
+     */
     @Bean
     @Scope("singleton")
     public PlatformTransactionManager transactionManager(DataSource druidDataSource){

@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The type Black ip service imp.
+ *
  * @Author coder
- * @Date 2021/11/26 21:35
+ * @Date 2021 /11/26 21:35
  * @Description
  */
 @Service("blackIpServiceImpl")

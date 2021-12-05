@@ -12,22 +12,35 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * The interface Resource acquisition recorder.
+ *
  * @Author coder
- * @Date 2021/12/3 12:19
+ * @Date 2021 /12/3 12:19
  * @Description
  */
-
 @Retention(RUNTIME)
 @Target({METHOD,TYPE})
 public @interface ResourceAcquisitionRecorder {
 
-    /**
-     * @return 记录访问资源的类型
-     */
-    ResourceType resourceType() default ResourceType.HTML;
+  /**
+   * Resource type resource type.
+   *
+   * @return 记录访问资源的类型 resource type
+   */
+  ResourceType resourceType() default ResourceType.HTML;
 
-    ApplicationType applicationType() default ApplicationType.BLOG;
+  /**
+   * Application type application type.
+   *
+   * @return the application type
+   */
+  ApplicationType applicationType() default ApplicationType.BLOG;
 
-    String name() default "文档";
+  /**
+   * Name string.
+   *
+   * @return the string
+   */
+  String name() default "文档";
 
 }

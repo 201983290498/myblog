@@ -1,10 +1,11 @@
 package com.coder.commom.annotation.Enum;
 
 /**
+ * The enum Application type.
+ *
  * @author coder
  * @Description 应用类型分类
  */
-
 public enum ApplicationType {
 
     /**
