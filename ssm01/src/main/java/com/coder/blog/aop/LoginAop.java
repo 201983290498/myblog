@@ -17,6 +17,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * 登入的注册的时候实现对密码的加密和授权登入
  *
@@ -77,6 +80,9 @@ public class LoginAop {
         try {
             /*授权登入*/
             currentUser.login(token);
+            HttpServletRequest request = (HttpServletRequest) args[args.length-1];
+            HttpSession session = request.getSession();
+            session.setAttribute("myToken",currentUser);
         }catch (AuthenticationException e){
             /*添加错误信息*/
             RespMessageUtils.generateErrorInfo(map,new String[]{e.getMessage()+":授权登入失败"});

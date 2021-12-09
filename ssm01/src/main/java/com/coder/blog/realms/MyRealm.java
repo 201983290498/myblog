@@ -4,8 +4,10 @@ import com.coder.blog.dao.UserDao;
 import com.coder.blog.entity.Role;
 import com.coder.blog.entity.User;
 import com.coder.blog.exception.MessageException;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -27,6 +29,8 @@ import java.util.Set;
  * @Description
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MyRealm extends AuthorizingRealm {
 
     private UserDao userDao;

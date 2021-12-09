@@ -76,8 +76,12 @@ public class UserServiceImp implements UserService {
       return new PageInfo<>(userDao.selectList());
     }
 
+    @Override
+    public Integer selectCount() {
+      return userDao.selectCount();
+    }
 
-  @SuppressWarnings("AlibabaTransactionMustHaveRollback")
+    @SuppressWarnings("AlibabaTransactionMustHaveRollback")
     @Transactional
     @Override
     public void insert(User user, MultipartFile photo){

@@ -41,6 +41,12 @@ public interface UserService {
   PageInfo<User> selectAllByPage(int page,int size);
 
   /**
+   * 查看用户的总数量
+   * @return
+   */
+  Integer selectCount();
+
+  /**
    * 插入一个图片，和需要打包的文件
    *
    * @param user  用户名

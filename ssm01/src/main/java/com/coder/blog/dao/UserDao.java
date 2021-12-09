@@ -17,15 +17,15 @@ import java.util.Set;
 public interface UserDao {
 
   /**
-   * 根据账户查找一个账户对象
-   *
-   * @param account 可以是邮箱，id，用户名
+   * 根据账户查找一个账户对象,
+   * 因为一个邮箱能注册多个，因此不支持邮箱进行唯一登入
+   * @param account 可以是id，用户名
    * @return 返回查询的结果 ，不存在的话返回空
    */
   @Results(id="stu01",value = {
-            @Result(property = "roles",column = "username",javaType = Set.class ,many = @Many(select = "selectRolesByName", fetchType = FetchType.LAZY) )
+            @Result(property = "roles",column = "username",javaType = Set.class ,many = @Many(select = "selectRolesByName") )
     })
-    @Select("select * from tbl_user where username = #{param1} or email=#{param1} or id=#{param1}")
+    @Select("select * from tbl_user where username = #{param1} or id=#{param1}")
     User selectOne(String account);
 
   /**
@@ -34,8 +34,15 @@ public interface UserDao {
    * @param username 多表查询的连接词
    * @return 返回角色集合 set
    */
-  @Select("select b.* from user_role a ,role_permission b where a.role=b.role and a.username=#{param1}")
+    @Select("select b.* from user_role a ,role_permission b where a.role=b.role and a.username=#{param1}")
     Set<Role> selectRolesByName(String username);
+
+  /**
+   * 查用户的总数量
+   * @return
+   */
+  @Select("select count(*) from user_role")
+    Integer selectCount();
 
   /**
    * 查询所有用户

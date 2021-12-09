@@ -53,6 +53,11 @@ public class User implements Serializable {
      */
     private String personalInfo;
 
+  /**
+   * 用户的状态，1表示活跃有效，0表示冻结，-1表示删除
+   */
+  private Integer status;
+
     /**
      * 入园的年龄
      */

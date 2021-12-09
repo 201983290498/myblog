@@ -12,11 +12,17 @@ public class RespMessageUtilsTest {
     @Test
     public void SUCCESS() {
         Map data = new HashMap<>();
-        data.put("imageId",null);
+        data.put("imageId","null");
         System.out.println(RespMessageUtils.SUCCESS(data));
+        System.out.println(RespMessageUtils.SUCCESS(1));
     }
 
     @Test
     public void ERROR() {
+    }
+
+    @Test
+    public void testSUCCESS() {
+
     }
 }

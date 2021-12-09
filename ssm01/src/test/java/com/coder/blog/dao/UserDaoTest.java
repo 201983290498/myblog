@@ -23,24 +23,19 @@ public class UserDaoTest {
 
     @Test
     public void selectOne(){
-        Ini ini = Ini.fromResourcePath("classpath:shiro.ini");
-        System.out.println(ini.toString());
-        System.out.println(myRealm);
+      System.out.println(userDao.selectOne("Coder1"));
     }
 
-    @Test
-    public void testSelectOne() {
-        User user = userDao.selectOne("cjm");
-        if(user==null)
-            System.out.println("null");
-        else{
-            System.out.println(user);
-        }
-    }
+
 
     @Test
     public void insert() {
         User user = new User("111", "baidu", "wea", "das", null, null, new Date(System.currentTimeMillis()));
         userDao.insert(user);
+    }
+
+    @Test
+    public void selectCount() {
+      System.out.println(userDao.selectCount());
     }
 }

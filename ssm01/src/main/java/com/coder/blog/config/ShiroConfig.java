@@ -3,8 +3,10 @@ package com.coder.blog.config;
 import com.coder.blog.dao.UserDao;
 import com.coder.blog.props.ShiroProps;
 import com.coder.blog.realms.MyRealm;
+import lombok.SneakyThrows;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
+import org.apache.shiro.config.Ini;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
@@ -13,14 +15,9 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 /**
  * The type Shiro config.
@@ -30,6 +27,7 @@ import java.util.Vector;
  * @Description
  */
 @Configuration
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ShiroConfig {
 
   /**
@@ -64,7 +62,7 @@ public class ShiroConfig {
    *
    * @return memory constrained cache manager
    */
-  @Bean
+    @Bean
     @Scope("singleton")
     public MemoryConstrainedCacheManager cacheManager(){
         return  new MemoryConstrainedCacheManager();
@@ -95,7 +93,7 @@ public class ShiroConfig {
    *
    * @return the ini realm
    */
-  @Bean
+    @Bean
     public IniRealm iniRealm(){
         IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
         return iniRealm;
@@ -126,18 +124,18 @@ public class ShiroConfig {
    * @param securityManager the security manager
    * @return the shiro filter factory bean
    */
-  @Bean
-    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
+    @SneakyThrows
+    @Bean
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager,IniRealm iniRealm){
+//      通过配置文件注入拦截器链
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(securityManager);
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/images/**","anon");
-        filterChainDefinitionMap.put("/users/**","anon");
-        filterChainDefinitionMap.put("/blog/**","anon");
-        filterChainDefinitionMap.put("/","anon");
-        filterChainDefinitionMap.put("/login","anon");
-        filterChainDefinitionMap.put("/admin/**","authc");
-        filterChainDefinitionMap.put("/account/**","authc");
+        Ini.Section urls = iniRealm.getIni().getSection("urls");
+        Set<Map.Entry<String, String>> entries = urls.entrySet();
+        for(Map.Entry<String, String> entry : entries) {
+          filterChainDefinitionMap.put(entry.getKey(), entry.getValue());
+        }
         factoryBean.setUnauthorizedUrl("/error/error.jsp");
         factoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         factoryBean.setLoginUrl("/login");
@@ -159,24 +157,29 @@ public class ShiroConfig {
     }
 
   /**
-   * Default advisor auto proxy creator default advisor auto proxy creator.
+   * Default advisor auto proxy creator default advisor auto proxy creator.，
+   * 代理器
    *
    * @return the default advisor auto proxy creator
    */
-  @Bean
+    @Bean
     @Scope("singleton")
     @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
-        return new DefaultAdvisorAutoProxyCreator();
+      DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
+      //开启基于类的动态代理
+      proxyCreator.setProxyTargetClass(true);
+      return proxyCreator;
     }
+
 
   /**
    * Authorization attribute source advisor authorization attribute source advisor.
-   *
+   * 开启注解版方法限制
    * @param securityManager the security manager
    * @return the authorization attribute source advisor
    */
-  @Bean
+    @Bean
     @Scope("singleton")
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();

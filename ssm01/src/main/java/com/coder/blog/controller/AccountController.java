@@ -45,14 +45,14 @@ public class AccountController {
 
     private final ShiroProps shiroProps;
 
-  /**
-   * Instantiates a new Account controller.
-   *
-   * @param userService      the user service
-   * @param messageQueUntils the message que untils
-   * @param shiroProps       the shiro props
-   */
-  public AccountController(UserService userService, MessageQueUntils messageQueUntils,ShiroProps shiroProps) {
+    /**
+     * Instantiates a new Account controller.
+     *
+     * @param userService      the user service
+     * @param messageQueUntils the message que untils
+     * @param shiroProps       the shiro props
+     */
+    public AccountController(UserService userService, MessageQueUntils messageQueUntils,ShiroProps shiroProps) {
         this.userService = userService;
         this.messageQueUntils = messageQueUntils;
         this.shiroProps = shiroProps;
@@ -65,7 +65,7 @@ public class AccountController {
    * @param account the account
    * @return the string
    */
-  @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "用户名核验")
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "用户名核验")
     @GetMapping("/login/username")
     @ResponseBody
     @ApiOperation(value = "查找账户是否存在", notes = "查找账户是否存在", httpMethod = "POST")
@@ -94,7 +94,7 @@ public class AccountController {
    * @param request  the request
    * @return the string
    */
-  @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "登入核验")
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "登入核验")
     @PostMapping("/login")
     @ApiOperation(value="登入", notes = "登入成功,跳转到dashboard页面，失败跳转到error页面", httpMethod = "POST")
     public String login(String username, String password, ModelMap map, HttpServletRequest request){
@@ -149,25 +149,25 @@ public class AccountController {
         return "redirect:/login";
     }
 
-  /**
-   * Regist page string.
-   *
-   * @return the string
-   */
-  @ResourceAcquisitionRecorder(name = "注册页面")
+    /**
+     * Regist page string.
+     *
+     * @return the string
+     */
+    @ResourceAcquisitionRecorder(name = "注册页面")
     @GetMapping("/registPage")
     @ApiOperation(value="注册页面", notes = "跳转到注册页面regist", httpMethod = "GET")
     public String registPage(){
         return "regist";
     }
 
-  /**
-   * Generate msg string.
-   *
-   * @param email the email
-   * @return the string
-   */
-  @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name="生成验证信息修改")
+    /**
+     * Generate msg string.
+     *
+     * @param email the email
+     * @return the string
+     */
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name="生成验证信息修改")
     @GetMapping("/generateMsg")
     @ResponseBody
     @ApiOperation(value="生成验证码", notes = "生成验证码", httpMethod = "GET")
@@ -176,14 +176,14 @@ public class AccountController {
         return RespMessageUtils.SUCCESS("验证码已发送，请注意查收");
     }
 
-  /**
-   * Check msg string.
-   *
-   * @param email   the email
-   * @param message the message
-   * @return the string
-   */
-  @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK, name="验证码核验")
+    /**
+     * Check msg string.
+     *
+     * @param email   the email
+     * @param message the message
+     * @return the string
+     */
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK, name="验证码核验")
     @PostMapping("/checkMsg")
     @ResponseBody
     @ApiOperation(value="生成验证码", notes = "生成验证码,错误返回错误信息", httpMethod = "POST")

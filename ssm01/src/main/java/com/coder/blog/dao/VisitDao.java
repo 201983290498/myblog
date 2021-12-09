@@ -71,6 +71,13 @@ public interface VisitDao {
     List<Visit> selectALl();
 
   /**
+   * 查询访客的总数量
+   * @return
+   */
+  @Select("select count(*) from visit")
+    Integer selectCount();
+
+  /**
    * 看某条记录是否记录过
    *
    * @param visit 访问记录
