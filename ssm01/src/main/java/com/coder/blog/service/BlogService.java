@@ -22,14 +22,14 @@ public interface BlogService {
    * 按页获取所有的博客，按照时间顺序降序,只有正文
    * @return
    */
-  PageInfo<Blog> selectListPage(int page,int size);
+  PageInfo<Blog> selectAllPage(int page,int size);
 
   /**
    * 安业获取某个用户的博文
    * @param username 用户名
    * @return
    */
-  PageInfo<Blog> selectListPageByUsername(String username,int page,int size);
+  PageInfo<Blog> selectListPageByUsername(String username,Integer status,int page,int size);
 
   /**
    * 查询最近一天博文的数量
@@ -54,6 +54,6 @@ public interface BlogService {
    * @param status 1为草稿,1为正文，2是回收文
    * @return
    */
-  Integer selectCount(Integer status);
+  Integer selectCountByCondition(Map<String,Object> map);
 
 }

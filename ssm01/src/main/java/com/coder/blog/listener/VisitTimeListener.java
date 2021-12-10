@@ -65,9 +65,7 @@ public class VisitTimeListener implements ServletRequestListener {
                 visit = new Visit();
                 visit.setIp(UserIpUtils.getIp(request));
                 visit.setSessionId((String) uuid);
-                Date d = new Date();
-                //TODO 数据库解决时区问题
-                visit.setTime(new java.sql.Date(d.getTime()));
+                visit.setTime(new Date());
                 String userAgent = request.getHeader("user-agent");
                 visit.setUserAgent(userAgent);
                 synchronized (this) {

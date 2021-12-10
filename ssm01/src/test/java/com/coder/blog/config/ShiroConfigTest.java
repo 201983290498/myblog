@@ -26,7 +26,7 @@ public class ShiroConfigTest {
   @Test
   public void testDate(){
     System.out.println(new Date(System.currentTimeMillis()));
-    System.out.println(new Date());
+    System.out.println(new java.sql.Date(new Date().getTime()));
   }
 
 }

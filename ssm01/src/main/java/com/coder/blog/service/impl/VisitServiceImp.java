@@ -68,7 +68,6 @@ public class VisitServiceImp implements VisitService {
 
     @Override
     public Long findVisitTimes(Visit visit) {
-        // TODO Auto-generated method stub
         return visitDao.findVisitTimes(visit);
     }
 

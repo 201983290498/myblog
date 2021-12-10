@@ -71,8 +71,8 @@ public interface BlogDao {
    * @return
    */
   @ResultMap(value = "blogMap")
-  @Select("select * from blog where username=#{username} order by add_time desc")
-  List<Blog> selectListByUsername(String username);
+  @Select("select * from blog where username=#{username} and status = #{status} order by add_time desc")
+  List<Blog> selectListByUsername(String username,int status);
 
 
 
