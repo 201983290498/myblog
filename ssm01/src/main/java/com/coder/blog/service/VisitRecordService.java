@@ -3,6 +3,8 @@ package com.coder.blog.service;
 import com.coder.blog.entity.visit.VisitRecord;
 import com.github.pagehelper.PageInfo;
 
+import java.util.Map;
+
 /**
  * The interface Visit record service.
  *
@@ -47,4 +49,18 @@ public interface VisitRecordService {
    * @return page info
    */
   PageInfo<VisitRecord> selectAllByPage(int page,int size);
+
+  /**
+   * 获取最近一次的访问资源的频率
+   * @return
+   */
+  Integer selectCountNow();
+
+  /**
+   * 获取访问资源的数量
+   * @param map 条件
+   * @return
+   */
+  Integer selectCount(Map<String,Object> map);
+
 }

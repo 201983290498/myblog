@@ -58,6 +58,13 @@ public interface VisitService {
   Long findVisitTimes(Visit visit);
 
   /**
+   * 统计数量查询
+   * @param map map是条件，主要是ip地址,时间区间查询
+   * @return
+   */
+  Integer selectCount(Map<String,Object> map);
+
+  /**
    * 根据日期月份分组查询
    *
    * @param map  the map
@@ -122,4 +129,11 @@ public interface VisitService {
    * @return page info
    */
   PageInfo<?>  selectVisitListByIp(Map<String, Object> map,int page,int size);
+
+  /**
+   * 统计最近的访客记录
+   * @param number 时限
+   * @return
+   */
+    List<Integer> getRecentFrequency(Integer number);
 }

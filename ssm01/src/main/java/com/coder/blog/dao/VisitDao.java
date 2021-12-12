@@ -16,7 +16,6 @@ import java.util.Map;
 @CacheNamespace(blocking = true)
 public interface VisitDao {
 
-
   /**
    * 方法用来删除记录
    *
@@ -78,6 +77,12 @@ public interface VisitDao {
     Integer selectCount();
 
   /**
+   * @param map 查询条件，主要是ip地址和区间
+   * @return
+   */
+  Integer selectCountByCondition(Map<String,Object> map);
+
+  /**
    * 看某条记录是否记录过
    *
    * @param visit 访问记录
@@ -135,6 +140,6 @@ public interface VisitDao {
    * @param record 访问记录
    * @return int
    */
-  @Update("update visit set ip=#{ip},userAgent=#{userAgent},city=#{city},url=#{url},browserType=#{browserType},platformType=#{platformType},time=#{time},sessionId=#{sessionId},where id=#{id}")
+  @Update("update visit set ip=#{ip},userAgent=#{userAgent},city=#{city},url=#{url},browserType=#{browserType},platformType=#{platformType},time=#{time},sessionId=#{sessionId} where id=#{id}")
     int updateByPrimaryKey(Visit record);
 }

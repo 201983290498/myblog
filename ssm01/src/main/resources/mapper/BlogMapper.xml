@@ -8,8 +8,11 @@
  <select id="selectCountByTime" resultType="int">
     select count(*) from blog
     <where>
-      <if test="startTime!=null and endTime!=null">
-        and add_time between #{startTime} and #{endTime}
+      <if test="startTime!=null">
+        and add_time <![CDATA[>]]> #{startTime}
+      </if>
+      <if test="endTime!=null">
+        and add_time <![CDATA[<]]> #{endTime}
       </if>
       <if test="status != null">
         and status = #{status}

@@ -7,6 +7,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The type Visit record service imp.
  *
@@ -49,5 +54,21 @@ public class VisitRecordServiceImp implements VisitRecordService {
   public PageInfo<VisitRecord> selectAllByPage(int page, int size) {
     PageHelper.startPage(page,size);
     return new PageInfo<>(recorderDao.selectAll());
+  }
+
+  @Override
+  public Integer selectCountNow() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(new Date());
+    Map<String,Object> map = new HashMap<>();
+    map.put("endTime",calendar.getTime());
+    calendar.add(Calendar.DATE,-1);
+    map.put("startTime",calendar.getTime());
+    return selectCount(map);
+  }
+
+  @Override
+  public Integer selectCount(Map<String, Object> map) {
+    return recorderDao.selectCount(map);
   }
 }

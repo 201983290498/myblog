@@ -1,5 +1,6 @@
 package com.coder.blog.service.impl;
 
+import com.coder.blog.service.VisitService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class VisitServiceImpTest {
     @Autowired
     ApplicationContext applicationContext;
 
+    @Autowired
+    private VisitService service;
+
     @Test
     public void deleteByPrimaryKey() {
         String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
@@ -26,67 +30,8 @@ public class VisitServiceImpTest {
         }
     }
 
-    @Test
-    public void insert() {
-    }
-
-    @Test
-    public void selectByPrimaryKey() {
-    }
-
-    @Test
-    public void updateByPrimaryKeySelective() {
-    }
-
-    @Test
-    public void updateByPrimaryKey() {
-    }
-
-    @Test
-    public void selectVisitByIp() {
-    }
-
-    @Test
-    public void findVisitTimes() {
-    }
-
-    @Test
-    public void selectVisitListByDate() {
-    }
-
-    @Test
-    public void selectLikeVisitListByPage() {
-    }
-
-    @Test
-    public void selectVisitListByIp() {
-    }
-
-    @Test
-    public void selectLikeVisitListGroupByIp() {
-    }
-
-    @Test
-    public void getVisitDao() {
-    }
-
-    @Test
-    public void setVisitDao() {
-    }
-
-    @Test
-    public void testEquals() {
-    }
-
-    @Test
-    public void canEqual() {
-    }
-
-    @Test
-    public void testHashCode() {
-    }
-
-    @Test
-    public void testToString() {
-    }
+  @Test
+  public void getRecentFrequency() {
+    System.out.println(service.getRecentFrequency(14));
+  }
 }

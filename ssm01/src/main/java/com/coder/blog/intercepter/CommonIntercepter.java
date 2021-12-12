@@ -4,6 +4,8 @@ import com.coder.commom.annotation.AccessLimit;
 import com.coder.blog.Utils.UserIpUtils;
 import com.coder.blog.entity.visit.RequestIp;
 import com.coder.blog.props.VisitProps;
+import com.coder.commom.annotation.Enum.ResourceType;
+import com.coder.commom.annotation.ResourceAcquisitionRecorder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,11 @@ public class CommonIntercepter implements HandlerInterceptor {
         if(handler instanceof HandlerMethod){
             HandlerMethod hm = (HandlerMethod) handler;
             AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
-            if(accessLimit==null){
+            ResourceAcquisitionRecorder recorder = hm.getMethodAnnotation(ResourceAcquisitionRecorder.class);
+          /**
+           * 拦截的请求不拦截获取资源记录的请求
+           */
+          if(accessLimit==null&&recorder!=null&&recorder.resourceType()!= ResourceType.RECORD){
                 response.setCharacterEncoding("utf-8");
                 String ip = UserIpUtils.getIp(request);
                 RequestIp re = (RequestIp) request.getSession().getAttribute(ip);

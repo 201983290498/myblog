@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The interface Visit recorder dao.
@@ -60,4 +61,11 @@ public interface VisitRecorderDao {
   @ResultMap(value="visit_record")
   @Select("select * from visit_record")
   List<VisitRecord> selectAll();
+
+  /**
+   * 按条件查询访问数量或者频率
+   * @param map
+   * @return
+   */
+  Integer selectCount(Map<String, Object> map);
 }

@@ -69,7 +69,6 @@ public class VisitTimeListener implements ServletRequestListener {
                 String userAgent = request.getHeader("user-agent");
                 visit.setUserAgent(userAgent);
                 synchronized (this) {
-                  //TODO 如果session相同，需要进一步判断是是否是更新用户的登入信息，例如新增补充记录的账号信息
                     if (visitServiceImpl.findVisitTimes(visit) == 0) {
                         visit.setPlatformType(UserAgentUtils.getUserAgent(
                                 userAgent).getPlatformType());

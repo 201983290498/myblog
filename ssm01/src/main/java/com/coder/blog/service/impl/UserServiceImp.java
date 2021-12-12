@@ -71,7 +71,6 @@ public class UserServiceImp implements UserService {
 
     @Override
     public PageInfo<User> selectAllByPage(int page, int size) {
-      // TODO List
       PageHelper.startPage(page,size);
       return new PageInfo<>(userDao.selectList());
     }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.coder.blog.dao.ToDoDao">
+
+  <select id="selectList" resultMap="todo" parameterType="map">
+    select id,info,status,add_time,deadline,owner from todo
+    <where>
+        <if test="status!=null">
+          and status = #{status}
+        </if>
+        <if test="startTime1!=null">
+          and add_time <![CDATA[>]]> #{startTime1}
+        </if>
+        <if test="endTime1!=null">
+          and add_time <![CDATA[<]]> #{endTime1}
+        </if>
+        <if test="startTime!=null">
+          and deadline <![CDATA[>]]> #{startTime}
+        </if>
+        <if test="endTime!=null">
+          and deadline <![CDATA[<]]> #{endTime}
+        </if>
+        <if test="owner != 'admin' and owner !=null">
+          and owner = #{owner}
+        </if>
+        <if test="owner=='admin' or owner == null">
+          and owner = 'Coder1'
+        </if>
+    </where>
+    <if test="order == null or order == 'deadline'">
+      order by deadline
+    </if>
+    <if test="order=='addTime'">
+      order by add_time desc
+    </if>
+  </select>
+
+  <select id="selectCount" resultType="int" parameterType="map">
+    select count(*) from todo
+    <where>
+      <if test="status==null">
+        and status = 0
+      </if>
+      <if test="status!=null">
+        and status = #{status}
+      </if>
+      <if test="startTime1!=null">
+        and add_time <![CDATA[>]]> #{startTime1}
+      </if>
+      <if test="endTime1!=null">
+        and add_time <![CDATA[<]]> #{endTime1}
+      </if>
+      <if test="startTime!=null">
+        and deadline <![CDATA[>]]> #{startTime}
+      </if>
+      <if test="endTime!=null">
+        and deadline <![CDATA[<]]> #{endTime}
+      </if>
+      <if test="owner != 'admin' and owner !=null">
+        and owner = #{owner}
+      </if>
+      <if test="owner=='admin' or owner == null">
+        and owner = 'admin'
+      </if>
+    </where>
+  </select>
+</mapper>

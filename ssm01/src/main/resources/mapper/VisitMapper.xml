@@ -95,7 +95,22 @@
         </if>
         <if test="format=='year'">
             GROUP BY DATE_FORMAT(time,'%Y')
+        </if>se
+    </select>
+
+    <select id="selectCountByCondition" parameterType="Map" resultType="int">
+      select count(*) from visit
+      <where>
+        <if test="startTime!=null">
+          and time <![CDATA[>]]> #{startTime}
         </if>
+        <if test="endTime!=null">
+          and time <![CDATA[<]]> #{endTime}
+        </if>
+        <if test="ip!=null">
+          and ip = #{ip}
+        </if>
+      </where>
     </select>
 
     <update id="updateByPrimaryKeySelective" parameterType="Visit">
@@ -129,4 +144,5 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+
 </mapper>

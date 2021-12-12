@@ -16,54 +16,13 @@ public class VisitDaoTest {
   @Autowired
   private VisitService visitservice;
 
-  @Test
-  public void deleteByPrimaryKey() {
-  }
-
-  @Test
-  public void insert() {
-  }
-
-  @Test
-  public void selectByPrimaryKey() {
-  }
+  @Autowired
+  private VisitDao visitDao;
 
   @Test
   public void selectVisitByIp() {
     PageInfo<Visit> visits = visitservice.selectVisitPageByIp("192.168.46.1", 1, 5);
     System.out.println(visits);
     System.out.println(visits.getList().get(0));
-  }
-
-  @Test
-  public void selectVisitBySessionId() {
-  }
-
-  @Test
-  public void findVisitTimes() {
-  }
-
-  @Test
-  public void selectLikeVisitListByPage() {
-  }
-
-  @Test
-  public void selectLikeVisitListGroupByIp() {
-  }
-
-  @Test
-  public void selectVisitListByDate() {
-  }
-
-  @Test
-  public void selectVisitListByIp() {
-  }
-
-  @Test
-  public void updateByPrimaryKeySelective() {
-  }
-
-  @Test
-  public void updateByPrimaryKey() {
   }
 }

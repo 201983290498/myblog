@@ -15,7 +15,9 @@ import java.util.Date;
  */
 @Data
 public class BlackIp implements Serializable {
-    private static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 1L;
+
+    public static final int pageSize =20;
 
     private Integer id;
 

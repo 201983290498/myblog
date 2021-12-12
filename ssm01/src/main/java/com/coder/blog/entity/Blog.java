@@ -18,7 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 public class Blog implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	public static final long serialVersionUID = 1L;
+
+  public static final long pageSize =10;
 
   /**
    * 博文的发布者

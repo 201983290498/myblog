@@ -79,4 +79,5 @@ public interface BlogDao {
 
   @Select("select imageId from blog_image where blogId = #{blogId}")
   List<String> selectImageList(Long blogId);
+
 }

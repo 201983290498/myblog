@@ -3,10 +3,11 @@ package com.coder.blog.service;
 import com.coder.blog.entity.Blog;
 import com.github.pagehelper.PageInfo;
 
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
+ * 结果数据库blog和blogType的相关查询工作
  * @author coder
  */
 public interface BlogService {
@@ -51,9 +52,28 @@ public interface BlogService {
 
   /**
    * 查询博文的总数量
-   * @param status 1为草稿,1为正文，2是回收文
+   * @param map 1为草稿,1为正文，2是回收文
    * @return
    */
   Integer selectCountByCondition(Map<String,Object> map);
 
+  /**
+   * 查最近number的新增博文数量
+   * @param number 天数
+   * @return 博文数量的队列
+   */
+    List<Integer> getRecentFrequency(Integer number);
+
+  /**
+   * 查所有类别的博客数量，和他们的名字，分成名称列表和数量列表，相应位置一一对应
+   * @param aclass 类别对应的枚举类文件
+   * @return
+   */
+  Map<String,Object> selectTypeCount(Class aclass);
+
+  /**
+   * 按照月份获取到每个月新增的博客 和 标签
+   * @return 返回labels,和data
+   */
+  Map<String,Object> selectCountByMonth();
 }

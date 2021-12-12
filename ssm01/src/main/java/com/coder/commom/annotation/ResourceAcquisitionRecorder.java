@@ -43,4 +43,5 @@ public @interface ResourceAcquisitionRecorder {
    */
   String name() default "文档";
 
+  String role() default "user";
 }
