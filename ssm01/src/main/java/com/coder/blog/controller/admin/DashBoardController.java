@@ -71,8 +71,6 @@ public class DashBoardController {
       return "forward:/error";
     }
     Map<String, Object> dashBoardInfo = service.getDashBoardInfo(user.getUsername());
-    user.setImageId(String.valueOf(dashBoardInfo.get("imageId")));
-    session.setAttribute("user", user);
     return RespMessageUtils.SUCCESS(dashBoardInfo);
   }
 

@@ -99,8 +99,9 @@ public class AccountController {
     @ApiOperation(value="登入", notes = "登入成功,跳转到dashboard页面，失败跳转到error页面", httpMethod = "POST")
     public String login(String username, String password, ModelMap map, HttpServletRequest request){
         if(userService.login(new User(username, password))) {
-            //记录登入信息
-            request.getSession().setAttribute("user",new User(username,new Date(System.currentTimeMillis())));
+          User user = userService.selectOne(username);
+          //记录登入信息
+            request.getSession().setAttribute("user",new User(username,new Date(System.currentTimeMillis()),user.getImageId()));
             if(username.equals(shiroProps.getAdmin())){
               return "forward:/admin/dashBoard";
             }

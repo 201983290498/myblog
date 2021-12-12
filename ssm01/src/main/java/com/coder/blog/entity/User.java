@@ -107,8 +107,9 @@ public class User implements Serializable {
    * @param username   the username
    * @param createTime the create time
    */
-  public User(String username, Date createTime) {
+  public User(String username, Date createTime, String imageId) {
         this.username = username;
         this.createTime = createTime;
+        this.imageId = imageId;
     }
 }

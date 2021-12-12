@@ -842,7 +842,8 @@
     </div>
     <!-- /.sidebar -->
   </aside>
-<!--TODO-->
+  <!--TODO-->
+
   <!-- Content Wrapper. 包含页面内容 -->
   <div class="content-wrapper">
     <!-- 内容标题（页面标题） -->
@@ -866,11 +867,12 @@
     <!-- 主体内容 -->
     <section class="content">
       <div class="container-fluid">
-        <h1>blogTable</h1>
+        <h1>userTable</h1>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>
+
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <!--    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>-->
@@ -886,7 +888,6 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery -->
 <script th:src="@{/admintle/plugins/jquery/jquery.min.js}"></script>
@@ -920,5 +921,12 @@
 <script th:src="@{/admintle/dist/js/adminlte.js}"></script>
 <!-- 用于演示 AdminLTE  -->
 <script th:src="@{/admintle/dist/js/demo.js}"></script>
+
+<script th:inline="javascript">
+  let urls =[[@{'/images/'}]];
+  urls = urls  + [[${session.user.imageId}]];
+  console.log([[${session.user.imageId}]]);
+  $('#userImage').attr("src", urls);
+</script>
 </body>
 </html>
