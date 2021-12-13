@@ -23,7 +23,7 @@ public interface ToDoService {
   /**
    * 按照条件搜索ToDo事件
    * @param conditions 查询条件
-   * id:没有限制  status:事件的状态
+   * id:没有限制  status:事件的状态,默认是大于0,等于0需要自己写
    * addTime:between startTime1 and endTime1
    * deadline: between startTime and endTime
    * owner: owner

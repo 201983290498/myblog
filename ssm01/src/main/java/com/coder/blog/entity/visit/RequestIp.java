@@ -20,7 +20,7 @@ public class RequestIp implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
-    public static final int pageSize =20;
+  public static final Integer pageSize = 15;
 
     private String ip;
 

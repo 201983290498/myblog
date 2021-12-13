@@ -28,6 +28,8 @@ public class ToDoServiceImpTest {
     public void selectList() {
       Map<String,Object> conditions = new HashMap<>();
       conditions.put("owner", "Coder1");
+      conditions.put("status",0);
+      conditions.put("order","finishTime");
       System.out.println(ToDo.pageSize);
 //      System.out.println(toDoDao.selectList(null));
       PageInfo<ToDo> toDoPageInfo = toDoService.selectList(conditions, 1, ToDo.pageSize);

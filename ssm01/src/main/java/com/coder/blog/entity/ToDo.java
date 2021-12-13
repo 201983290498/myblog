@@ -55,6 +55,9 @@ public class ToDo implements Serializable {
   @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
   private Date deadline;
 
+  @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+  private Date finishTime;
+
 /**
  * -----------------------------------------------------------------------------------------------
  */
@@ -64,13 +67,38 @@ public class ToDo implements Serializable {
 
   private Integer color;
 
+  public ToDo(Long id, String info, Date date, Integer status) {
+    this.id = id;
+    this.info = info;
+    this.deadline = date;
+    this.status = status;
+  }
+
+  public ToDo(Long id, String info, Integer status, Date deadline, Date finishTime) {
+    this.id = id;
+    this.info = info;
+    this.status = status;
+    this.deadline = deadline;
+    this.finishTime = finishTime;
+  }
+
   public void setColorsIndex(String description){
     if(description.contains("秒")){
       setColor(0);
     }else if(description.contains("分")){
-      setColor(1);
+      String[] s = description.split(" ");
+      if(Integer.parseInt(s[0])<30){
+        setColor(0);
+      }else {
+        setColor(1);
+      }
     }else if(description.contains("时")){
-      setColor(2);
+      String[] s = description.split(" ");
+      if(Integer.parseInt(s[0])<6){
+        setColor(1);
+      }else {
+        setColor(2);
+      }
     }else if(description.contains("天")){
       setColor(3);
     }else if(description.contains("月")){

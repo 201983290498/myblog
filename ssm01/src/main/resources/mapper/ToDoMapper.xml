@@ -6,10 +6,13 @@
 <mapper namespace="com.coder.blog.dao.ToDoDao">
 
   <select id="selectList" resultMap="todo" parameterType="map">
-    select id,info,status,add_time,deadline,owner from todo
+    select id,info,status,add_time,deadline,owner,finish_time from todo
     <where>
         <if test="status!=null">
           and status = #{status}
+        </if>
+        <if test="status==null">
+          and status <![CDATA[>]]> 0
         </if>
         <if test="startTime1!=null">
           and add_time <![CDATA[>]]> #{startTime1}
@@ -23,19 +26,29 @@
         <if test="endTime!=null">
           and deadline <![CDATA[<]]> #{endTime}
         </if>
-        <if test="owner != 'admin' and owner !=null">
-          and owner = #{owner}
-        </if>
-        <if test="owner=='admin' or owner == null">
-          and owner = 'Coder1'
-        </if>
+        <choose>
+          <when test="owner != null and owner != 'Coder1'">
+            and owner = #{owner}
+          </when>
+          <when test="owner=='Coder1' or owner == null">
+            and owner = 'Coder1'
+          </when>
+        </choose>
     </where>
-    <if test="order == null or order == 'deadline'">
-      order by deadline
-    </if>
-    <if test="order=='addTime'">
-      order by add_time desc
-    </if>
+    <choose>
+      <when test="order == null">
+        order by deadline
+      </when>
+      <when test="order == deadline">
+        order by deadline
+      </when>
+      <when test="order == 'addTime'">
+        order by add_time desc
+      </when>
+      <otherwise>
+        order by finish_time desc
+      </otherwise>
+    </choose>
   </select>
 
   <select id="selectCount" resultType="int" parameterType="map">
@@ -59,11 +72,11 @@
       <if test="endTime!=null">
         and deadline <![CDATA[<]]> #{endTime}
       </if>
-      <if test="owner != 'admin' and owner !=null">
+      <if test="owner != 'Coder1' and owner !=null">
         and owner = #{owner}
       </if>
-      <if test="owner=='admin' or owner == null">
-        and owner = 'admin'
+      <if test="owner=='Coder1' or owner == null">
+        and owner = 'Coder1'
       </if>
     </where>
   </select>

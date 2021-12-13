@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,14 @@ public class ToDoServiceImp implements ToDoService {
     //TODO generate the main methods
     PageHelper.startPage(page,size);
     List<ToDo> toDos = toDoDao.selectList(conditions);
+    Integer status = (Integer) conditions.get("status");
     for(ToDo toDo : toDos){
-      toDo.setDeadlineDescription(TimeUtils.getAdaptedDeadline(null,toDo.getDeadline()));
+      //status==0的时候 返回status=0的情况
+      if(status != null && status == 0) {
+        toDo.setDeadlineDescription(TimeUtils.getAdaptedAddTime(toDo.getFinishTime()));
+      }else{
+        toDo.setDeadlineDescription(TimeUtils.getAdaptedDeadline(null, toDo.getDeadline()));
+      }
       toDo.setAddTimeDescription(TimeUtils.getAdaptedAddTime(toDo.getAddTime()));
       toDo.setColorsIndex(toDo.getDeadlineDescription());
     }

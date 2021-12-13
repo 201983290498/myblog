@@ -43,25 +43,32 @@ public class ToDoListController {
   @ResourceAcquisitionRecorder(resourceType = ResourceType.RECORD,name = "todoList记录")
   @PostMapping("/list/{page}")
   public String getToDoList(HttpServletRequest request, @ApiParam(value = "页码") @PathVariable("page") int page,
-                            @ApiParam(value = "获取代做的事项") @RequestParam(value = "status")Integer status){
+                            @ApiParam(value = "获取代做的事项")Integer status){
     Map<String,Object> conditions = new HashMap<>();
     User user = (User) request.getSession().getAttribute("user");
-    if(status != null){
+    if(status != -1){
       //获取todo的状态和todo的拥有者
       conditions.put("status",status);
+      if(status == 0) {
+        conditions.put("order", "finishTime");
+      }
     }
     conditions.put("owner", user.getUsername());
     PageInfo<ToDo> toDoPageInfo = toDoService.selectList(conditions, page, ToDo.pageSize);
     return RespMessageUtils.SUCCESS(toDoPageInfo);
   }
 
+  @SneakyThrows
   @ResponseBody
   @ApiOperation(value = "更新待做事项",httpMethod = "POST")
   @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY,name = "更新todo事项")
-  @PostMapping("/update")
-  public String updateToDo(ToDo todo){
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public String updateToDo(Long id, String info, String deadline, Integer status){
+    SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    ToDo todo = new ToDo(id,info,sdf.parse(deadline),status);
     toDoService.update(todo);
-    return RespMessageUtils.SUCCESS(todo);
+    PageInfo<ToDo> toDoPageInfo = toDoService.selectList(null, 1, ToDo.pageSize);
+    return RespMessageUtils.SUCCESS(toDoPageInfo);
   }
 
   /**
@@ -101,5 +108,19 @@ public class ToDoListController {
     }else{
       return RespMessageUtils.ERROR("资源不属于您,获取失败。");
     }
+  }
+
+  @GetMapping("/id")
+  @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name="修改todo事项的状态")
+  @ApiOperation(value="修改todo事项的状态", httpMethod = "GET")
+  @ResponseBody
+  public String changeStatus(Long id){
+    ToDo todo = toDoService.selectOne(id);
+    if(todo.getStatus()>0){
+      toDoService.update(new ToDo(id,todo.getInfo(),0,todo.getDeadline(), new Date()));
+    }else{
+      toDoService.update(new ToDo(id,todo.getInfo(),todo.getDeadline(),1));
+    }
+    return RespMessageUtils.SUCCESS();
   }
 }

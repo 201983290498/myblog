@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 public class Image implements Serializable {
 
-    private Integer pageSize=10;
+  public static final Integer pageSize = 15;
 
     private String id;
 

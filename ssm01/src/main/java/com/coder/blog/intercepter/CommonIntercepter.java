@@ -38,10 +38,15 @@ public class CommonIntercepter implements HandlerInterceptor {
             HandlerMethod hm = (HandlerMethod) handler;
             AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
             ResourceAcquisitionRecorder recorder = hm.getMethodAnnotation(ResourceAcquisitionRecorder.class);
+          String requestURI = request.getRequestURI();
+          Boolean flag = true;
+          if(requestURI.matches("(.*)css$")||requestURI.matches("(.*)js$")){
+            flag = false;
+          }
           /**
            * 拦截的请求不拦截获取资源记录的请求
            */
-          if(accessLimit==null&&recorder!=null&&recorder.resourceType()!= ResourceType.RECORD){
+          if(flag&&accessLimit==null&&recorder!=null&&recorder.resourceType()!= ResourceType.RECORD){
                 response.setCharacterEncoding("utf-8");
                 String ip = UserIpUtils.getIp(request);
                 RequestIp re = (RequestIp) request.getSession().getAttribute(ip);

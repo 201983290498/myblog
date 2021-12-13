@@ -14,13 +14,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ValidationInfo {
 
+  public static final Integer pageSize = 15;
+
     private String message;
 
     private String email;
 
     private Long createTime;
 
-    private Integer pageSize=10;
 
   /**
    * Instantiates a new Validation info.

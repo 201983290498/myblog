@@ -1,8 +1,10 @@
 package com.coder.blog.controller.admin;
 
+import com.coder.blog.entity.User;
 import com.coder.blog.service.UserService;
 import com.coder.commom.annotation.Enum.ResourceType;
 import com.coder.commom.annotation.ResourceAcquisitionRecorder;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,8 @@ public class UserTableController {
   @ApiOperation(value = "获取userTable页面", httpMethod = "GET")
   public String userTable(ModelMap map, HttpServletRequest request){
     map.addAttribute("tableName","UserTable");
+    PageInfo<User> pageInfo = userService.selectAllByPage(0, User.pageSize);
+    map.addAttribute("pageInfo",pageInfo);
     return "/admin/userTable";
   }
 }

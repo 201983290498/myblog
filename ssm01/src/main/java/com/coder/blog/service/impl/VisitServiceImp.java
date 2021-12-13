@@ -118,14 +118,18 @@ public class VisitServiceImp implements VisitService {
     Map<String, Object> map = new HashMap<>();
     Calendar cal = Calendar.getInstance();
     cal.setTime(new Date());
+    number = number - 1;
+    map.put("endTime",cal.getTime());
     cal.set(Calendar.HOUR,0);
-    do{
+    map.put("startTime",cal.getTime());
+    list.add(selectCount(map));
+    while(number!=0){
       map.put("endTime",cal.getTime());
       cal.add(Calendar.DATE,-1);
       map.put("startTime",cal.getTime());
       list.add(selectCount(map));
       number = number - 1;
-    }while(number!=0);
+    }
     return list;
   }
 }

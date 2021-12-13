@@ -40,6 +40,10 @@
       padding: 6px 12px;
       border: 1px solid #ccc;
     }
+    i.changeList:hover{
+      cursor: pointer;
+    }
+
   </style>
 </head>
 
@@ -987,11 +991,11 @@
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
                   待办事项列表
+                  <i class="fas fa-th-large mr-1 changeList" margin-left="4px" data-status="0"></i>
                 </h3>
 
-<!--                TODO 转换成自动生成的 页码-->
                 <div class="card-tools">
-                  <ul class="pagination pagination-sm" >
+                  <ul class="pagination pagination-sm">
                     <li class="page-item"><a href="#" class="page-link" style="color: #000b16;">&laquo;</a></li>
                     <li class="page-item"><a href="#" class="page-link" style="color: #000b16;">1</a></li>
                     <li class="page-item"><a href="#" class="page-link" style="color: #000b16;">2</a></li>
@@ -1003,7 +1007,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <ul class="todo-list" data-widget="todo-list" id="toDoList">
-<!--                  TODO  添加模态框  需要在每一个标签中放入数据-->
+
                 </ul>
               </div>
               <!-- /.card-body -->
@@ -1102,12 +1106,12 @@
                     <div id="sparkline-2"></div>
                     <div class="text-white">在线</div>
                   </div>
-<!--                  &lt;!&ndash; ./col &ndash;&gt;-->
-<!--                  <div class="col-4 text-center">-->
-<!--                    <div id="sparkline-3"></div>-->
-<!--                    <div class="text-white">销量</div>-->
-<!--                  </div>-->
                   <!-- ./col -->
+                  <div class="col-4 text-center">
+                    <div id="sparkline-3"></div>
+                    <div class="text-white">博文</div>
+                  </div>
+<!--                   ./col -->
                 </div>
                 <!-- /.row -->
               </div>
@@ -1115,44 +1119,44 @@
             <!-- /.card -->
 
 
-            <!-- Calendar -->
-            <div class="card bg-gradient-success">
-              <div class="card-header border-0">
+<!--            &lt;!&ndash; Calendar &ndash;&gt;-->
+<!--            <div class="card bg-gradient-success">-->
+<!--              <div class="card-header border-0">-->
 
-                <h3 class="card-title">
-                  <i class="far fa-calendar-alt"></i>
-                  日历
-                </h3>
-                <!-- tools card -->
-                <div class="card-tools">
-                  <!-- 带有下拉菜单的按钮 -->
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="dropdown-menu" role="menu">
-                      <a href="#" class="dropdown-item">添加事件</a>
-                      <a href="#" class="dropdown-item">清除事件</a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item">查看日历</a>
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-                <!-- /. tools -->
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body pt-0">
-                <!--The calendar -->
-                <div id="calendar" style="width: 100%"></div>
-              </div>
-              <!-- /.card-body -->
-            </div>
+<!--                <h3 class="card-title">-->
+<!--                  <i class="far fa-calendar-alt"></i>-->
+<!--                  日历-->
+<!--                </h3>-->
+<!--                &lt;!&ndash; tools card &ndash;&gt;-->
+<!--                <div class="card-tools">-->
+<!--                  &lt;!&ndash; 带有下拉菜单的按钮 &ndash;&gt;-->
+<!--                  <div class="btn-group">-->
+<!--                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">-->
+<!--                      <i class="fas fa-bars"></i>-->
+<!--                    </button>-->
+<!--                    <div class="dropdown-menu" role="menu">-->
+<!--                      <a href="#" class="dropdown-item">添加事件</a>-->
+<!--                      <a href="#" class="dropdown-item">清除事件</a>-->
+<!--                      <div class="dropdown-divider"></div>-->
+<!--                      <a href="#" class="dropdown-item">查看日历</a>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">-->
+<!--                    <i class="fas fa-minus"></i>-->
+<!--                  </button>-->
+<!--                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">-->
+<!--                    <i class="fas fa-times"></i>-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--                &lt;!&ndash; /. tools &ndash;&gt;-->
+<!--              </div>-->
+<!--              &lt;!&ndash; /.card-header &ndash;&gt;-->
+<!--              <div class="card-body pt-0">-->
+<!--                &lt;!&ndash;The calendar &ndash;&gt;-->
+<!--                <div id="calendar" style="width: 100%"></div>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; /.card-body &ndash;&gt;-->
+<!--            </div>-->
             <!-- /.card -->
           </section>
           <!-- right col -->
@@ -1215,15 +1219,17 @@
             <div style="margin-bottom: 15px">
               <label>最后期限</label>
               <div style="display: inline-block;margin-left: 20px;font-size:14px">
-                <input type="datetime-local" class="myInput" id="deadline" placeholder="请输入截至时间" name="deadline">
+                <input type="datetime-local" class="myInput" id="deadline" placeholder="请输入截至时间" name="deadline" >
               </div>
             </div>
+                <input type="hidden" id="addTime"/>
+                <input type="hidden" id="status"/>
             <button type="reset"  id="resetBtn" class="hide">重置</button>
            </form>
         </div>
 
         <div class="modal-footer" style="padding:15px;">
-          <button type="button" class="btn btn-default" data-dismiss="modal" style="float:right; font-size:14px;padding:5px 12px;">关闭</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="float:right; font-size:14px;padding:5px 12px;" id="closeModal">关闭</button>
           <button type="button" class="btn btn-primary productBtn" id="submitBtn" style="float:right; font-size:14px; padding:5px 12px;">提交</button>
           <button type="button" class="btn btn-primary hide editBtn" id="editBtn" style="float:right; font-size:14px; padding:5px 12px;">修改</button>
 
@@ -1275,6 +1281,7 @@
 
 <script th:inline="javascript">
   (function (){
+    //Modal的事件响应
     {
       $("#todoModal").modal("hide");
       $("#close").on("click", function(){
@@ -1282,6 +1289,11 @@
       })
       $("#addItem").on("click", function(){
         $("#todoModal").modal("show");
+        $('#editBtn').addClass("hide");
+        $('#submitBtn').removeClass("hide");
+        $("#todoModal").modal("show");
+        $('#addToDo').removeClass("hide");
+        $('#editToDo').addClass("hide");
         $('#resetBtn').click();
       })
       $("#submitBtn").click(function(){
@@ -1324,11 +1336,16 @@
           dataType: "json",
           success: function(rs){
             const data = rs.data;
+            let s = dateFormat(data.deadline,'-');
+            let strings = s.split(' ');
+            let strings1 = strings[1].split(":");
+            let time = strings[0]+"T"+strings1[0]+":"+strings1[1];
+            $('#todoId').val(data.id);
             $('#info').val(data.info);
-            console.log(data.deadline);
-            $('#deadline').val(data.deadline);
-            console.log($('input[name="status"][value="1"]'))
-            if(data.status==1) {
+            $('#status').val(data.status);
+            $('#addTime').val(data.addTime);
+            $('#deadline').val(time);
+            if(data.status>0) {
               $('input[name="status"][value="1"]').attr("checked",'checked');
             }else{
               $('input[name="status"][value="0"]').attr("checked",'checked');
@@ -1342,11 +1359,39 @@
         $("#todoModal").addClass("hide");
         $('#addToDo').removeClass("hide");
         $('#editToDo').addClass("hide");
-        //TODO ajax修改
+        let s = $('#deadline').val();
+        s = s.replace('T',' ') + ":00";
+        $.ajax({
+          url: [[@{'/todo/update'}]],
+          method: 'POST',
+          dataType: 'json',
+          data: {
+            "id": $('#todoId').val(),
+            "info": $('#info').val(),
+            "status": $('input[name="status"]:checked').val(),
+            "deadline": s,
+          },
+          success: function(rs){
+            if(rs.result){
+              setToDoList(rs.data);
+            }else{
+              console.log("error");
+            }
+            $('#closeModal').click();
+          },
+          error: (rs)=>{
+            $('#closeModal').click();
+          }
+        });
+      })
+      $('#toDoList').on('click','.chooseLabel', function(rs){
+        const id1 = this.dataset.id;
+        let url1 = [[@{'/todo/id'}]];
+        url1 = url1 + "?id=" + id1;
+        $.get(url1,()=>{})
       })
     }
-
-
+    //搜索访问流量
     $.ajax({
       url:[[@{'/admin/dateFrequency?number=14'}]],
       method: 'get',
@@ -1362,6 +1407,7 @@
         console.error("服务器或者网络问题无法获取图标1的数据");
       }
     });
+    //画环形图
     $.ajax({
       url:[[@{'/admin/blogType/differentKind'}]],
       method: 'get',
@@ -1372,6 +1418,7 @@
         }
       }
     });
+    //获取卡片的数量
     $.ajax({
       url: [[@{'/admin/dashBoardInfo'}]],
       method: 'get',
@@ -1389,6 +1436,7 @@
         }
       }
     });
+    //画博文的状态
     $.ajax({
       url: [[@{'/blog/getCountByMonth'}]],
       method: "GET",
@@ -1397,10 +1445,33 @@
         drawLineChart('#line-chart',rs.data);
       }
     });
+
+    $('i.changeList').click(function(){
+      const status = this.dataset.status;
+      this.dataset.status = 1 - status;
+      refreshToDoList(1,status);
+    })
+
     setToDoList([[${toDoList}]]);
 
+    function dateFormat(num,step){
+      let dd = new Date(num);
+      let y = dd.getFullYear();
+      let m = dd.getMonth() + 1;
+      let d = dd.getDate();
+      let h = dd.getHours();
+      let i = dd.getMinutes();
+      let s = dd.getSeconds();
+      m = m < 10 ? '0' + m : m;
+      d = d < 10 ? '0' + d : d;
+      h = h < 10 ? '0' + h : h;
+      i = i < 10 ? '0' + i : i;
+      s = s < 10 ? '0' + s : s;
+      return y + step + m + step + d + ' ' + h + ':' + i + ':' + s
+    }
 
     function setToDoList(pageInfo){
+      // setPageNumber(pageInfo.pageNum,pageInfo.pages);
       let toDoListColor = ['badge-danger','badge-info','badge-warning','badge-success','badge-primary','badge-secondary'];
       let data = pageInfo.list;
       let content = '';
@@ -1413,7 +1484,7 @@
                     </span>
                     <div  class="icheck-primary d-inline ml-2">
                       <input type="checkbox" value="" name="todo${i}" id="todoCheck${i}" ${data[i-1].status==0?"checked":""}>
-                      <label for="todoCheck${i}"></label>
+                      <label for="todoCheck${i}" class="chooseLabel" data-id="${data[i-1].id}"></label>
                     </div>
                     <span class="text">${data[i-1].info}</span>
                     <small class="badge ${toDoListColor[data[i-1].color]}"><i class="far fa-clock"></i>${data[i-1].deadlineDescription}</small>
@@ -1427,7 +1498,7 @@
     }
 
     function DrawPieChart(id,data1){
-
+    //画饼图
       let colorList = new Array(data1.typeNames.length + 1).join('#');
       colorList = colorList.split('');
       for(let i=0; i<colorList.length; i++){//随机获取颜色
@@ -1471,7 +1542,6 @@
      * @constructor
      */
     function DrawsaleChart(id,datelist,blogNumberList,visitNumberList) {
-      // 销售图表
       let salesChartCanvas = document.getElementById(id).getContext('2d')
       // $('#revenue-chart').get(0).getContext('2d');
 
@@ -1488,7 +1558,6 @@
             pointStrokeColor: 'rgba(60,141,188,1)',
             pointHighlightFill: '#fff',
             pointHighlightStroke: 'rgba(60,141,188,1)',
-            // TODO admin最近的博文产生情况
             data:blogNumberList
           },
           {
@@ -1500,7 +1569,6 @@
             pointStrokeColor: '#c1c7d1',
             pointHighlightFill: '#fff',
             pointHighlightStroke: 'rgba(220,220,220,1)',
-            // TODO admin的访客数量的数据
             data: visitNumberList
           }
         ]
@@ -1536,7 +1604,7 @@
     }
 
     function drawLineChart(id,data1){
-      // 销售图表
+      // 博文新增图搜索
       let salesGraphChartCanvas = $(id).get(0).getContext('2d')
       // $('#revenue-chart').get(0).getContext('2d');
 
@@ -1597,6 +1665,70 @@
         data: salesGraphChartData,
         options: salesGraphChartOptions
       })
+    }
+
+    function refreshToDoList(page,todostatus){
+        let url1 = [[@{/todo/list}]];
+        url1 += "/" + page;
+        if(todostatus == 0) {
+          $.ajax({
+            url: url1,
+            method: "POST",
+            dataType: "json",
+            data: {
+              "status": 0
+            },
+            success: function (rs) {
+              setToDoList(rs.data);
+            }
+          })
+        }else{
+          $.ajax({
+            url: url1,
+            method: "POST",
+            dataType: "json",
+            data: {
+              "status": "-1"
+            },
+            success: function (rs) {
+              setToDoList(rs.data);
+            }
+          })
+        }
+    }
+
+    function pageIconClick(page){
+      const item = $('i.changeList')[0]
+      console.log(item)
+      refreshToDoList(page,item.dataset.status);
+    }
+
+    function setPageNumber(currentPage,totalPage) {
+      let content = `<li className="page-item"><a href="#" className="page-link" style="color: #000b16;">&laquo;</a></li>`
+      const backgroundColor = "#d2d6de";
+      let pageList = [], showpage;
+      if(totalPage<3){
+        for(let i = 1;i<=totalPage;i++){
+          pageList.push(i);
+        }
+      }else{
+        if(currentPage==1){
+          pageList.push(1);pageList.push(2);pageList.push(3);
+        }else if(currentPage == totalPage){
+          pageList.push(totalPage-2);pageList.push(totalPage-1);pageList.push(totalPage);
+        }else{
+          pageList.push(currentPage-1);pageList.push(currentPage);pageList.push(currentPage+1);
+        }
+      }
+      for(let i = 1;i<=pageList.length;i++){
+        if(currentPage == pageList[i-1])
+          content += `<li className="page-item" style="background-color:${backgroundColor}"><a href="#" className="page-link" style="color: #000b16;">${pageList[i-1]}</a></li>`;
+        else{
+          content += `<li className="page-item"><a href="#" className="page-link" style="color: #000b16;">${pageList[i-1]}</a></li>`;
+        }
+      }
+      content += `<li className="page-item"><a href="#" className="page-link" style="color: #000b16;">&raquo;</a></li>`;
+      $("#pageNumber").html(content);
     }
   })();
 

@@ -21,9 +21,10 @@ public interface ToDoDao {
    * @return
    */
   @Results(id = "todo",value = {
-    @Result(property = "addTime", column = "add_time")
+    @Result(property = "addTime", column = "add_time"),
+    @Result(property = "finishTime", column = "finish_time")
   })
-  @Select("select id,info,status,add_time,deadline,owner from todo where id = #{id}")
+  @Select("select id,info,status,add_time,deadline,owner, finish_time from todo where id = #{id}")
   ToDo selectOne(Long id);
 
   /**
@@ -54,6 +55,6 @@ public interface ToDoDao {
   @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
   Integer insert(ToDo todo);
 
-  @Update("update todo set info = #{info}, deadline = #{deadline}, status = #{status} where id = #{id}")
+  @Update("update todo set info = #{info}, deadline = #{deadline}, status = #{status}, finish_time = #{finishTime, jdbcType=TIMESTAMP} where id = #{id}")
   Integer update(ToDo todo);
 }

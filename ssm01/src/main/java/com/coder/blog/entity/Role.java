@@ -18,7 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Role implements Serializable {
 
-    private Integer pageSize=10;
+  public static final Integer pageSize = 15;
 
     private String role;
 

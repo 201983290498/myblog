@@ -18,6 +18,8 @@ public class BlogType implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+  public static final Integer pageSize = 15;
+
 	/**  */
     private Integer id;
 

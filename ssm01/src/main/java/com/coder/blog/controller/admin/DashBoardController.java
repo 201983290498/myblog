@@ -61,7 +61,7 @@ public class DashBoardController {
 
   @ResourceAcquisitionRecorder(resourceType = ResourceType.RECORD, name = "获取中台页面的所有信息")
   @ResponseBody
-  @ApiOperation(value = "获取首页需要的信息", notes = "获取首页需要的信息", httpMethod = "GET")
+  @ApiOperation(value = "获取首页需要的信息")
   @RequestMapping("/dashBoardInfo")
   public String dashBoardInfo(HttpServletRequest request, ModelMap map){
     HttpSession session = request.getSession();

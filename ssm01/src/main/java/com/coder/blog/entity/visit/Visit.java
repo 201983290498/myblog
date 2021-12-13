@@ -21,7 +21,7 @@ import java.util.Date;
 public class Visit implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    public static final int pageSize = 20;
+  public static final Integer pageSize = 15;
 
 
     private Integer id;

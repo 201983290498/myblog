@@ -20,7 +20,7 @@ public class Blog implements Serializable{
 
 	public static final long serialVersionUID = 1L;
 
-  public static final long pageSize =10;
+  public static final long pageSize =15;
 
   /**
    * 博文的发布者
