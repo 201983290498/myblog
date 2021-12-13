@@ -42,7 +42,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">主页</a>
+        <a th:href="@{/admin/dashBoard}" class="nav-link">主页</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">联系</a>
@@ -855,8 +855,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">首页</a></li>
-              <li class="breadcrumb-item active">Blog</li>
+              <li class="breadcrumb-item"><a th:href="@{/admin/dashBoard}">首页</a></li>
+              <li class="breadcrumb-item active" ><a th:href="@{/admin/blogDashBoard}">Blog</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -925,7 +925,6 @@
 <script th:inline="javascript">
   let urls =[[@{'/images/'}]];
   urls = urls  + [[${session.user.imageId}]];
-  console.log([[${session.user.imageId}]]);
   $('#userImage').attr("src", urls);
 </script>
 </body>

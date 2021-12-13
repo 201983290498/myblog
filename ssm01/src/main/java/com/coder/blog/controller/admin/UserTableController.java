@@ -35,7 +35,7 @@ public class UserTableController {
   @ResourceAcquisitionRecorder(resourceType = ResourceType.HTML, role = "admin", name = "获取userTable页面")
   @ApiOperation(value = "获取userTable页面", httpMethod = "GET")
   public String userTable(ModelMap map, HttpServletRequest request){
-    System.out.println(request.getSession().getAttribute("user"));
+    map.addAttribute("tableName","UserTable");
     return "/admin/userTable";
   }
 }

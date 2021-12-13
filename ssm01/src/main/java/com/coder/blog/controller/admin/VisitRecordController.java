@@ -35,7 +35,6 @@ public class VisitRecordController {
   @ResourceAcquisitionRecorder(resourceType = ResourceType.HTML, role = "admin", name = "获取visitRecordTable页面")
   @ApiOperation(value = "获取visitRecordTable页面", httpMethod = "GET")
   public String visitRecordTable(ModelMap map, HttpServletRequest request){
-    System.out.println(request.getSession().getAttribute("user"));
     return "/admin/visitRecordTable";
   }
 }

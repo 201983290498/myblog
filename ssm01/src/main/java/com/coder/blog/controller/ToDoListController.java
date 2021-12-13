@@ -10,10 +10,13 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,5 +62,44 @@ public class ToDoListController {
   public String updateToDo(ToDo todo){
     toDoService.update(todo);
     return RespMessageUtils.SUCCESS(todo);
+  }
+
+  /**
+   * TODO check  role:user+
+   */
+  @SneakyThrows
+  @PostMapping("/insert")
+  @ApiOperation(value = "插入待做事项", notes = "插入之后刷新整个事项", httpMethod = "POST")
+  @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY,name = "插入todo事项")
+  @ResponseBody
+  public String insert(@RequestParam("info") String info,@RequestParam("status") Integer status,
+                       @RequestParam("deadline") String date,HttpServletRequest request){
+    User user = (User)request.getSession().getAttribute("user");
+    ToDo todo = new ToDo();
+    SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    Date parse = sdf.parse(date);
+    todo.setStatus(status);
+    todo.setInfo(info);
+    todo.setDeadline(parse);
+    todo.setOwner(user.getUsername());
+    todo.setAddTime(new Date());
+    toDoService.insert(todo);
+    //插入事项，然后返回第一页
+    PageInfo<ToDo> toDoPageInfo = toDoService.selectList(null, 1, ToDo.pageSize);
+    return RespMessageUtils.SUCCESS(toDoPageInfo);
+  }
+
+  @GetMapping("/one")
+  @ResponseBody
+  @ResourceAcquisitionRecorder(resourceType = ResourceType.RECORD, name="获取一则todo事项")
+  @ApiOperation(value="获取一则todo事项",httpMethod = "GET")
+  public String getToDo(@ApiParam(name="id",required = true)Long id, HttpServletRequest request){
+    ToDo toDo = toDoService.selectOne(id);
+    User user = (User) request.getSession().getAttribute("user");
+    if(toDo.getOwner().equals(user.getUsername())){
+      return RespMessageUtils.SUCCESS(toDo);
+    }else{
+      return RespMessageUtils.ERROR("资源不属于您,获取失败。");
+    }
   }
 }

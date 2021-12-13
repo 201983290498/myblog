@@ -50,7 +50,6 @@ public class BlogController {
   @ResourceAcquisitionRecorder(resourceType = ResourceType.HTML, role = "admin", name = "获取blogTable页面")
   @ApiOperation(value = "获取blogTable页面", httpMethod = "GET")
   public String blogTable(ModelMap map, HttpServletRequest request){
-    System.out.println(request.getSession().getAttribute("user"));
     return "/admin/blogTable";
   }
 }
