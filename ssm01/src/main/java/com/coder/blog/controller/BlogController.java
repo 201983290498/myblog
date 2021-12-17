@@ -1,6 +1,9 @@
 package com.coder.blog.controller;
 
 import com.coder.blog.Utils.RespMessageUtils;
+import com.coder.blog.Utils.TableFieldUtils;
+import com.coder.blog.Utils.TimeUtils;
+import com.coder.blog.entity.Blog;
 import com.coder.blog.service.BlogService;
 import com.coder.commom.annotation.Enum.ResourceType;
 import com.coder.commom.annotation.ResourceAcquisitionRecorder;
@@ -51,6 +54,8 @@ public class BlogController {
   @ApiOperation(value = "获取blogTable页面", httpMethod = "GET")
   public String blogTable(ModelMap map, HttpServletRequest request){
     map.addAttribute("tableName","BlogTable");
+    map.addAttribute("tableName_zh","博文表格");
+    TableFieldUtils.renderTable(map,blogService.selectAll(), Blog.class);
     return "/admin/blogTable";
   }
 }

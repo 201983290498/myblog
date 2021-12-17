@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The interface User service.
@@ -39,6 +40,7 @@ public interface UserService {
    * @return the page info
    */
   PageInfo<User> selectAllByPage(int page,int size);
+  List<User> selectAll();
 
   /**
    * 查看用户的总数量

@@ -1,5 +1,6 @@
 package com.coder.blog.entity;
 
+import com.coder.commom.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableField(enableRendering = true)
 public class Blog implements Serializable{
 
 	public static final long serialVersionUID = 1L;
@@ -25,18 +27,22 @@ public class Blog implements Serializable{
   /**
    * 博文的发布者
    */
+  @TableField(column = "发布者")
   private String username;
 
     /** 自增 */
+    @TableField(column = "博文id")
     private Integer id;
 
     /** 博客标题 */
+    @TableField(column = "博文标题")
     private String title;
 
     /** 博客简介/摘要 */
     private String introduction;
 
     /**  */
+    @TableField(column = "关键字")
     private String keyword;
 
     /**
@@ -61,23 +67,31 @@ public class Blog implements Serializable{
     /** 博主推荐,1为推荐，0为普通 */
     private boolean isRecommend;
 
+
+  /**  */
+  @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+  @TableField(column = "创建时间")
+  private Date addTime;
+
     /**  */
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @TableField(column="更新时间")
     private Date updateTime;
 
-    /**  */
-    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
-    private Date addTime;
 
     /** -1为草稿，1为正文 ，2为回收站*/
+    @TableField(column = "博文的状态")
     private Integer status;
 
   /**
    * 获取参数的时候，获取到的是类别名，可能需要单独处理
    */
+    @TableField(column = "博文类型")
     private BlogType type;
 
     /** 博客内容 */
     private String content;
+
+
 
 }

@@ -1,16 +1,14 @@
 package com.coder.blog.service.impl;
 
 import com.coder.blog.dao.VisitRecorderDao;
+import com.coder.blog.entity.visit.Visit;
 import com.coder.blog.entity.visit.VisitRecord;
 import com.coder.blog.service.VisitRecordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The type Visit record service imp.
@@ -54,6 +52,11 @@ public class VisitRecordServiceImp implements VisitRecordService {
   public PageInfo<VisitRecord> selectAllByPage(int page, int size) {
     PageHelper.startPage(page,size);
     return new PageInfo<>(recorderDao.selectAll());
+  }
+
+  @Override
+  public List<VisitRecord> selectAll(){
+    return recorderDao.selectAll();
   }
 
   @Override

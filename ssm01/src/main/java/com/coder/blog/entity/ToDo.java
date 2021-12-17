@@ -1,5 +1,6 @@
 package com.coder.blog.entity;
 
+import com.coder.commom.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableField(enableRendering = true)
 public class ToDo implements Serializable {
 
   static final long serialVersionUID = 1L;
@@ -31,31 +33,37 @@ public class ToDo implements Serializable {
   /**
    * 代做事件的拥有者
    */
+  @TableField(column = "创建者")
   private String owner;
 
   /**
    * 代做事件的信息
    */
+  @TableField(column = "事件内容")
   private String info;
 
   /**
    * 代做事件的状态 0 已做,1 未作, 其他待定可以代表严重程度
    */
+  @TableField(column = "执行状态")
   private Integer status;
 
   /**
    * 添加的时间
    */
   @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+  @TableField(column = "创建时间")
   private Date addTime;
 
   /**
    * 最后期限
    */
   @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+  @TableField(column = "最后期限")
   private Date deadline;
 
   @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+  @TableField(column = "完成时间")
   private Date finishTime;
 
 /**

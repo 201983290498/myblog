@@ -120,6 +120,8 @@ public interface VisitService {
    */
   int updateByPrimaryKey(Visit record);
 
+  List<Visit> selectAll();
+
   /**
    * 根据IP分组查询
    *

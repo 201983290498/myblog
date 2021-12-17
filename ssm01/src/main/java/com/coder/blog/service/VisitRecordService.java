@@ -1,8 +1,10 @@
 package com.coder.blog.service;
 
+import com.coder.blog.entity.visit.Visit;
 import com.coder.blog.entity.visit.VisitRecord;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,7 +51,7 @@ public interface VisitRecordService {
    * @return page info
    */
   PageInfo<VisitRecord> selectAllByPage(int page,int size);
-
+  List<VisitRecord> selectAll();
   /**
    * 获取最近一次的访问资源的频率
    * @return

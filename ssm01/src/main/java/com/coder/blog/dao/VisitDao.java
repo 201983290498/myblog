@@ -40,7 +40,7 @@ public interface VisitDao {
    * @param id 查找的id
    * @return 返回记录 visit
    */
-  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit where id=#{id}")
+  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit where id=#{id} order by time desc")
     Visit selectByPrimaryKey(Integer id);
 
   /**
@@ -49,7 +49,7 @@ public interface VisitDao {
    * @param ip 查询的ip地址
    * @return list
    */
-  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit where ip=#{ip}")
+  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit where ip=#{ip} order by time desc")
     List<Visit> selectVisitPageByIp(@Param("ip") String ip);
 
   /**
@@ -58,7 +58,7 @@ public interface VisitDao {
    * @param sessionId sessionId
    * @return visit
    */
-  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit where sessionId=#{sessionId}")
+  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit where sessionId=#{sessionId} order by time desc")
     Visit selectVisitBySessionId(@Param("sessionId") String sessionId);
 
   /**
@@ -66,8 +66,8 @@ public interface VisitDao {
    *
    * @return list
    */
-  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit)")
-    List<Visit> selectALl();
+  @Select("select id, ip,userAgent, city,url,browserType,platformType, time, sessionId from visit order by time desc")
+    List<Visit> selectAll();
 
   /**
    * 查询访客的总数量

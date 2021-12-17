@@ -42,6 +42,10 @@ public class BlogServiceImp implements BlogService {
     PageInfo<Blog> info = new PageInfo<>(blogDao.selectAll());
     return info;
   }
+  @Override
+  public List<Blog> selectAll(){
+    return blogDao.selectAll();
+  }
 
   @Override
   public PageInfo<Blog> selectListPageByUsername(String username,Integer status,int page,int size) {

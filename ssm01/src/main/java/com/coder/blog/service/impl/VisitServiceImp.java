@@ -97,7 +97,11 @@ public class VisitServiceImp implements VisitService {
   @Override
   public PageInfo<Visit> selectAllByPage(int page, int size) {
     PageHelper.startPage(page,size);
-    return new PageInfo<>(visitDao.selectALl());
+    return new PageInfo<>(visitDao.selectAll());
+  }
+  @Override
+  public List<Visit> selectAll(){
+    return visitDao.selectAll();
   }
 
   @Override

@@ -1,5 +1,6 @@
 package com.coder.blog.service.impl;
 
+import com.coder.blog.Utils.TableFieldUtils;
 import com.coder.blog.dao.ImageDao;
 import com.coder.blog.dao.UserDao;
 import com.coder.blog.entity.Image;
@@ -16,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -73,6 +76,11 @@ public class UserServiceImp implements UserService {
     public PageInfo<User> selectAllByPage(int page, int size) {
       PageHelper.startPage(page,size);
       return new PageInfo<>(userDao.selectList());
+    }
+
+    @Override
+    public List<User> selectAll(){
+      return userDao.selectList();
     }
 
     @Override

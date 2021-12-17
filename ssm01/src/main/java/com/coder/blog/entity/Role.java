@@ -23,4 +23,9 @@ public class Role implements Serializable {
     private String role;
 
     private String permission;
+
+  @Override
+  public String toString() {
+    return  role.toString();
+  }
 }

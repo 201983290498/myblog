@@ -37,9 +37,10 @@ public interface VisitRecorderDao {
    */
   @Results(id="visit_record",value = {
     @Result(property="time",column = "visit_time"),
-    @Result(property = "visit",column = "sessionId", javaType = Visit.class,one = @One(select="com.coder.blog.dao.VisitDao.selectVisitBySessionId",fetchType= FetchType.LAZY))
+    @Result(property = "visit",column = "sessionId", javaType = Visit.class,one = @One(select="com.coder.blog.dao.VisitDao.selectVisitBySessionId",fetchType= FetchType.LAZY)),
+    @Result(property="sessionId",column="sessionId")
   })
-  @Select("select * from visit_record where sessionId=#{arg0}")
+  @Select("select * from visit_record where sessionId=#{arg0} order by time desc")
   List<VisitRecord> selectListPageBySessionId(String sessionId);
 
   /**
@@ -49,8 +50,8 @@ public interface VisitRecorderDao {
    * @return 访问记录 list
    */
   @ResultMap(value="visit_record")
-  @Select("select * from visit_record where username=#{username}")
-  List<VisitRecord> selectListPageByUsername(String username);;
+  @Select("select * from visit_record where username=#{username} order by time desc")
+  List<VisitRecord> selectListPageByUsername(String username);
 
 
   /**
@@ -59,7 +60,7 @@ public interface VisitRecorderDao {
    * @return list
    */
   @ResultMap(value="visit_record")
-  @Select("select * from visit_record")
+  @Select("select * from visit_record order by time desc")
   List<VisitRecord> selectAll();
 
   /**

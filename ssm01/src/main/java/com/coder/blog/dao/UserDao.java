@@ -23,7 +23,8 @@ public interface UserDao {
    * @return 返回查询的结果 ，不存在的话返回空
    */
   @Results(id="stu01",value = {
-            @Result(property = "roles",column = "username",javaType = Set.class ,many = @Many(select = "selectRolesByName") )
+            @Result(property = "roles",column = "username",javaType = Set.class ,many = @Many(select = "selectRolesByName") ),
+            @Result(property = "username",column="username")
     })
     @Select("select * from tbl_user where username = #{param1} or id=#{param1}")
     User selectOne(String account);
@@ -50,7 +51,7 @@ public interface UserDao {
    * @return list
    */
   @ResultMap(value="stu01")
-    @Select("select * from user_table")
+    @Select("select * from tbl_user")
     List<User> selectList();
 
   /**

@@ -1,5 +1,6 @@
 package com.coder.blog.entity.visit;
 
+import com.coder.commom.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@TableField(enableRendering = true)
 public class Visit implements Serializable {
     public static final long serialVersionUID = 1L;
 
@@ -26,18 +28,22 @@ public class Visit implements Serializable {
 
     private Integer id;
 
+    @TableField(column = "访问IP")
     private String ip;
 
     private String userAgent;
 
+    @TableField(column = "城市")
     private String city;
 
     private String url;
 
     /**浏览器类型*/
+    @TableField(column = "浏览器")
     private String browserType;
 
     /** 平台类型 */
+    @TableField(column = "平台")
     private String platformType;
 
 
@@ -45,11 +51,13 @@ public class Visit implements Serializable {
      * 记录登入的时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @TableField(column = "登入时间")
     private Date time;
 
     /**
      * 记录登入的session号，区别两次登入
      */
+    @TableField(column = "Session标识符")
     private String sessionId;
 
   /**

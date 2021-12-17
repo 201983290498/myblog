@@ -1,5 +1,7 @@
 package com.coder.blog.controller.admin;
 
+import com.coder.blog.Utils.TableFieldUtils;
+import com.coder.blog.entity.visit.Visit;
 import com.coder.blog.service.VisitService;
 import com.coder.commom.annotation.Enum.ResourceType;
 import com.coder.commom.annotation.ResourceAcquisitionRecorder;
@@ -37,6 +39,8 @@ public class VisitController {
   @ApiOperation(value = "获取visitTable页面", httpMethod = "GET")
   public String visitTable(ModelMap map, HttpServletRequest request){
     map.addAttribute("tableName","VisitTable");
+    map.addAttribute("tableName_zh","访客记录表");
+    TableFieldUtils.renderTable(map,service.selectAll(), Visit.class);
     return "/admin/visitTable";
   }
 

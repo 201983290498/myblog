@@ -1,10 +1,10 @@
 package com.coder.blog.controller.admin;
 
+import com.coder.blog.Utils.TableFieldUtils;
 import com.coder.blog.entity.User;
 import com.coder.blog.service.UserService;
 import com.coder.commom.annotation.Enum.ResourceType;
 import com.coder.commom.annotation.ResourceAcquisitionRecorder;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author coder
@@ -38,8 +39,10 @@ public class UserTableController {
   @ApiOperation(value = "获取userTable页面", httpMethod = "GET")
   public String userTable(ModelMap map, HttpServletRequest request){
     map.addAttribute("tableName","UserTable");
-    PageInfo<User> pageInfo = userService.selectAllByPage(0, User.pageSize);
-    map.addAttribute("pageInfo",pageInfo);
+    map.addAttribute("tableName_zh","用户表格");
+    List<User> users = userService.selectAll();
+    //对数据进行渲染并放入到map里面
+    TableFieldUtils.renderTable(map,users,User.class);
     return "/admin/userTable";
   }
 }

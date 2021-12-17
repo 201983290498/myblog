@@ -19,12 +19,16 @@
   <link rel="stylesheet" th:href="@{/admintle/plugins/jqvmap/jqvmap.min.css}">
   <!-- 主题样式 -->
   <link rel="stylesheet" th:href="@{/admintle/dist/css/adminlte.min.css}">
+  <!-- Toastr -->
+  <link rel="stylesheet" th:href="@{/admintle/plugins/toastr/toastr.min.css}">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" th:href="@{/admintle/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
   <!-- Daterange picker -->
   <link rel="stylesheet" th:href="@{/admintle/plugins/daterangepicker/daterangepicker.css}">
   <!-- summernote -->
   <link rel="stylesheet" th:href="@{/admintle/plugins/summernote/summernote-bs4.min.css}">
+
+
   <style>
     .hide{
       display: none;
@@ -1277,7 +1281,8 @@
 <script th:src="@{/admintle/dist/js/demo.js}"></script>
 <!-- AdminLTE 仪表盘演示（仅用于演示） -->
 <script th:src="@{/admintle/dist/js/pages/dashboard.js}"></script>
-
+<!-- Toastr -->
+<script th:src="@{/admintle/plugins/toastr/toastr.min.js}"></script>
 
 <script th:inline="javascript">
   (function (){
@@ -1313,11 +1318,11 @@
               $("#todoModal").addClass("hide");
               setToDoList(rs.data);
             }else{
-              alert("新增待做事项失败");
+              toastr.error("新增待做事项失败");
             }
           },
           error: function(rs){
-            alert("新增待做事项失败");
+            toastr.error("新增待做事项失败");
           }
         })
       })
@@ -1375,7 +1380,7 @@
             if(rs.result){
               setToDoList(rs.data);
             }else{
-              console.log("error");
+              toastr.warning("error");
             }
             $('#closeModal').click();
           },
@@ -1400,11 +1405,11 @@
         if(rs.result){
           DrawsaleChart('revenue-chart-canvas',rs.data.dates,rs.data.blogNumbers,rs.data.visits)
         }else{
-          console.error(rs.message);
+          toastr.error(rs.message);
         }
       },
       error: (rs)=>{
-        console.error("服务器或者网络问题无法获取图标1的数据");
+        toastr.error("服务器或者网络问题无法获取图标1的数据");
       }
     });
     //画环形图
@@ -1699,7 +1704,6 @@
 
     function pageIconClick(page){
       const item = $('i.changeList')[0]
-      console.log(item)
       refreshToDoList(page,item.dataset.status);
     }
 

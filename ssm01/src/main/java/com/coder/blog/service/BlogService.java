@@ -24,6 +24,7 @@ public interface BlogService {
    * @return
    */
   PageInfo<Blog> selectAllPage(int page,int size);
+  List<Blog> selectAll();
 
   /**
    * 安业获取某个用户的博文
