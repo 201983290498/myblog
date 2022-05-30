@@ -119,5 +119,14 @@ public class User implements Serializable {
         this.username = username;
         this.createTime = createTime;
         this.imageId = imageId;
-    }
+  }
+
+  public Boolean hasRole(String rolename){
+      for(Role role: roles){
+          if(role.getRole().equals(rolename)) {
+              return true;
+          }
+      }
+      return false;
+  }
 }

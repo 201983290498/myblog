@@ -31,9 +31,9 @@ public class IpFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        //获取到用户的IP
+        //过滤器先获取到请求体和响应体，然后从请求体中获取IP地址
         String ip= UserIpUtils.getIp(request);
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession();// 获取到session
         ServletContext servletContext = session.getServletContext();
         BlackIp blackIp = null;
         BlackIpService blackIpServiceImpl = null;

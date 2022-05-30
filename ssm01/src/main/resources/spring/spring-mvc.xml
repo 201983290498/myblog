@@ -7,7 +7,7 @@
                             http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-
+    <!--  注入springMvc的功能类，通过配置先注入核心的配置类，在配置类中注入响应的程序 -->
     <context:component-scan base-package="com.coder.blog.config" use-default-filters="false">
         <context:include-filter type="assignable" expression="com.coder.blog.config.SpringMvcConfig"/>
     </context:component-scan>
@@ -15,7 +15,7 @@
     <mvc:annotation-driven/>
 
     <!--配置视图解析器-->
-<!--    会根据视图名称自动配置相应的视图解析器-->
+    <!--  会根据视图名称自动配置相应的视图解析器,返回的字符窜会自动交给模板引擎，然后用响应体的内容去渲染视图，返回页面给前端 -->
     <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="order" value="1"/>
         <property name="characterEncoding" value="UTF-8"/>
@@ -38,7 +38,7 @@
     </bean>
 
 
-<!-- 文件封装器 -->
+    <!-- 文件封装器 -->
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
 
 

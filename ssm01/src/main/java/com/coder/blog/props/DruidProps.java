@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 /**
  * The type Druid props.
+ * 属性注入类，自动注入配置文件中的属性。
  *
  * @Author coder
  * @Date 2021 /11/25 0:33

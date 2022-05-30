@@ -5,15 +5,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                             http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--    只能使用一次-->
-    <context:property-placeholder location="classpath:application.properties"/>
+    <!--    只能使用一次，属性注入 -->
+    <context:property-placeholder location="classpath:properties/*.properties"/>
 
 
-    <!--    开启注解扫描-->
+    <!-- 开启注解扫描功能 -->
     <context:annotation-config/>
 
 
-    <!--    Spring工厂的扫描-->
+    <!-- Spring工厂的扫描，注入最基本的SpringIoc容器 -->
     <context:component-scan base-package="com.coder.blog">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
         <context:exclude-filter type="assignable" expression="com.coder.blog.config.SpringMvcConfig"/>

@@ -9,8 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mybatis_druid" />
         <module name="ssm1" />
+        <module name="shrioTest" />
         <module name="ssm01" />
-        <module name="shrio" />
       </profile>
     </annotationProcessing>
   </component>

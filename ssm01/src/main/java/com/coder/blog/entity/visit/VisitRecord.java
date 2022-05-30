@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * The type Visit record.
+ * 浏览访问记录
  *
  * @Author coder
  * @Date 2021 /12/4 15:32

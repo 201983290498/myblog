@@ -23,7 +23,7 @@ import java.util.*;
 
 
 /**
- * 专门负责用户的登入和注册
+ * 专门负责用户的登入和注册的账号管理的类
  *
  * @Author coder
  * @Date 2021 /11/29 19:54
@@ -34,7 +34,7 @@ import java.util.*;
 @RequestMapping("/users")
 @Api(value = "账户登入、注册Contoller")
 /*
-镇压自动注入的问题
+镇压因mabatis自动注入导致的问题
 @SuppressWarnings("all")
 */
 public class AccountController {
@@ -46,7 +46,7 @@ public class AccountController {
     private final ShiroProps shiroProps;
 
     /**
-     * Instantiates a new Account controller.
+     * Instantiates a new Account controller and finish the automatic injection.
      *
      * @param userService      the user service
      * @param messageQueUntils the message que untils
@@ -99,10 +99,11 @@ public class AccountController {
     @ApiOperation(value="登入", notes = "登入成功,跳转到dashboard页面，失败跳转到error页面", httpMethod = "POST")
     public String login(String username, String password, ModelMap map, HttpServletRequest request){
         if(userService.login(new User(username, password))) {
-          User user = userService.selectOne(username);
+            User user = userService.selectOne(username);
+            System.out.println(user);
           //记录登入信息
             request.getSession().setAttribute("user",new User(username,new Date(System.currentTimeMillis()),user.getImageId()));
-            if(username.equals(shiroProps.getAdmin())){
+            if(username.equals(shiroProps.getAdmin())||user.hasRole("admin")){
               return "forward:/admin/dashBoard";
             }
             return "forward:/account/dashBoard";
@@ -113,17 +114,17 @@ public class AccountController {
     }
 
 
-  /**
-   * Register string.
-   *
-   * @param user         the user
-   * @param photo        the photo
-   * @param repeatPwd    the repeat pwd
-   * @param validateData the validate data
-   * @param map          the map
-   * @return the string
-   */
-  @AccessLimit(seconds = 1)
+   /**
+    * Register string.
+    *
+    * @param user         the user
+    * @param photo        the photo
+    * @param repeatPwd    the repeat pwd
+    * @param validateData the validate data
+    * @param map          the map
+    * @return the string
+    */
+    @AccessLimit(seconds = 1)
     @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name = "注册用户修改")
     @PostMapping("/register")
     @ApiOperation(value="账号注册",notes = "注册成功返回登入页面，失败跳转到失败页面，交代失败的原因", httpMethod = "POST")

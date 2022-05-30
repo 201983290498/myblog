@@ -8,10 +8,9 @@ import org.springframework.ui.ModelMap;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * The type Resp message utils.
+ * The type resp message utils.统一响应信息处理类
  *
  * @Author coder
  * @Date 2021 /11/29 21:44
@@ -22,11 +21,26 @@ import java.util.Map;
 @NoArgsConstructor
 public class RespMessageUtils {
 
+    /**
+     * 状态
+     */
     private Boolean result;
 
+    /**
+     * 详细的错误信息
+     */
     private String msg;
-    /** 数据 */
+
+    /**
+     * 需要传输的数据
+     */
     private Object data;
+
+    /**
+     * 状态码
+     */
+    private Integer statusCode;
+
 
     private int size;
 
@@ -100,12 +114,13 @@ public class RespMessageUtils {
     }
 
   /**
-   * 产生错误信息队列
+   * 可能产生的错误比较多,因此在响应体中返回ERRORS作为所有错误的总称
    *
    * @param map  the map
    * @param args the args
    */
   public static void generateErrorInfo(ModelMap map, String[] args){
+      // TODO errors待定义为一个固定的常量
         Object error = map.getAttribute("errors");
         List<String> errors  = new LinkedList<>();
         if(error == null) {
@@ -114,6 +129,8 @@ public class RespMessageUtils {
             errors = (List<String>) error;
             errors.add("用户名和密码错误");
         }
+        //响应的信息，应该是放到response响应体的话可以在前端直接获取到
+       // TODO errors待定义为一个固定的常量
         map.addAttribute("errors",errors);
     }
 

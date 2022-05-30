@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * 对标注了访问限制的方法进行拦截，
  * 避免过度修改数据库，带来的数据库压力,将数据写入session来限制访问
  * 对修改方法的限制
+ * 对访问和修改数据库的频率做出限制
  *
  * @author coder
  */
