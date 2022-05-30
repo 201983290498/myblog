@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 
 /**
  * The type User ip utils.
+ * 主要的功能是通过多种方式是获取http报文中的IP地址
  *
  * @Author coder
  * @Date 2021 /11/26 21:29

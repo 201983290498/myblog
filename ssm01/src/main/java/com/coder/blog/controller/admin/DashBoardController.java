@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,7 +49,7 @@ public class DashBoardController {
   @ResourceAcquisitionRecorder(name="控制信息主页面")
   @ApiOperation(value = "中台控制端主页", notes = "支持多种方法的访问", httpMethod = "GET")
   @RequestMapping(value = "/dashBoard",method = {RequestMethod.GET,RequestMethod.POST})
-  public String dashBoard(HttpServletRequest request,ModelMap map){
+  public String dashBoard(@NotNull HttpServletRequest request, ModelMap map){
     User user = (User)request.getSession().getAttribute("user");
     //获取不同状态的博客的数量
     service.getBlogCountByStatus(map);

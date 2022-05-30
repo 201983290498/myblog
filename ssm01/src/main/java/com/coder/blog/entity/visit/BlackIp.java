@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * The type Black ip.
- *
+ * IP地址的实体类
  * @Author coder
  * @Date 2021 /11/26 21:31
  * @Description

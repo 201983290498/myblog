@@ -46,16 +46,16 @@ public class LoginAop {
     }
 
   /**
-   * 登入切入点
+   * 定义登入切入点
    */
   @Pointcut("execution(public * com.coder.blog.controller.AccountController.login(..))")
     public void loginPoint(){
     }
 
   /**
-   * 注册切入点
+   * 定义注册切入点
    */
-  @Pointcut("execution(public * com.coder.blog.controller.AccountController.register(..))")
+@Pointcut("execution(public * com.coder.blog.controller.AccountController.register(..))")
     public void registerPoint(){
     }
 
@@ -66,7 +66,7 @@ public class LoginAop {
    * @return object
    * @throws Throwable the throwable
    */
-  @Order(1)
+    @Order(1)
     @Around("loginPoint()")
     public Object aroundLogin(ProceedingJoinPoint joinPoint) throws Throwable {
         boolean flag = true;
@@ -105,10 +105,12 @@ public class LoginAop {
    * @return the object
    * @throws Throwable the throwable
    */
-  @Order(1)
+    @Order(1)
     @Around("registerPoint()")
     public Object Register(ProceedingJoinPoint joinPoint) throws Throwable {
+        //获取到被切入点的所有参数
         Object[] args = joinPoint.getArgs();
+        // 获取到第一个参数，注册的用户对象
         User user = (User) args[0];
         String plainText2 = (String) args[2];
         String plainText1 = user.getPassword();

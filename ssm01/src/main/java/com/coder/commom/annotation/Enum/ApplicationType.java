@@ -16,5 +16,11 @@ public enum ApplicationType {
     /**
      * 智能云相册
      */
-    AIPHOTO
+    AIPHOTO,
+
+    /**
+     * 实验相关的接口
+     */
+    EXPERIMENT
+
 }

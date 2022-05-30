@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * The type Common intercepter.
+ * 公共拦截器获取，主要的功能包括了
  *
  * @Author coder
  * @Date 2021 /11/27 13:14
@@ -38,13 +39,19 @@ public class CommonIntercepter implements HandlerInterceptor {
             HandlerMethod hm = (HandlerMethod) handler;
             AccessLimit accessLimit = hm.getMethodAnnotation(AccessLimit.class);
             ResourceAcquisitionRecorder recorder = hm.getMethodAnnotation(ResourceAcquisitionRecorder.class);
+          //获取URI
           String requestURI = request.getRequestURI();
-          Boolean flag = true;
-          if(requestURI.matches("(.*)css$")||requestURI.matches("(.*)js$")){
-            flag = false;
+          //静态资源直接放行，包括了visitProps中的publicResource属性
+          boolean flag = true;
+          for(String publicResource : visitProps.getPublicResources()){
+              if (requestURI.matches("(.*)" + publicResource + "$")) {
+                  flag = false;
+                  break;
+              }
           }
           /**
            * 拦截的请求不拦截获取资源记录的请求
+           * 在session结构体中写入ip: ResquestIp结构
            */
           if(flag&&accessLimit==null&&recorder!=null&&recorder.resourceType()!= ResourceType.RECORD){
                 response.setCharacterEncoding("utf-8");
@@ -57,7 +64,7 @@ public class CommonIntercepter implements HandlerInterceptor {
                     re.setIp(ip);
                 }else{
                     long createTime = re.getCreateTime();
-                    if((System.currentTimeMillis()-createTime)/1000>visitProps.getSeconds()){
+                    if((System.currentTimeMillis()-createTime) / 1000 > visitProps.getSeconds()){
                         re = new RequestIp();
                         re.setReCount(1);
                         re.setCreateTime(System.currentTimeMillis());
@@ -65,6 +72,7 @@ public class CommonIntercepter implements HandlerInterceptor {
                     }else{
                         if(re.getReCount()>visitProps.getMaxCount()){
                             response.setCharacterEncoding("utf-8");
+                            //直接给网页写个script脚本执行
                             OutputStream outputStream = response.getOutputStream();
                             outputStream.write("<script>alert('the frequently of visit is too height!')</script>".getBytes(StandardCharsets.UTF_8));
                             outputStream.flush();

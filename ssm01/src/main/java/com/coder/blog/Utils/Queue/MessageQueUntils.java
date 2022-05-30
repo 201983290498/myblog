@@ -14,8 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * The type Message que untils.
- *
+ * The type Message queue untils.
+ * The management of verification code including sending, checking and valid Message queue
  * @Author coder
  * @Date 2021 /12/1 20:20
  * @Description
@@ -73,6 +73,7 @@ public class MessageQueUntils {
         }
     }
 
+
     private boolean sendHtmlMail(String receiveEmail, String name,String code){
         try{
             JavaMailSenderImpl sender = new JavaMailSenderImpl();
@@ -110,7 +111,7 @@ public class MessageQueUntils {
             /* 让服务器去认证用户名和密码 */
             prop.put("mail.smtp.auth", "true");
             /* 连接超时时间 */
-            prop.put("mail.smtp.timeout", "2500");
+            prop.put("mail.smtp.timeout", "4000");
             sender.setJavaMailProperties(prop);
             sender.send(mailMessage);
             return true;

@@ -27,7 +27,7 @@ public class SpringContextConfig {
     public EmailProps emailProps(){return new EmailProps();}
 
     /**
-     * Message que untils message que untils.
+     * 注入邮箱
      *
      * @param emailProps the email props
      * @return the message que untils
