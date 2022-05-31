@@ -50,7 +50,7 @@
 
     <filter>
         <filter-name>ipFilter</filter-name>
-        <filter-class>com.coder.blog.fliter.IpFilter</filter-class>
+        <filter-class>com.coder.commonBase.fliter.IpFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ipFilter</filter-name>
@@ -67,7 +67,7 @@
     </listener>
 
     <listener>
-        <listener-class>com.coder.blog.listener.VisitTimeListener</listener-class>
+        <listener-class>com.coder.commonBase.listener.VisitTimeListener</listener-class>
     </listener>
 
     <!--配置springMVC的前端控制器DispatcherServlet-->

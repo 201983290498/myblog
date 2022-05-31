@@ -14,9 +14,9 @@
 
 
     <!-- Spring工厂的扫描，注入最基本的SpringIoc容器 -->
-    <context:component-scan base-package="com.coder.blog">
+    <context:component-scan base-package="com.coder.commonBase">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-        <context:exclude-filter type="assignable" expression="com.coder.blog.config.SpringMvcConfig"/>
+        <context:exclude-filter type="assignable" expression="com.coder.commonBase.config.SpringMvcConfig"/>
     </context:component-scan>
 
 

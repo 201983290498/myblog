@@ -8,10 +8,10 @@
                            http://www.springframework.org/schema/mvc  http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--  注入springMvc的功能类，通过配置先注入核心的配置类，在配置类中注入响应的程序 -->
-    <context:component-scan base-package="com.coder.blog.config" use-default-filters="false">
-        <context:include-filter type="assignable" expression="com.coder.blog.config.SpringMvcConfig"/>
+    <context:component-scan base-package="com.coder.commonBase.config" use-default-filters="false">
+        <context:include-filter type="assignable" expression="com.coder.commonBase.config.SpringMvcConfig"/>
     </context:component-scan>
-    <bean class="com.coder.blog.props.SwaggerConfig"/>
+    <bean class="com.coder.commonBase.props.SwaggerConfig"/>
     <mvc:annotation-driven/>
 
     <!--配置视图解析器-->
@@ -45,9 +45,9 @@
     <mvc:interceptors>
         <!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->
         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
-        <bean class="com.coder.blog.intercepter.AccessIntercepter"/>
-        <bean class="com.coder.blog.intercepter.CommonIntercepter"/>
-        <bean class="com.coder.blog.intercepter.VisitorInterceptor"/>
+        <bean class="com.coder.commonBase.intercepter.AccessIntercepter"/>
+        <bean class="com.coder.commonBase.intercepter.CommonIntercepter"/>
+        <bean class="com.coder.commonBase.intercepter.VisitorInterceptor"/>
     </mvc:interceptors>
     
 <!--    开启静态资源配置-->

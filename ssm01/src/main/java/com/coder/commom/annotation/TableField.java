@@ -21,6 +21,12 @@ public @interface TableField {
   String column() default "未知";
 
   /**
+   * 标注在类上的时候返回的时对应的表格名称
+   * @return
+   */
+  String tableName() default "未知";
+
+  /**
    * 标注在方法上，代表是否开启渲染还是原表呈现
    */
   boolean enableRendering() default false;

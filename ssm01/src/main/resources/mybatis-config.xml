@@ -10,7 +10,7 @@
     </settings>
 
     <mappers>
-        <package name="com.coder.blog.dao"/>
+        <package name="com.coder.commonBase.dao"/>
     </mappers>
 
 </configuration>
