@@ -99,7 +99,7 @@ public class VersionServiceImp implements VersionService {
      * @param version 待更新的节点
      */
     @Override
-    public void UpdateOne(Version version) {
+    public void updateOne(Version version) {
         //重置前后节点的信息
         version.setPreVersion(Joiner.on(",").join(version.getPreVersions()));
         version.setNextVersion(Joiner.on(",").join(version.getNextVersions()));

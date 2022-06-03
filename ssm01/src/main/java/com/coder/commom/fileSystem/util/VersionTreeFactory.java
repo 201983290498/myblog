@@ -87,7 +87,19 @@ public class VersionTreeFactory {
                 queue.add(versionTree.dots.get(nextVersion));
             }
         }
+        //对数据库进行修改
         versionService.deleteListByIds(children);
+        //对根节点进行修改
+        root.nextVersions.clear();
+        versionService.updateOne(root);
+        //树本身进行修改, 其中包括了点的信息 和 该点对应边的信息
+        for(String deleteId: children){
+            versionTree.dots.remove(deleteId);
+            versionTree.versionGraph.remove(deleteId);
+        }
+        //删除该点出去的边
+        versionTree.dots.put(root.getVersionId(),root);
+        versionTree.versionGraph.get(root.getVersionId()).clear();
         return true;
     }
 
@@ -100,8 +112,22 @@ public class VersionTreeFactory {
      */
     public boolean cutVersionTree(VersionTreeGraph versionTree, String cutPoint, boolean include){
         cutVersionTree(versionTree, cutPoint);
+        Version cutVersion = versionTree.dots.get(cutPoint);
         if(include){
-
+            for(String faId: cutVersion.getPreVersions()){
+                //todo 检测一下，当从map取出一个结构体进行修改的时候树本身是否发生修改
+                Version faVersion = versionTree.dots.get(faId);
+                faVersion.nextVersions.remove(cutPoint);
+                versionService.updateOne(faVersion);
+                //删除父亲节点的边
+                List<VersionEdge> versionEdges = versionTree.versionGraph.get(faId);
+                for(int i=0;i<versionEdges.size();i++){
+                    if(versionEdges.get(i).getVersionFromId().equals(faId) && versionEdges.get(i).getVersionToId().equals(cutPoint) ){
+                        versionEdges.remove(i);
+                    }
+                }
+            }
+            versionService.delete(cutVersion);
         }
         return true;
     }

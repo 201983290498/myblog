@@ -41,10 +41,10 @@ public class Version {
     /**
      * 之前的所有版本号, 非存储字段, 在service层自动处理获取
      */
-    List<String> preVersions;
+    public List<String> preVersions;
 
     /**
      * 之后的所有版本号, 存储字段, 在service层自动处理获取,空值返回空列表
      */
-    List<String> nextVersions;
+    public List<String> nextVersions;
 }

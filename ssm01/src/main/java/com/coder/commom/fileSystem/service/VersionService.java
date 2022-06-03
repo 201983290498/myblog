@@ -47,7 +47,7 @@ public interface VersionService {
      * 更新某个节点的信息
      * @param version 待更新的节点
      */
-    void UpdateOne(Version version);
+    void updateOne(Version version);
 
     /**
      * 批量删除
