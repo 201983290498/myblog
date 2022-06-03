@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Author coder
@@ -18,11 +19,12 @@ import java.util.List;
 @TableField(tableName = "version_management")
 public class Version {
 
+
     /**
-     * 版本号
+     * 版本号, 唯一标识某个文件的某个状态
      */
-    @TableField(column = "当前的版本id")
-    String versionId;
+    @TableField(column = "当前的版本id", tableColumn = "version_id")
+    String versionId=UUID.randomUUID().toString();
 
     /**
      * 前一个版本的versionId,方便存储以逗号分隔开
@@ -42,7 +44,7 @@ public class Version {
     List<String> preVersions;
 
     /**
-     * 之后的所有版本号, 存储字段, 在service层自动处理获取
+     * 之后的所有版本号, 存储字段, 在service层自动处理获取,空值返回空列表
      */
     List<String> nextVersions;
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  * @Date 2022/5/31 0:24
  * @Description
  */
-@Service("versionServiceImpl")
+@Service("versionServiceImp")
 @Data
 public class VersionServiceImp implements VersionService {
 
@@ -42,14 +43,14 @@ public class VersionServiceImp implements VersionService {
 
     /**
      * TODO 删除某个分支，需要进行身份认证，可以通过AOP检查拦截检查
+     * TODO 需要检查它的前缀是否都删除，由文件类保证
      * 删除某个分支，以及之后的所有子节点，
-     * 因为是一颗树,需要用一个先广度优先搜索将所有的子节点找到
+     * 树的构建交给文件，文件中有个集合包含了所有的版本id，由他来删除所有的版本
      * @param version
      */
     @Override
     public boolean delete(Version version) {
-
-
+        versionDao.delete(version);
         return true;
     }
 
@@ -61,8 +62,73 @@ public class VersionServiceImp implements VersionService {
     @Override
     public Version selectOne(String versionId) {
         Version version = versionDao.selectOneById(versionId);
-        version.setPreVersions(List.of(version.getPreVersion().split(",")));
-        version.setPreVersions(List.of(version.getNextVersion().split(",")));
+        getNeiberVersions(version);
         return version;
     }
+
+    /**
+     * 向上层文件提供一个版本相关的详细信息的方式
+     * @param version 更新对应的文件的版本信息
+     */
+    @Override
+    public void setFileVersion(Version version){
+        Version newVersion = selectOne(version.getVersionId());
+        version.setNextVersions(newVersion.getNextVersions());
+        version.setNextVersion(newVersion.getNextVersion());
+        version.setPreVersions(newVersion.getPreVersions());
+        version.setPreVersion(newVersion.getPreVersion());
+    }
+
+    /**
+     * 获取到所有的版本号
+     * @param versionIds 版本id集合
+     * @return
+     */
+    @Override
+    public List<Version> selectList(List<String> versionIds) {
+        List<Version> versions = versionDao.selectListByIds(versionIds);
+        for(Version version: versions){
+          getNeiberVersions(version);
+        }
+        return versions;
+    }
+
+    /**
+     * 更新某个节点的信息
+     *
+     * @param version 待更新的节点
+     */
+    @Override
+    public void UpdateOne(Version version) {
+        //重置前后节点的信息
+        version.setPreVersion(Joiner.on(",").join(version.getPreVersions()));
+        version.setNextVersion(Joiner.on(",").join(version.getNextVersions()));
+        versionDao.updateOne(version);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param children 批量删除的节点集合
+     */
+    @Override
+    public void deleteListByIds(List<String> versionIds) {
+        versionDao.deleteListByIds(versionIds);
+    }
+
+    /**
+     * 获取到附近的点
+     * @param version 需要进一步处理的version
+     */
+    private static void getNeiberVersions(Version version) {
+        if(version.getPreVersion()==null) {
+            version.setPreVersion("");
+        }
+        if(version.getNextVersion() == null) {
+            version.setNextVersion("");
+        }
+        version.setPreVersions(List.of(version.getPreVersion().split(",")));
+        version.setNextVersions(List.of(version.getNextVersion().split(",")));
+    }
+
 }
