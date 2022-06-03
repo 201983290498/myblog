@@ -27,8 +27,8 @@ public class Blog implements Serializable{
   /**
    * 博文的发布者
    */
-  @TableField(column = "发布者")
-  private String username;
+    @TableField(column = "发布者")
+    private String username;
 
     /** 自增 */
     @TableField(column = "博文id")
@@ -91,7 +91,6 @@ public class Blog implements Serializable{
 
     /** 博客内容 */
     private String content;
-
 
 
 }

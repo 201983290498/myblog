@@ -35,17 +35,17 @@ public enum BlogType {
   }
 
   public static BlogType getBlogType(String type) {
-    if(type.equals("工程技术")){
+    if("工程技术".equals(type)){
       return SoftwareTechnologies;
-    }else if(type.equals("人工智能")){
+    }else if("人工智能".equals(type)){
       return AITechnologies;
-    }else if(type.equals("基础理论")){
+    }else if("基础理论".equals(type)){
       return BasicTheories;
-    }else if(type.equals("生活随笔")){
+    }else if("生活随笔".equals(type)){
       return Article;
-    }else if(type.equals("日记")){
+    }else if("日记".equals(type)){
       return Diary;
-    }else if(type.equals("话题")){
+    }else if("话题".equals(type)){
       return Topic;
     }else{
       return Others;
