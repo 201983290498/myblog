@@ -23,8 +23,8 @@ public interface FileDao {
      * @param file
      * @return
      */
-    @Insert("insert into " + TBLNAME + "(file_id,filename, username, file_type, modified_time, filepath, version_id) " +
-            "values(#{fileId},#{fileName},#{username},#{fileType}, #{modifiedTime}, #{filepath}, #{versionId})")
+    @Insert("insert into " + TBLNAME + "(file_id,filename, username, file_type, update_time, filepath, version_id) " +
+            "values(#{fileId},#{fileName},#{username},#{fileType}, #{updateTime}, #{filepath}, #{versionId})")
     int insert(File file);
 
     /**
@@ -34,7 +34,7 @@ public interface FileDao {
      */
     @Results(id="file", value = {
             @Result(property = "fileId", column = "file_id"),
-            @Result(property = "modifiedTime", column = "modified_time"),
+            @Result(property = "updateTime", column = "update_time"),
             @Result(property = "fileType", column = "file_type"),
             @Result(property = "isActive", column = "is_active"),
             @Result(property = "versionId", column = "version_id")

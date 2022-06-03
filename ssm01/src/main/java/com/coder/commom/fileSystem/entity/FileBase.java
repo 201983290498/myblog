@@ -3,6 +3,7 @@ package com.coder.commom.fileSystem.entity;
 import com.coder.commom.annotation.Enum.FileType;
 import com.coder.commom.annotation.TableField;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -33,7 +34,8 @@ public class FileBase extends Version{
      * 文件的修改时间
      */
     @TableField(column = "修改时间")
-    Date modifiedTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    public Date updateTime;
 
     /**
      * 文件类型

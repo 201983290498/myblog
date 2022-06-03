@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import com.coder.commom.fileSystem.entity.File;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,17 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableField(enableRendering = true)
-public class Blog implements Serializable{
+public class Blog implements Serializable extends File{
 
 	public static final long serialVersionUID = 1L;
 
   public static final long pageSize =15;
 
-  /**
-   * 博文的发布者
-   */
-    @TableField(column = "发布者")
-    private String username;
 
     /** 自增 */
     @TableField(column = "博文id")
@@ -73,10 +69,7 @@ public class Blog implements Serializable{
   @TableField(column = "创建时间")
   private Date addTime;
 
-    /**  */
-    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
-    @TableField(column="更新时间")
-    private Date updateTime;
+
 
 
     /** -1为草稿，1为正文 ，2为回收站*/
