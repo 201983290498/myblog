@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableField(enableRendering = true)
-public class Blog implements Serializable extends File{
+public class Blog extends File  implements Serializable{
 
 	public static final long serialVersionUID = 1L;
 

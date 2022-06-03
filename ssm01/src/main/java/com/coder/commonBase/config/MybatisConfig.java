@@ -93,7 +93,7 @@ public class MybatisConfig {
     public SqlSessionFactory sqlSessionFactory(DruidDataSource druidDataSource,Interceptor pageInterceptor) throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(druidDataSource);
-        factoryBean.setTypeAliasesPackage("com.coder.commonBase.entity,com.coder.commom.fileSystem.dao");
+        factoryBean.setTypeAliasesPackage("com.coder.commonBase.entity,com.coder.commom.fileSystem.entity");
         try {
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
         } catch (IOException e) {

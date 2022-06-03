@@ -19,6 +19,8 @@ import java.util.Map;
 @CacheNamespace(blocking = true)
 public interface VisitRecorderDao {
 
+  String TBLNAME = "visit_record";
+
   /**
    * 插入访问记录
    *
@@ -69,4 +71,13 @@ public interface VisitRecorderDao {
    * @return
    */
   Integer selectCount(Map<String, Object> map);
+
+  /**
+   * 查看某条记录是否已经存在
+   * @param visitRecord 访问记录
+   * @return 不存在-0 存在-1
+   */
+  @Select("select count(*) from" + TBLNAME +
+          "where ip=#{ip} and url=#{url} and visit_time=#{visitTime}")
+  int isExist(VisitRecord visitRecord);
 }

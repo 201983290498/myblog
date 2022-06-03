@@ -32,7 +32,9 @@ public class VisitRecordServiceImp implements VisitRecordService {
 
   @Override
   public void insert(VisitRecord visitRecord) {
-    recorderDao.insert(visitRecord);
+    if(recorderDao.isExist(visitRecord)==0){
+      recorderDao.insert(visitRecord);
+    }
   }
 
   @Override
