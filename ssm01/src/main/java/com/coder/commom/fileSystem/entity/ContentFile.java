@@ -1,5 +1,4 @@
-package com.coder.commom.fileSystem.entity;
-
+﻿package com.coder.commom.fileSystem.entity;
 import com.coder.commom.annotation.Enum.FileType;
 import com.coder.commom.annotation.TableField;
 import lombok.Data;

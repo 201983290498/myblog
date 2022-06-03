@@ -93,7 +93,7 @@ public class MybatisConfig {
     public SqlSessionFactory sqlSessionFactory(DruidDataSource druidDataSource,Interceptor pageInterceptor) throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(druidDataSource);
-        factoryBean.setTypeAliasesPackage("com.coder.commonBase.entity");
+        factoryBean.setTypeAliasesPackage("com.coder.commonBase.entity,com.coder.commom.fileSystem.dao");
         try {
             factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
         } catch (IOException e) {
@@ -118,7 +118,7 @@ public class MybatisConfig {
     public MapperScannerConfigurer mapperScannerConfigurer(){
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-        mapperScannerConfigurer.setBasePackage("com.coder.commonBase.dao");
+        mapperScannerConfigurer.setBasePackage("com.coder.commonBase.dao,com.coder.commom.fileSystem.dao");
         return mapperScannerConfigurer;
     }
 

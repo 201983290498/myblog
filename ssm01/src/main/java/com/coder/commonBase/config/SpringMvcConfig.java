@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
  */
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@ComponentScan(value = "com.coder.commonBase",useDefaultFilters = false, includeFilters = {
+@ComponentScan(basePackages = {"com.coder.commonBase","com.coder.commom.fileSystem"},useDefaultFilters = false, includeFilters = {
         @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class)
 })
 public class SpringMvcConfig {

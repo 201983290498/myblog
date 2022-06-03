@@ -11,6 +11,7 @@
 
     <mappers>
         <package name="com.coder.commonBase.dao"/>
+        <package name="com.coder.commom.fileSystem.dao"/>
     </mappers>
 
 </configuration>
