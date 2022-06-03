@@ -21,6 +21,14 @@ public @interface TableField {
   String column() default "未知";
 
   /**
+   * 在数据表中的名称
+   * @return
+   */
+  String tableColumn() default "未知";
+
+  boolean isKey() default false;
+  
+  /**
    * 标注在类上的时候返回的时对应的表格名称
    * @return
    */
