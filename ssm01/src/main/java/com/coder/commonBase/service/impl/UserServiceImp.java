@@ -1,5 +1,9 @@
 package com.coder.commonBase.service.impl;
 
+import com.coder.commom.fileSystem.entity.File;
+import com.coder.commom.fileSystem.entity.FileBase;
+import com.coder.commom.fileSystem.service.ContentFileService;
+import com.coder.commom.fileSystem.service.imp.FileServiceImp;
 import com.coder.commonBase.dao.UserDao;
 import com.coder.commonBase.entity.User;
 import com.coder.commonBase.service.ImageService;
@@ -7,6 +11,7 @@ import com.coder.commonBase.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

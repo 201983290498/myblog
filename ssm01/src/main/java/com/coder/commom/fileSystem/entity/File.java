@@ -28,4 +28,5 @@ public class File extends FileBase{
      * 版本树，只有在必要的时候通过VersionTreeGraphUtil 获取
      */
     VersionTreeGraph versionTree = null;
+
 }

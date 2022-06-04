@@ -2,6 +2,7 @@ package com.coder.commom.fileSystem.dao;
 
 
 import com.coder.commom.fileSystem.entity.File;
+import com.coder.commom.fileSystem.entity.FileBase;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public interface FileDao {
      * @param file
      * @return
      */
-    @Insert("insert into " + TBLNAME + "(file_id,filename, username, file_type, update_time, filepath, version_id) " +
-            "values(#{fileId},#{fileName},#{username},#{fileType}, #{updateTime}, #{filepath}, #{versionId})")
-    int insert(File file);
+    @Insert("insert into " + TBLNAME + "(file_id,filename, username, file_type, update_time, filepath, version_id, is_active) " +
+            "values(#{fileId},#{filename},#{username},#{fileType}, #{updateTime}, #{filepath}, #{versionId}, #{isActive})")
+    int insert(FileBase file);
 
     /**
      * 按照file_id找一个当前活跃的文件
@@ -39,12 +40,22 @@ public interface FileDao {
             @Result(property = "isActive", column = "is_active"),
             @Result(property = "versionId", column = "version_id")
     })
-    @Select("select * from" + TBLNAME + "where file_id = #{fileId} and is_active = true")
+    @Select("select * from " + TBLNAME + " where file_id = #{fileId} and is_active = true")
     File selectOneByFileId(String fileId);
 
     @ResultMap(value="file")
-    @Select("select * from" + TBLNAME + "where version_id = #{versionId}")
+    @Select("select * from " + TBLNAME + " where version_id = #{versionId}")
     File selectOneByVersionId(String versionId);
+
+    /**
+     * 根据根据文件名获取到对应的激活文件
+     * @param filePath 文件路径
+     * @param username 文件拥有者
+     * @return
+     */
+    @ResultMap(value="file")
+    @Select("select * form " + TBLNAME + " where filepath=#{filepath} and username=#{username} and is_active=true")
+    File selectOneByFilepathAndUsername(String filePath, String username);
 
     /**
      * 更新
@@ -52,7 +63,7 @@ public interface FileDao {
      * @param active 激活的版本
      * @return
      */
-    @Update("updae " + TBLNAME + "set is_active = #{active} where version = #{versionId}")
+    @Update("updae " + TBLNAME + " set is_active = #{active} where version = #{versionId}")
     boolean changeStatus(String versionId, boolean active);
 
     /**
@@ -61,6 +72,16 @@ public interface FileDao {
      * @param fileId 文件Id
      * @return 返回同一个文件的不同版本号
      */
-    @Select("select version_id from " + TBLNAME + "where file_id = #{fileId}" )
+    @Select("select version_id from " + TBLNAME + " where file_id = #{fileId}")
     List<String> getVersionsOfFile(String fileId);
+
+    /**
+     * 根据文件路径和用户可以唯一确定一个文件
+     * @param filepath 文件路径
+     * @param username 用户
+     * @return
+     */
+    @Select("select count(*) from " + TBLNAME + " " +
+            "where filepath=#{arg0} and username=#{arg1}")
+    int findByFilepathAndVersion(String filepath, String username);
 }

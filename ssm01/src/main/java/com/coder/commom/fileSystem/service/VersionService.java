@@ -54,4 +54,10 @@ public interface VersionService {
      * @param children 批量删除的节点集合
      */
     void deleteListByIds(List<String> children);
+
+    /**
+     * 给新文件生成一个版本号
+     * @param fileVersion 待填充的版本对象
+     */
+    void generateVersion(Version fileVersion);
 }

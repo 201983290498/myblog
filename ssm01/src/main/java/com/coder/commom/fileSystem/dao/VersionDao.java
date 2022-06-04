@@ -55,7 +55,7 @@ public interface VersionDao {
      * @param version 待跟新的版本
      */
     @Update("update " + tblName +
-            "set pre_version_id = #{preVersionId} and next_version_id = #{nextVersionId} " +
+            " set pre_version_id = #{preVersionId} and next_version_id = #{nextVersionId} " +
             "where version_id = #{versionId}")
     boolean updateOne(Version version);
 

@@ -109,11 +109,22 @@ public class VersionServiceImp implements VersionService {
     /**
      * 批量删除
      *
-     * @param children 批量删除的节点集合
+     * @param versionIds 批量删除的节点集合
      */
     @Override
     public void deleteListByIds(List<String> versionIds) {
         versionDao.deleteListByIds(versionIds);
+    }
+
+    /**
+     * 给新文件生成一个版本号
+     *
+     * @param fileVersion 待填充的版本对象
+     */
+    @Override
+    public void generateVersion(Version fileVersion) {
+        //随机生成一个版本号
+        fileVersion.setVersionId(UUID.randomUUID().toString());
     }
 
     /**

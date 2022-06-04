@@ -1,9 +1,11 @@
 package com.coder.commom.fileSystem.controller;
 
+import com.coder.commom.annotation.Enum.ResourceType;
+import com.coder.commom.annotation.ResourceAcquisitionRecorder;
+import com.coder.commom.fileSystem.service.imp.FileAccountServiceImpl;
 import com.coder.commonBase.Utils.RespMessageUtils;
 import com.coder.commonBase.entity.User;
 import com.coder.commonBase.props.ShiroProps;
-import com.coder.commonBase.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,15 +26,16 @@ import java.util.Date;
 @RequestMapping("/fileSystem")
 public class FileSystemAccountController {
 
-    private final UserService userService;
+    private final FileAccountServiceImpl userService;
 
     private final ShiroProps shiroProps;
 
-    public FileSystemAccountController(ShiroProps shiroProps, UserService userService) {
+    public FileSystemAccountController(ShiroProps shiroProps, FileAccountServiceImpl userService) {
         this.shiroProps = shiroProps;
         this.userService = userService;
     }
 
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "文件系统的登入核验")
     @ResponseBody
     @PostMapping(value="/login")
     @ApiOperation(value="登入", notes = "登入成功,返回success, 返回error.", httpMethod = "POST")
@@ -51,6 +54,7 @@ public class FileSystemAccountController {
         return new RespMessageUtils(false, "用户名和密码错误");
     }
 
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name = "文件系统的用户注册")
     @ResponseBody
     @PostMapping("/register")
     public RespMessageUtils register(@RequestBody User user){

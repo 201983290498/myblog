@@ -2,10 +2,14 @@ package com.coder.commom.fileSystem.entity;
 
 import com.coder.commom.annotation.Enum.FileType;
 import com.coder.commom.annotation.TableField;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 所有文件的基本结构，
@@ -16,6 +20,8 @@ import java.util.Date;
  * @Description
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class FileBase extends Version{
 
     /**
@@ -60,4 +66,15 @@ public class FileBase extends Version{
      */
     Boolean isActive=false;
 
+    public FileBase(String username, String filepath) {
+        this.username=username;
+        this.filepath=filepath;
+    }
+
+    public void generateFileInfo() {
+        List<String> splitStrs= List.of(filepath.split("/"));
+        filename = splitStrs.get(splitStrs.size()-1);
+        updateTime = new Date();
+        fileId = UUID.randomUUID().toString();
+    }
 }

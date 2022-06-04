@@ -1,6 +1,7 @@
 package com.coder.commom.fileSystem.service;
 
 import com.coder.commom.fileSystem.entity.File;
+import com.coder.commom.fileSystem.entity.FileBase;
 
 /**
  * @author coder
@@ -34,4 +35,11 @@ public interface FileService {
      * @param file 待更新的文件
      */
     void _setVersionsCollections(File file);
+
+    /**
+     * 插入一个新的文件
+     * @param file 文件目录信息
+     * @return
+     */
+    boolean insertFile(FileBase file);
 }
