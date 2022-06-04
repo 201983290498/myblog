@@ -15,4 +15,12 @@ public class VersionDaoTest {
     @Test
     public void delete() {
     }
+
+    @Test
+    public void testInsert() {
+    }
+
+    @Test
+    public void testSelectOneById() {
+    }
 }

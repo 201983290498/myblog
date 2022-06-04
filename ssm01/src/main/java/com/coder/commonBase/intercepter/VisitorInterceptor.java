@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * The type Visitor interceptor.
@@ -47,6 +48,7 @@ public class VisitorInterceptor implements HandlerInterceptor {
           record.setApplicationType(recorder.applicationType().toString());
           record.setResourceType(recorder.resourceType().toString());
           record.setMessage(recorder.name());
+          record.setUuid(UUID.randomUUID().toString());
           //一般注入是先注入Spring的ioc容器，然后注入SpringMVC的bean, 所以SpringMVC中可以通过WebApplicationContext获取到响应的beans
           WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
           VisitRecordService service = applicationContext.getBean(VisitRecordService.class);

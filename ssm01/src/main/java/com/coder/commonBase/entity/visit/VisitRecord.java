@@ -76,4 +76,7 @@ public class VisitRecord implements Serializable {
    */
   @TableField(column = "备注")
   String message;
+
+  @TableField(column = "唯一标识符")
+  String uuid;
 }

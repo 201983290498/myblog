@@ -21,65 +21,54 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * 登入的注册的时候实现对密码的加密和授权登入
- *
  * @Author coder
- * @Date 2021 /12/2 20:40
+ * @Date 2022/6/4 13:45
  * @Description
  */
 @Aspect
 @Component
 @Data
-public class LoginAop {
-
-
+public class FileSystemLoginAop {
 
     private final ShiroProps shiroProps;
 
-  /**
-   * Instantiates a new Login aop.
-   *
-   * @param shiroProps the shiro props
-   */
-  public LoginAop(ShiroProps shiroProps) {
+    public FileSystemLoginAop(ShiroProps shiroProps) {
         this.shiroProps = shiroProps;
     }
 
-  /**
-   * 定义登入切入点
-   */
-  @Pointcut("execution(public * com.coder.commonBase.controller.AccountController.login(..))")
-    public void loginPoint(){
-    }
-
-  /**
-   * 定义注册切入点
-   */
-    @Pointcut("execution(public * com.coder.commonBase.controller.AccountController.register(..))")
-    public void registerPoint(){
-    }
-
-
-
-
 
     /**
-     * 登入程序的密码加密和权限认证
+     * 登入切入点
+     */
+    @Pointcut("execution(public * com.coder.commom.fileSystem.controller.FileSystemAccountController.login(..))")
+    public void fileSystemLoginPoint(){}
+
+    /**
+     * 定义文件系统的切入点
+     */
+    @Pointcut("execution(public * com.coder.commom.fileSystem.controller.FileSystemAccountController.register(..))")
+    public void fileSystemRegisterPoint(){}
+
+    /**
+     * 文件系统的登入程序的密码加密和权限认证
+     *
      * @param joinPoint 登入程序
-     * @return
-     * @throws Throwable
+     * @return object
+     * @throws Throwable the throwable
      */
     @Order(1)
-    @Around("loginPoint()")
-    public Object aroundLogin(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around("fileSystemLoginPoint()")
+    public Object aroundFileSystemLogin(ProceedingJoinPoint joinPoint) throws Throwable {
         boolean flag = true;
         Object[] args = joinPoint.getArgs();
-        String plainText = (String) args[1];
+        User user = (User) args[0];
+        String plainText = user.getPassword();
         plainText = new SimpleHash(shiroProps.getAlgorithm(),plainText,shiroProps.getSalt(),shiroProps.getHashIterations()).toString();
-        UsernamePasswordToken token = new UsernamePasswordToken((String)args[0], (String)args[1]);
-        args[1] = plainText;
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+        user.setPassword(plainText);
+        args[0] = user;
         Subject currentUser = SecurityUtils.getSubject();
-        ModelMap map = (ModelMap) args[2];
+        ModelMap map = (ModelMap) args[1];
         try {
             /*授权登入*/
             currentUser.login(token);
@@ -93,37 +82,32 @@ public class LoginAop {
         }
         Object proceed = joinPoint.proceed(args);
         /*综合两次的登入结果*/
-        if(flag){
-            return proceed;
-        }else{
-            return "error";
-        }
+        return proceed;
     }
 
-
     /**
-   * 注册时候实现密码加密
-   *
-   * @param joinPoint the join point
-   * @return the object
-   * @throws Throwable the throwable
-   */
+     * 文件系统的注册系统
+     * @param joinPoint 切入点
+     * @return
+     * @throws Throwable
+     */
     @Order(1)
-    @Around("registerPoint()")
-    public Object Register(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around("fileSystemRegisterPoint()")
+    public Object fileSystemRegister(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取到被切入点的所有参数
         Object[] args = joinPoint.getArgs();
         // 获取到第一个参数，注册的用户对象
         User user = (User) args[0];
-        String plainText2 = (String) args[1];
+        if(user.getUsername().length()<6||user.getUsername().length()>12){
+            return new RespMessageUtils(false, "用户名长度过长(短), 请限制在6~12个字符");
+        }
+        if(user.getPassword().length()<6||user.getPassword().length()>20){
+            return new RespMessageUtils(false, "密码长度过长(短), 请限制在6~12个字符");
+        }
         String plainText1 = user.getPassword();
         plainText1 = new SimpleHash(shiroProps.getAlgorithm(),plainText1,shiroProps.getSalt(),shiroProps.getHashIterations()).toString();
-        plainText2 = new SimpleHash(shiroProps.getAlgorithm(),plainText2,shiroProps.getSalt(),shiroProps.getHashIterations()).toString();
         user.setPassword(plainText1);
         args[0] = user;
-        args[1] = plainText2;
         return joinPoint.proceed(args);
     }
-
-
 }

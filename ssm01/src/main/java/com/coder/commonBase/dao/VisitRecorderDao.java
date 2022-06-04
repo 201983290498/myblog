@@ -26,8 +26,8 @@ public interface VisitRecorderDao {
    *
    * @param record 插入的访问记录
    */
-  @Insert("insert into visit_record(username,ip,url,applicationType,resourceType,message,visit_time,sessionId)" +
-    "values(#{username,jdbcType=VARCHAR},#{ip},#{url},#{applicationType},#{resourceType},#{message,jdbcType=VARCHAR},#{time},#{sessionId,jdbcType=VARCHAR})")
+  @Insert("insert into visit_record(username,ip,url,applicationType,resourceType,message,visit_time,sessionId,uuid)" +
+    "values(#{username,jdbcType=VARCHAR},#{ip},#{url},#{applicationType},#{resourceType},#{message,jdbcType=VARCHAR},#{time},#{sessionId,jdbcType=VARCHAR},#{uuid})")
   void insert(VisitRecord record);
 
 
@@ -77,7 +77,7 @@ public interface VisitRecorderDao {
    * @param visitRecord 访问记录
    * @return 不存在-0 存在-1
    */
-  @Select("select count(*) from" + TBLNAME +
-          "where ip=#{ip} and url=#{url} and visit_time=#{visitTime}")
+  @Select("select count(*) from " + TBLNAME +
+          " where uuid = #{uuid} and ip=#{ip}")
   int isExist(VisitRecord visitRecord);
 }

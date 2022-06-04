@@ -32,4 +32,32 @@ public class VisitRecordServiceImpTest {
   @Test
   public void testSelectCountNow1() {
   }
+
+    @Test
+    public void insert() {
+    }
+
+    @Test
+    public void selectListPageBySessionId() {
+    }
+
+    @Test
+    public void selectListByUsername() {
+    }
+
+    @Test
+    public void selectAllByPage() {
+    }
+
+    @Test
+    public void selectAll() {
+    }
+
+    @Test
+    public void testSelectCountNow2() {
+    }
+
+    @Test
+    public void testSelectCount() {
+    }
 }

@@ -90,8 +90,12 @@ public class RespMessageUtils {
    * @param data :数据
    * @return string
    */
-  public static String SUCCESS(Object data){
+    public static String SUCCESS(Object data){
         return JSON.toJSONString(new RespMessageUtils(true,data));
+    }
+
+    public static RespMessageUtils SUCCESSOBJ(Object data){
+        return new RespMessageUtils(true,data);
     }
 
   /**
@@ -132,6 +136,22 @@ public class RespMessageUtils {
         //响应的信息，应该是放到response响应体的话可以在前端直接获取到
        // TODO errors待定义为一个固定的常量
         map.addAttribute("errors",errors);
+    }
+
+    public static RespMessageUtils generateErrorInfoOBJ(ModelMap map, String[] args){
+        // TODO errors待定义为一个固定的常量
+        Object error = map.getAttribute("errors");
+        List<String> errors  = new LinkedList<>();
+        if(error == null) {
+            errors.addAll(List.of(args));
+        }else{
+            errors = (List<String>) error;
+            errors.add("用户名和密码错误");
+        }
+        //响应的信息，应该是放到response响应体的话可以在前端直接获取到
+        // TODO errors待定义为一个固定的常量
+        map.addAttribute("errors",errors);
+        return new RespMessageUtils(false,map);
     }
 
 }

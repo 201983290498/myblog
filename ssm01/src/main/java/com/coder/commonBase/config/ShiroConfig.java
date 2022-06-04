@@ -35,7 +35,7 @@ public class ShiroConfig {
    *
    * @return shiro props
    */
-  @Bean
+    @Bean
     @Scope("singleton")
     public ShiroProps shiroProps(){
         return new ShiroProps();
@@ -47,7 +47,7 @@ public class ShiroConfig {
    * @param shiroProps the shiro props
    * @return hashed credentials matcher
    */
-  @Bean
+    @Bean
     @Scope("singleton")
     public HashedCredentialsMatcher credentialsMatcher(ShiroProps shiroProps){
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
@@ -78,7 +78,7 @@ public class ShiroConfig {
    * @param shiroProps         the shiro props
    * @return my realm
    */
-  @Bean
+    @Bean
     public MyRealm myRealm(UserDao userDao,MemoryConstrainedCacheManager cacheManager,HashedCredentialsMatcher credentialsMatcher,ShiroProps shiroProps){
         MyRealm myRealm = new MyRealm();
         myRealm.setUserDao(userDao);

@@ -83,6 +83,11 @@ public class UserServiceImp implements UserService {
       return userDao.selectCount();
     }
 
+    /**
+     * 首先上传图片，返回图片的id, 并将id给User对象，然后插入User对象
+     * @param user  用户名
+     * @param photo 上传打包的file文件
+     */
     @SuppressWarnings("AlibabaTransactionMustHaveRollback")
     @Transactional
     @Override
@@ -98,7 +103,6 @@ public class UserServiceImp implements UserService {
         }
         //添加角色
         insert(user);
-        userDao.insertRole(user.getUsername(),"user");
     }
 
 
@@ -107,5 +111,6 @@ public class UserServiceImp implements UserService {
         user.setCreateTime(new Date(System.currentTimeMillis()));
         user.setId(UUID.randomUUID().toString().substring(0,10));
         userDao.insert(user);
+        userDao.insertRole(user.getUsername(),"user");
     }
 }

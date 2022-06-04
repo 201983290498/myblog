@@ -128,7 +128,7 @@ public class AccountController {
     @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name = "注册用户修改")
     @PostMapping("/register")
     @ApiOperation(value="账号注册",notes = "注册成功返回登入页面，失败跳转到失败页面，交代失败的原因", httpMethod = "POST")
-    public String register(User user, MultipartFile photo, String repeatPwd, String validateData, ModelMap map){
+    public String register(User user, String repeatPwd,  MultipartFile photo, String validateData, ModelMap map){
         //验证失败，或者密码重复不正确
         if(!repeatPwd.equals(user.getPassword())) {
             RespMessageUtils.generateErrorInfo(map,new String[]{"两次输入的密码不正确"});
