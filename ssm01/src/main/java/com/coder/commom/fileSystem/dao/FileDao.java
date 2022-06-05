@@ -83,5 +83,5 @@ public interface FileDao {
      */
     @Select("select count(*) from " + TBLNAME + " " +
             "where filepath=#{arg0} and username=#{arg1}")
-    int findByFilepathAndVersion(String filepath, String username);
+    int findByFilepathAndUsername(String filepath, String username);
 }

@@ -115,7 +115,7 @@ public class FileServiceImp implements FileService {
         versionService.generateVersion(file);
         file.generateFileInfo();
         //查看文件是否已经存在
-        int exist = fileDao.findByFilepathAndVersion(file.getFilepath(), file.getVersionId());
+        int exist = fileDao.findByFilepathAndUsername(file.getFilepath(), file.getUsername());
         if (exist == 0) {
             //文件不存在直接创建
             file.setIsActive(true);
