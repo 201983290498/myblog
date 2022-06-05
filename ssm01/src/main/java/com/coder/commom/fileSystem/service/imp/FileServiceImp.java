@@ -1,6 +1,7 @@
 package com.coder.commom.fileSystem.service.imp;
 
 import com.coder.commom.annotation.Enum.FileType;
+import com.coder.commom.fileSystem.dao.ContentFileDao;
 import com.coder.commom.fileSystem.dao.FileDao;
 import com.coder.commom.fileSystem.entity.File;
 import com.coder.commom.fileSystem.entity.FileBase;
@@ -10,7 +11,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,10 +27,12 @@ public class FileServiceImp implements FileService {
 
     private final FileDao fileDao;
     private final VersionService versionService;
+    private final ContentFileDao contentDao;
 
-    public FileServiceImp(FileDao fileDao, VersionService versionService) {
+    public FileServiceImp(FileDao fileDao, VersionService versionService, ContentFileDao contentDao) {
         this.fileDao = fileDao;
         this.versionService = versionService;
+        this.contentDao = contentDao;
     }
 
 
@@ -97,13 +100,14 @@ public class FileServiceImp implements FileService {
      * 插入一个新的文件,一般比较唯一的就是文件路径和文件拥有者
      * - 目录具有唯一性
      * - 文件的话查看is_active 是添加文件目录还是添加新的激活文件
-     *  {@link todo 文件更新的检测}
+     * - 同时更新目录项
+     *  {@link FileServiceImp 需要检测这个函数}
      *
      * @param file 文件目录信息
      * @return 返回是否插入成功
      */
     @Override
-    public boolean insertFile(FileBase file) {
+    public boolean insertFile(FileBase file,String faPath) {
         //默认文本是file类型的，初始化文件的基本信息
         if (file.getFileType() != FileType.CONTENT) {
             file.setFileType(FileType.FILE);
@@ -117,6 +121,11 @@ public class FileServiceImp implements FileService {
             file.setIsActive(true);
             fileDao.insert(file);
             log.info(file.toString());
+            //更新目录
+            if(faPath != null){
+                FileBase faFile = selectOneByFilepathAndUsername(faPath, file.getUsername());
+                contentDao.insert(faFile.getFileId(), file.getFileId());
+            }
         } else if (file.getIsActive() && exist > 0) {
             if (file.getFileType() == FileType.CONTENT) {
                 return false;
@@ -128,11 +137,26 @@ public class FileServiceImp implements FileService {
                 //设置新文档的id
                 file.setFileId(file1.getFileId());
                 fileDao.insert(file);
+                //更新待插入节点的版本信息
+                file.setPreVersions(Collections.singletonList(file1.getVersionId()));
                 log.info(file.toString());
             }
         } else {//文件已经存在
             return false;
         }
+        //更新版本信息
+        versionService.insertNewVersion(file);
         return true;
+    }
+
+    /**
+     * 根据路径和用户名查找文件
+     *  @param filepath 文件路径
+     * @param username 文件拥有这
+     * @return
+     */
+    @Override
+    public FileBase selectOneByFilepathAndUsername(String filepath, String username) {
+        return fileDao.selectOneByFilepathAndUsername(filepath, username);
     }
 }

@@ -21,7 +21,7 @@ public interface VersionDao {
      * @param versionRecord 当前的版本记录
      */
     @Insert("insert into version_management(version_id, pre_version_id, next_version_id) " +
-            "values(#{versionId}, #{preVersionId}, #{nextVersionId})")
+            "values(#{versionId}, #{preVersion}, #{nextVersion})")
     void insert(Version versionRecord);
 
     /**
@@ -55,7 +55,7 @@ public interface VersionDao {
      * @param version 待跟新的版本
      */
     @Update("update " + tblName +
-            " set pre_version_id = #{preVersionId} and next_version_id = #{nextVersionId} " +
+            " set pre_version_id = #{preVersionId} and next_version_id = #{nextVersion} " +
             "where version_id = #{versionId}")
     boolean updateOne(Version version);
 

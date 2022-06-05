@@ -39,7 +39,16 @@ public interface FileService {
     /**
      * 插入一个新的文件
      * @param file 文件目录信息
+     * @param faPath 父亲文件的路径,只有新增的文件才有
      * @return
      */
-    boolean insertFile(FileBase file);
+    boolean insertFile(FileBase file, String faPath);
+
+    /**
+     * 根据路径和用户名查找文件
+     * @param filepath 文件路径
+     * @param username 文件拥有这
+     * @return
+     */
+    FileBase selectOneByFilepathAndUsername(String filepath, String username);
 }

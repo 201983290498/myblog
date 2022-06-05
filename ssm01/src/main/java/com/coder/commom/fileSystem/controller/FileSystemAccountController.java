@@ -62,7 +62,7 @@ public class FileSystemAccountController {
         User user1 = userService.selectOne(user.getUsername());
         if(user1 == null){
             userService.insert(user);
-            return RespMessageUtils.SUCCESSOBJ("登入成功!");
+            return RespMessageUtils.SUCCESSOBJ("注册成功,请登入。");
         }else{
             return new RespMessageUtils(false, "用户已经存在");
         }

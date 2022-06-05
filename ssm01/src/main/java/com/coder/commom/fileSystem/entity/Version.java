@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableField(tableName = "version_management")
-public class Version {
+public class Version implements Serializable{
 
 
     /**
@@ -47,4 +48,5 @@ public class Version {
      * 之后的所有版本号, 存储字段, 在service层自动处理获取,空值返回空列表
      */
     public List<String> nextVersions;
+
 }

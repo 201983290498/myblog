@@ -1,15 +1,17 @@
 package com.coder.commom.fileSystem.service;
 
 import com.coder.commom.fileSystem.entity.Version;
+import com.coder.commom.fileSystem.util.VersionManagement;
 
 import java.util.List;
 
 /**
+ * 定义数据库的操作方法
  * @Author coder
  * @Date 2022/5/31 0:23
  * @Description
  */
-public interface VersionService {
+public interface VersionService extends VersionManagement {
 
     /**
      * 存入相关版本，需要对前后节点进行存储处理
@@ -31,10 +33,10 @@ public interface VersionService {
     Version selectOne(String versionId);
 
     /**
-     * 想上层文件提供一个更新Version数据的方式
-     * @param version
+     * 获取文件的具体的版本信息
+     * @param fileVersion 文件的版本信息
      */
-    void setFileVersion(Version version);
+    void setFileVersion(Version fileVersion);
 
     /**
      * 根据版本id获取到所有的版本信息
@@ -55,9 +57,5 @@ public interface VersionService {
      */
     void deleteListByIds(List<String> children);
 
-    /**
-     * 给新文件生成一个版本号
-     * @param fileVersion 待填充的版本对象
-     */
-    void generateVersion(Version fileVersion);
+
 }

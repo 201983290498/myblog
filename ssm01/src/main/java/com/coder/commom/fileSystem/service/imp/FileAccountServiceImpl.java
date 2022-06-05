@@ -59,8 +59,11 @@ public class FileAccountServiceImpl implements FileAccoutService {
      */
     @Override
     public void insert(User user) {
+        //step 1、添加用户账号信息
         userService.insert(user);
-        contentService.insertOneContentFile(new FileBase(user.getUsername(),"/home"));
-        contentService.insertOneContentFile(new FileBase(user.getUsername(),"/data"));
+        // step 2、 添加文件目录项并修改目录
+        contentService.insertOneContentFile(new FileBase(user.getUsername(), "/"),null);
+        contentService.insertOneContentFile(new FileBase(user.getUsername(),"/home"),"/");
+        contentService.insertOneContentFile(new FileBase(user.getUsername(),"/data"),"/");
     }
 }

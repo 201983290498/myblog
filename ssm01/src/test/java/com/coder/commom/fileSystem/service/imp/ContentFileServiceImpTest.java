@@ -13,8 +13,5 @@ public class ContentFileServiceImpTest {
 
     @Test
     public void insertOneContentFile() {
-        FileBase fileBase = new FileBase();
-        fileBase.setUsername("Coder1");
-        contentFileService.insertOneContentFile(fileBase);
     }
 }

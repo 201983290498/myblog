@@ -15,6 +15,8 @@ import java.util.List;
 @CacheNamespace(blocking = true)
 public interface ContentFileDao {
 
+    String TBLNAME = "tbl_content";
+
     /**
      * 寻找某个文件夹下所有激活的文件
      * @return
@@ -27,9 +29,11 @@ public interface ContentFileDao {
             @Result(property = "versionId", column = "version_id")
     })
     @Select("select a.* " +
-            "from file_table a join content_table b on a.file_id = d.sub_directory " +
+            "from file_table a join "+ TBLNAME + " b on a.file_id = d.sub_directory " +
             "where b.directory = #{contentFileId} and a.is_active = true")
-    List<File> listDir(Integer contentFileId);
+    List<File> listDir(String contentFileId);
 
+    @Insert("insert into " + TBLNAME + "(directory, sub_directory) values(#{arg0}, #{arg1})")
+    void insert(String dirFileId, String subDirFileId);
 
 }

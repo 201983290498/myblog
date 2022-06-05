@@ -41,7 +41,7 @@ public interface FileDao {
             @Result(property = "versionId", column = "version_id")
     })
     @Select("select * from " + TBLNAME + " where file_id = #{fileId} and is_active = true")
-    File selectOneByFileId(String fileId);
+    File selectOneByFileId(@Param("fileId") String fileId);
 
     @ResultMap(value="file")
     @Select("select * from " + TBLNAME + " where version_id = #{versionId}")
@@ -54,7 +54,7 @@ public interface FileDao {
      * @return
      */
     @ResultMap(value="file")
-    @Select("select * form " + TBLNAME + " where filepath=#{filepath} and username=#{username} and is_active=true")
+    @Select("select * from " + TBLNAME + " where filepath=#{arg0} and username=#{arg1} and is_active=true")
     File selectOneByFilepathAndUsername(String filePath, String username);
 
     /**
@@ -63,7 +63,7 @@ public interface FileDao {
      * @param active 激活的版本
      * @return
      */
-    @Update("updae " + TBLNAME + " set is_active = #{active} where version = #{versionId}")
+    @Update("update " + TBLNAME + " set is_active = #{arg1} where version = #{arg0}")
     boolean changeStatus(String versionId, boolean active);
 
     /**

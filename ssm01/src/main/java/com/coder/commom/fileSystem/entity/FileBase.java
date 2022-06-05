@@ -73,7 +73,11 @@ public class FileBase extends Version{
 
     public void generateFileInfo() {
         List<String> splitStrs= List.of(filepath.split("/"));
-        filename = splitStrs.get(splitStrs.size()-1);
+        if(splitStrs.size()>0) {
+            filename = splitStrs.get(splitStrs.size()-1);
+        } else{
+            filename = "/";
+        }
         updateTime = new Date();
         fileId = UUID.randomUUID().toString();
     }

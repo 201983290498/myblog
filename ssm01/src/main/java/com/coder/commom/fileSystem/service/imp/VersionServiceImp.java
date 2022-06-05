@@ -7,11 +7,13 @@ import com.google.common.base.Joiner;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 
 /**
+ * 版本管理工具类 + 版本数据库操作对象
  * @Author coder
  * @Date 2022/5/31 0:24
  * @Description
@@ -34,7 +36,13 @@ public class VersionServiceImp implements VersionService {
      */
     @Override
     public boolean insert(Version version) {
-        //图转成字符窜存储
+        //图转成字符窜存储,同时图要防空
+        if(version.getNextVersions()==null){
+            version.setNextVersions(new ArrayList<>());
+        }
+        if(version.getPreVersions()==null){
+            version.setPreVersions(new ArrayList<>());
+        }
         version.setPreVersion(Joiner.on(",").join(version.getPreVersions()));
         version.setNextVersion(Joiner.on(",").join(version.getNextVersions()));
         versionDao.insert(version);
@@ -67,16 +75,16 @@ public class VersionServiceImp implements VersionService {
     }
 
     /**
-     * 向上层文件提供一个版本相关的详细信息的方式
-     * @param version 更新对应的文件的版本信息
+     * 获取文件的具体版本信息
+     * @param fileVersion 更新对应的文件的版本信息
      */
     @Override
-    public void setFileVersion(Version version){
-        Version newVersion = selectOne(version.getVersionId());
-        version.setNextVersions(newVersion.getNextVersions());
-        version.setNextVersion(newVersion.getNextVersion());
-        version.setPreVersions(newVersion.getPreVersions());
-        version.setPreVersion(newVersion.getPreVersion());
+    public void setFileVersion(Version fileVersion){
+        Version newVersion = selectOne(fileVersion.getVersionId());
+        fileVersion.setNextVersions(newVersion.getNextVersions());
+        fileVersion.setNextVersion(newVersion.getNextVersion());
+        fileVersion.setPreVersions(newVersion.getPreVersions());
+        fileVersion.setPreVersion(newVersion.getPreVersion());
     }
 
     /**
@@ -128,10 +136,30 @@ public class VersionServiceImp implements VersionService {
     }
 
     /**
-     * 获取到附近的点
+     * 文件项存在两种: 1-首节点 ; 2-更新节点
+     * 1. 首节点,它的前后缀都是空的, 直接插入当前节点
+     * 2. 中间节点, 首先需要修改上一个节点的next, 在插入当前的节点
+     *
+     * @param fileVersion 待插入的文件目录节点
+     */
+    @Override
+    public void insertNewVersion(Version fileVersion) {
+        if(fileVersion.getPreVersions()!=null && fileVersion.getPreVersions().size() !=0){
+            //更新上一个节点
+            Version version = selectOne(fileVersion.getPreVersions().get(0));
+            version.nextVersions.add(fileVersion.getVersionId());
+            updateOne(version);
+        }
+        //插入当前节点
+        insert(fileVersion);
+    }
+
+    /**
+     * 将数据库中压缩的前后继转换成列表节点
      * @param version 需要进一步处理的version
      */
-    private static void getNeiberVersions(Version version) {
+    @Override
+    public void getNeiberVersions(Version version) {
         if(version.getPreVersion()==null) {
             version.setPreVersion("");
         }
