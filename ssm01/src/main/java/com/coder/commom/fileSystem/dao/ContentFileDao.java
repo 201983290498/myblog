@@ -1,6 +1,6 @@
 package com.coder.commom.fileSystem.dao;
 
-import com.coder.commom.fileSystem.entity.File;
+import com.coder.commom.fileSystem.entity.FileBase;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -29,9 +29,9 @@ public interface ContentFileDao {
             @Result(property = "versionId", column = "version_id")
     })
     @Select("select a.* " +
-            "from file_table a join "+ TBLNAME + " b on a.file_id = d.sub_directory " +
+            "from file_table a join "+ TBLNAME + " b on a.file_id = b.sub_directory " +
             "where b.directory = #{contentFileId} and a.is_active = true")
-    List<File> listDir(String contentFileId);
+    List<FileBase> listDir(String contentFileId);
 
     @Insert("insert into " + TBLNAME + "(directory, sub_directory) values(#{arg0}, #{arg1})")
     void insert(String dirFileId, String subDirFileId);

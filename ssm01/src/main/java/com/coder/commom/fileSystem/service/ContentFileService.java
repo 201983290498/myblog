@@ -2,6 +2,8 @@ package com.coder.commom.fileSystem.service;
 
 import com.coder.commom.fileSystem.entity.FileBase;
 
+import java.util.List;
+
 /**
  * @Author coder
  * @Date 2022/6/4 15:05
@@ -24,4 +26,11 @@ public interface ContentFileService {
      * @param username 文件的拥有者
      */
     void insertContent(String faPath, String sonPath, String username);
+
+    /**
+     * 获取某个文件下的目录项
+     * @param contentFileId 目录的文件ID
+     * @return
+     */
+    List<FileBase> listDir(String contentFileId);
 }

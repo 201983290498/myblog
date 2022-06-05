@@ -7,6 +7,8 @@ import com.coder.commom.fileSystem.service.ContentFileService;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author coder
  * @Date 2022/6/4 15:06
@@ -44,6 +46,17 @@ public class ContentFileServiceImp implements ContentFileService {
         FileBase father = fileService.selectOneByFilepathAndUsername(faPath, username);
         FileBase son = fileService.selectOneByFilepathAndUsername(sonPath, username);
         contentDao.insert(father.getFileId(), son.getFileId());
+    }
+
+    /**
+     * 获取某个文件下的目录项
+     *
+     * @param contentFileId 目录的文件ID
+     * @return
+     */
+    @Override
+    public List<FileBase> listDir(String contentFileId) {
+        return contentDao.listDir(contentFileId);
     }
 
 
