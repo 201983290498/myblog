@@ -21,6 +21,15 @@ public enum ApplicationType {
     /**
      * 实验相关的接口
      */
-    EXPERIMENT
+    EXPERIMENT,
 
+    /**
+     * 文件管理系统
+     */
+    FILESYSTEM,
+
+    /**
+     * 中台监控网站
+     */
+    MONITOR,
 }
