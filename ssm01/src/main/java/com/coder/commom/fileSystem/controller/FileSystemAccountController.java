@@ -1,11 +1,11 @@
 package com.coder.commom.fileSystem.controller;
 
+import com.coder.commom.annotation.Enum.ApplicationType;
 import com.coder.commom.annotation.Enum.ResourceType;
 import com.coder.commom.annotation.ResourceAcquisitionRecorder;
 import com.coder.commom.fileSystem.service.imp.FileAccountServiceImpl;
 import com.coder.commonBase.Utils.RespMessageUtils;
 import com.coder.commonBase.entity.User;
-import com.coder.commonBase.props.ShiroProps;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,17 +28,15 @@ public class FileSystemAccountController {
 
     private final FileAccountServiceImpl userService;
 
-    private final ShiroProps shiroProps;
 
-    public FileSystemAccountController(ShiroProps shiroProps, FileAccountServiceImpl userService) {
-        this.shiroProps = shiroProps;
+    public FileSystemAccountController(FileAccountServiceImpl userService) {
         this.userService = userService;
     }
 
-    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "文件系统的登入核验")
     @ResponseBody
     @PostMapping(value="/login")
     @ApiOperation(value="登入", notes = "登入成功,返回success, 返回error.", httpMethod = "POST")
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.CHECK,name = "文件系统的登入核验",applicationType = ApplicationType.FILESYSTEM)
     public RespMessageUtils login(@RequestBody User user, ModelMap map, HttpServletRequest request){
         log.info(user.getUsername()+user.getPassword());
         if(userService.login(user)){
@@ -54,9 +52,10 @@ public class FileSystemAccountController {
         return new RespMessageUtils(false, "用户名和密码错误");
     }
 
-    @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name = "文件系统的用户注册")
     @ResponseBody
     @PostMapping("/register")
+    @ApiOperation(value="登入", notes = "登入成功,返回success, 返回error.", httpMethod = "POST")
+    @ResourceAcquisitionRecorder(resourceType = ResourceType.MODIFY, name = "文件系统的用户注册", applicationType = ApplicationType.FILESYSTEM)
     public RespMessageUtils register(@RequestBody User user){
         log.info(user.toString());
         User user1 = userService.selectOne(user.getUsername());
